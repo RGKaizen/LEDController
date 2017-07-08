@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E6A16532-396A-4D74-9277-4D9DDB85524D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DoubleRainbow</RootNamespace>
+    <AssemblyName>DoubleRainbow</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>DR.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="LibUsbDotNet">
+      <HintPath>C:\Program Files\LibUsbDotNet\LibUsbDotNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interfaces\IHueGenerator.cs" />
+    <Compile Include="Interfaces\ILEDManager.cs" />
+    <Compile Include="UI\MoodSelector\MoodSeq.cs" />
+    <Compile Include="Utils\AnimationThread.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Utils\Blender.cs" />
+    <Compile Include="Utils\Colors.cs" />
+    <Compile Include="UI\ColorWheel\ColorChangedEventArgs.cs" />
+    <Compile Include="UI\ColorWheel\ColorChooser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Utils\DRColor.cs" />
+    <Compile Include="UI\ColorWheel\ColorWheel.cs" />
+    <Compile Include="UI\MoodSelector\DlgNameChooser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\MoodSelector\MoodSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\MoodSelector\MoodSelector.Designer.cs">
+      <DependentUpon>MoodSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\HueGenerator.cs" />
+    <Compile Include="UI\OptionMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\OptionMenu.Designer.cs">
+      <DependentUpon>OptionMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\RainbowGenerator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\RainbowGenerator.Designer.cs">
+      <DependentUpon>RainbowGenerator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\Globals.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rainbow.cs" />
+    <Compile Include="UI\MoodSelector\MoodSeqUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\MoodSelector\MoodSeqUI.Designer.cs">
+      <DependentUpon>MoodSeqUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\RainbowUtils.cs" />
+    <Compile Include="DTOs\RGBMessageDto.cs" />
+    <EmbeddedResource Include="UI\ColorWheel\ColorChooser.resx">
+      <DependentUpon>ColorChooser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\MoodSelector\DlgNameChooser.resx">
+      <DependentUpon>DlgNameChooser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\MoodSelector\MoodSelector.resx">
+      <DependentUpon>MoodSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\OptionMenu.resx">
+      <DependentUpon>OptionMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\RainbowGenerator.resx">
+      <DependentUpon>RainbowGenerator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="UI\MoodSelector\MoodSeqUI.resx">
+      <DependentUpon>MoodSeqUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DR.ico" />
+    <Content Include="Rainnbow.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
