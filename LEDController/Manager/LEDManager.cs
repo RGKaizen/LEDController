@@ -57,6 +57,11 @@ namespace LEDController.Manager
 
         public async Task<bool> SendColor(RGBMessageDto rgbMessage)
         {
+            if(rgbMessage.pixels.Count == 0)
+            {
+                return true;
+            }
+
             var success = false;
             var message = JsonConvert.SerializeObject(rgbMessage);
             var request = new RestRequest("/Rainbow", Method.POST);
@@ -64,13 +69,11 @@ namespace LEDController.Manager
             request.RequestFormat = DataFormat.Json;
             try
             {
-                _HttpClient.ExecuteAsync(request, response =>
+                var response = _HttpClient.Execute(request);
+                if(response.StatusCode == HttpStatusCode.OK)
                 {
-                    if (response.StatusCode == HttpStatusCode.OK)
-                    {
-                        success =  true;
-                    }
-                });
+                    success = true;
+                }
             }
             catch (Exception error)
             {

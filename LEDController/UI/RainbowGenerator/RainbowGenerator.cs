@@ -38,8 +38,8 @@ namespace LEDController.UI
             DRColor.RGB new_color = new DRColor.RGB(color_gen);
 
             // Position Generation
-            _ledState[23] = new_color;
-            _ledState[24] = new_color;
+            _ledState[_ledManager.LEDCount/2] = new_color;
+            _ledState[_ledManager.LEDCount/2 -1] = new_color;
             Push();
             _ledManager.SendColor(_ledManager.CreateMessage(_ledState));
             Thread.Sleep(refreshRate);
@@ -48,10 +48,10 @@ namespace LEDController.UI
         // Pushes from the center like this --> <--
         public void Push()
         {
-            for (int i = 0; i < 23; i++)
+            for (int i = 0; i < _ledManager.LEDCount/2; i++)
             {
-                int wave_up = 0+i;
-                int wave_down = 47-i;
+                int wave_up = i;
+                int wave_down = _ledManager.LEDCount-1 - i;
                 _ledState[wave_up] = _ledState[wave_up + 1];
                 _ledState[wave_down] = _ledState[wave_down - 1];
             }

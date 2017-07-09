@@ -21,7 +21,7 @@ namespace LEDController.Dtos
         [JsonProperty("channel")]
         public int channel { get; set; }
 
-        [JsonProperty("position")]
+        [JsonProperty("pos")]
         public int position { get; set; }
 
         [JsonProperty("red")]
