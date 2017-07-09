@@ -2,6 +2,16 @@
 {
     public static class RainbowUtils
     {
+        public static DRColor.RGB[] createEmptyArray(int count)
+        {
+            var array = new DRColor.RGB[count];
+            for (var i = 0; i < count; i++)
+            {
+                array[i] = new DRColor.RGB(0, 0, 0);
+            }
+            return array;
+        }
+
         public static void fillBoth(DRColor.RGB rgb)
         {
         }

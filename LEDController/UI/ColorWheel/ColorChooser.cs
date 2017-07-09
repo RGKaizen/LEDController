@@ -1,6 +1,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using LEDController.Utils;
+using LEDController.Interfaces;
 
 namespace LEDController.UI
 {
@@ -35,10 +36,13 @@ namespace LEDController.UI
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 
-		public ColorChooser()
+        private ILEDManager _LEDManager { get; set; }
+
+		public ColorChooser(ILEDManager ledManager)
 		{
 			InitializeComponent();
-		}
+            _LEDManager = ledManager;
+        }
 
 		/// <summary>
 		/// Clean up any resources being used.
@@ -409,7 +413,7 @@ namespace LEDController.UI
 			SetRGBLabels(RGB);
 	   }
 
-		private void SetHSV( DRColor.HSV HSV) 
+		private void SetHSV(DRColor.HSV HSV) 
 		{
             if (HSV == null)
                 return;

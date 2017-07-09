@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Threading;
 using LEDController.Interfaces;
 using LEDController.Utils;
+using LEDController.Dtos;
 
 namespace LEDController.UI
 {
@@ -16,58 +17,58 @@ namespace LEDController.UI
 
     public partial class RainbowGenerator : Form
     {
-        const int KaiLength = Globals.KaiLength;
-        IHueGenerator _huey = null;
-        AnimationThread animationThread = null;
+        private IHueGenerator _hueGenerator { get; set; }
+        private ILEDManager _ledManager { get; set; }
+        private AnimationThread _animationThread = null;
+        private DRColor.RGB[] _ledState { get; set; }
 
-        public RainbowGenerator(IHueGenerator hueGenerator)
+        public RainbowGenerator(IHueGenerator hueGenerator, ILEDManager ledManager)
         {
             InitializeComponent();
-            _huey = hueGenerator;
-            animationThread = new AnimationThread(Animate);
+            _hueGenerator = hueGenerator;
+            _ledManager = ledManager;
+            _animationThread = new AnimationThread(Animate);
+            _ledState = RainbowUtils.createEmptyArray(ledManager.LEDCount);
         }
 
         public void Animate()
         {
-
             // Color Generation 
-            DRColor.HSV color_gen = _huey.getNextColor((float)Slider1Value, (float)Slider2Value, (float)Slider3Value);
+            DRColor.HSV color_gen = _hueGenerator.getNextColor((float)Slider1Value, (float)Slider2Value, (float)Slider3Value);
             DRColor.RGB new_color = new DRColor.RGB(color_gen);
 
             // Position Generation
-            //Rainbow.Kai[23] = new_color;
-            //Rainbow.Kai[24] = new_color;
+            _ledState[23] = new_color;
+            _ledState[24] = new_color;
             Push();
-            RainbowUtils.update();
+            _ledManager.SendColor(_ledManager.CreateMessage(_ledState));
             Thread.Sleep(refreshRate);
         }
 
         // Pushes from the center like this --> <--
         public void Push()
         {
-            double mid = 23.5;
             for (int i = 0; i < 23; i++)
             {
-                int wave_up = 0+i;//(int)(Math.Ceiling(mid + i));
-                int wave_down = 47-i;//(int)(Math.Floor(mid - i));
-                //Rainbow.Kai[wave_up] = Rainbow.Kai[wave_up + 1];
-                //Rainbow.Kai[wave_down] = Rainbow.Kai[wave_down - 1];
+                int wave_up = 0+i;
+                int wave_down = 47-i;
+                _ledState[wave_up] = _ledState[wave_up + 1];
+                _ledState[wave_down] = _ledState[wave_down - 1];
             }
         }
 
         // Starts/stops repeat thread
         private void PlayPause(object sender, EventArgs e)
         {
-            if (animationThread.isOn)
+            if (_animationThread.isOn)
             {
-                this.button2.Text = "Play";
-                animationThread.Stop();
+                button2.Text = "Play";
+                _animationThread.Stop();
             }
             else
             {
-                this.button2.Text = "Pause";
-                animationThread.Start();
-                StoreState();
+                button2.Text = "Pause";
+                _animationThread.Start();
             }
         }
 
@@ -102,12 +103,6 @@ namespace LEDController.UI
         {
             refreshRate = RefreshBar.Value;
             refreshLbl.Text = refreshRate + " ms";
-        }
-
-        DRColor.RGB[] storedState = new DRColor.RGB[KaiLength];
-        private void StoreState()
-        {
-            //Array.Copy(Rainbow.Kai, storedState, KaiLength);
         }
 
         private DRColor.RGB AdjustVal(DRColor.RGB rgb, double perc)

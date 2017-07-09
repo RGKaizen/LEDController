@@ -1,21 +1,37 @@
 ﻿using System.Collections.Generic;
 using LEDController.Utils;
+using Newtonsoft.Json;
 
 namespace LEDController.Dtos
 {
 
     public class RGBMessageDto
     {
-        public IEnumerable<RGBData> pixels { get; set; }
+        [JsonProperty("pixels")]
+        public IList<RGBData> pixels { get; set; }
+
+        public RGBMessageDto()
+        {
+            pixels = new List<RGBData>();
+        }
     }
 
     public class RGBData
     {
+        [JsonProperty("channel")]
         public int channel { get; set; }
 
+        [JsonProperty("position")]
         public int position { get; set; }
 
-        public DRColor.RGB color { get; set; }
+        [JsonProperty("red")]
+        public int red { get; set; }
+
+        [JsonProperty("green")]
+        public int green { get; set; }
+
+        [JsonProperty("blue")]
+        public int blue { get; set; }
     }
     
 }

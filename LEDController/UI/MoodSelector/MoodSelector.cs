@@ -2,28 +2,27 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using LEDController.Utils;
+using LEDController.Interfaces;
 
 namespace LEDController.UI
 {
     public partial class MoodSelector : Form
     {
-        ColorChooser _chooser;
-        BindingList<MoodSeq> moods_list;
+        private ColorChooser _chooser;
+        private ILEDManager _LedManager { get; set; }
+        private BindingList<MoodSeq> moods_list;
         private MoodSeqUI current_moodSeqUI;
         private MoodSeq currentMood;
 
-        public MoodSelector()
+        public MoodSelector(ILEDManager ledManager)
         {
             InitializeComponent();
             InitMoodSeq();
+            _LedManager = ledManager;
             _at = new AnimationThread(Animation);           
             if(File.Exists(@"moods.txt"))
                 moods_list = JsonConvert.DeserializeObject<BindingList<MoodSeq>>(File.ReadAllText(@"moods.txt"));
@@ -55,7 +54,7 @@ namespace LEDController.UI
         {
           if(_chooser == null)
           { 
-            _chooser = new ColorChooser();
+            _chooser = new ColorChooser(_LedManager);
             _chooser.Show();
           }
         }

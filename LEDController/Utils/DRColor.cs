@@ -274,9 +274,9 @@ namespace LEDController.Utils
                 }
                 // return an RGB structure, with values scaled
                 // to be between 0 and 255.
-                this.setRed((int)(r * 128));
-                this.setGreen((int)(g * 128));
-                this.setBlue((int)(b * 128));
+                this.setRed((int)(r * 256));
+                this.setGreen((int)(g * 256));
+                this.setBlue((int)(b * 256));
             }
 
             public RGB(Color c)
