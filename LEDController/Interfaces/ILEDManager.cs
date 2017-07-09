@@ -8,8 +8,10 @@ namespace LEDController.Interfaces
     {
         int LEDCount { get; }
 
-        Task<bool> SendColor(RGBMessageDto rgbMessage);
+        bool SendColor(RGBMessageDto rgbMessage);
 
         RGBMessageDto CreateMessage(DRColor.RGB[] input);
+
+        RGBMessageDto CreateMessage(DRColor.RGB input);
     }
 }

@@ -34,9 +34,9 @@ namespace LEDController.Utils
                 double max;
                 double delta;
 
-                double r = (double)rgb.Red / 128;
-                double g = (double)rgb.Green/ 128;
-                double b = (double)rgb.Blue / 128;
+                double r = (double)rgb.Red / 256;
+                double g = (double)rgb.Green/ 256;
+                double b = (double)rgb.Blue / 256;
 
                 double h;
                 double s;
@@ -85,9 +85,9 @@ namespace LEDController.Utils
 
                 // Scale to the requirements of this 
                 // application. All values are between 0 and 255.
-                Hue = (int)(h / 360 * 255);
-                Saturation = (int)(s * 255);
-                Value = (int)(v * 255);
+                Hue = (int)(h / 360 * 256);
+                Saturation = (int)(s * 256);
+                Value = (int)(v * 256);
             }
 
             public override string ToString()
@@ -102,29 +102,27 @@ namespace LEDController.Utils
             private int _green;
             private int _blue;
 
-
-            // Accessors prevent RGB values with out of range values [0 - 127]
             #region Accessors
             public int Red
             {
-                get { return this._red; }
+                get { return _red; }
                 set { setRed(value); }
             }
             public int Green
             {
-                get { return this._green; }
+                get { return _green; }
                 set { setGreen(value); }
             }
             public int Blue
             {
-                get { return this._blue; }
+                get { return _blue; }
                 set { setBlue(value); }
             }
 
             private void setRed(int r)
             {
-                if (r > 127)
-                    _red = 127;
+                if (r > 256)
+                    _red = 256;
                 else if (r < 0)
                     _red = 0;
                 else
@@ -132,8 +130,8 @@ namespace LEDController.Utils
             }
             private void setGreen(int g)
             {
-                if (g > 127)
-                    _green = 127;
+                if (g > 256)
+                    _green = 256;
                 else if (g < 0)
                     _green = 0;
                 else
@@ -141,8 +139,8 @@ namespace LEDController.Utils
             }
             private void setBlue(int b)
             {
-                if (b > 127)
-                    _blue = 127;
+                if (b > 256)
+                    _blue = 256;
                 else if (b < 0)
                     _blue = 0;
                 else
@@ -193,9 +191,9 @@ namespace LEDController.Utils
 
                 // Scale Hue to be between 0 and 360. Saturation
                 // and value scale to be between 0 and 1.
-                h = ((double)hsv.Hue / 255 * 360) % 360;
-                s = (double)hsv.Saturation / 255;
-                v = (double)hsv.Value / 255;
+                h = ((double)hsv.Hue / 256 * 360) % 360;
+                s = (double)hsv.Saturation / 256;
+                v = (double)hsv.Value / 256;
 
                 if (s == 0)
                 {
@@ -274,9 +272,9 @@ namespace LEDController.Utils
                 }
                 // return an RGB structure, with values scaled
                 // to be between 0 and 255.
-                this.setRed((int)(r * 256));
-                this.setGreen((int)(g * 256));
-                this.setBlue((int)(b * 256));
+                setRed((int)(r * 256));
+                setGreen((int)(g * 256));
+                setBlue((int)(b * 256));
             }
 
             public RGB(Color c)
@@ -288,20 +286,15 @@ namespace LEDController.Utils
 
             public Boolean different(RGB other)
             {
-                if (other._red != this._red)
+                if (other._red != _red)
                     return true;
-                if (other._blue != this._blue)
+                if (other._blue != _blue)
                     return true;
-                if (other._green != this._green)
+                if (other._green != _green)
                     return true;
                 return false;
             }
 
-
-            public override string ToString()
-            {
-                return "{" + this._red + "," + this._green + "," + this._blue + "}";
-            }
         }
 
         public static Color HSVtoColor(HSV hsv)

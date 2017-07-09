@@ -14,53 +14,53 @@ namespace LEDController.UI
         public DlgNameChooser()
         {
             InitializeComponent();
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MinimizeBox = false;
         }
 
         private void InitializeComponent()
         {
-            this.nameTextBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.Okaybtn = new System.Windows.Forms.Button();
-            this.SuspendLayout();
+            nameTextBox = new TextBox();
+            label1 = new Label();
+            Okaybtn = new Button();
+            SuspendLayout();
             // 
             // nameTextBox
             // 
-            this.nameTextBox.Location = new System.Drawing.Point(15, 32);
-            this.nameTextBox.Name = "nameTextBox";
-            this.nameTextBox.Size = new System.Drawing.Size(100, 20);
-            this.nameTextBox.TabIndex = 0;
+            nameTextBox.Location = new System.Drawing.Point(15, 32);
+            nameTextBox.Name = "nameTextBox";
+            nameTextBox.Size = new System.Drawing.Size(100, 20);
+            nameTextBox.TabIndex = 0;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(125, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Enter name for MoodSeq";
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(12, 9);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(125, 13);
+            label1.TabIndex = 1;
+            label1.Text = "Enter name for MoodSeq";
             // 
             // Okaybtn
             // 
-            this.Okaybtn.Location = new System.Drawing.Point(15, 62);
-            this.Okaybtn.Name = "Okaybtn";
-            this.Okaybtn.Size = new System.Drawing.Size(75, 23);
-            this.Okaybtn.TabIndex = 2;
-            this.Okaybtn.Text = "Okay";
-            this.Okaybtn.UseVisualStyleBackColor = true;
-            this.Okaybtn.Click += new System.EventHandler(this.Okaybtn_Click);
+            Okaybtn.Location = new System.Drawing.Point(15, 62);
+            Okaybtn.Name = "Okaybtn";
+            Okaybtn.Size = new System.Drawing.Size(75, 23);
+            Okaybtn.TabIndex = 2;
+            Okaybtn.Text = "Okay";
+            Okaybtn.UseVisualStyleBackColor = true;
+            Okaybtn.Click += new System.EventHandler(Okaybtn_Click);
             // 
             // DlgNameChooser
             // 
-            this.ClientSize = new System.Drawing.Size(143, 97);
-            this.Controls.Add(this.Okaybtn);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.nameTextBox);
-            this.Name = "DlgNameChooser";
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            ClientSize = new System.Drawing.Size(143, 97);
+            Controls.Add(Okaybtn);
+            Controls.Add(label1);
+            Controls.Add(nameTextBox);
+            Name = "DlgNameChooser";
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 
@@ -68,7 +68,7 @@ namespace LEDController.UI
         private void Okaybtn_Click(object sender, EventArgs e)
         {
             name = nameTextBox.Text.Trim();
-            this.DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
         }
     }
 }

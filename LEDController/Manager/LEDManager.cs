@@ -4,12 +4,7 @@ using LEDController.Utils;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace LEDController.Manager
 {
     public class LEDManager : ILEDManager
@@ -24,13 +19,12 @@ namespace LEDController.Manager
 
         private int _channelSegment = 60;
 
-
         public LEDManager(string url, string port, int ledCount)
         {
             _URLWithPort = $"http://{url}:{port}";          
             _HttpClient = new RestClient(_URLWithPort);
             LEDCount = ledCount;
-            _buffer = RainbowUtils.createEmptyArray(ledCount);
+            _buffer = Utils.Utils.createEmptyArray(ledCount);
         }
 
         public RGBMessageDto CreateMessage(DRColor.RGB[] input)
@@ -55,7 +49,29 @@ namespace LEDController.Manager
             return message;
         }
 
-        public async Task<bool> SendColor(RGBMessageDto rgbMessage)
+        public RGBMessageDto CreateMessage(DRColor.RGB input)
+        {
+            var message = new RGBMessageDto();
+
+            for (var i = 0; i < LEDCount; i++)
+            {
+                if (_buffer[i].different(input))
+                {
+                    message.pixels.Add(new RGBData
+                    {
+                        channel = i < _channelSegment ? 1 : 2,
+                        position = i,
+                        red = input.Red,
+                        green = input.Green,
+                        blue = input.Blue
+                    });
+                }
+            }
+
+            return message;
+        }
+
+        public bool SendColor(RGBMessageDto rgbMessage)
         {
             if(rgbMessage.pixels.Count == 0)
             {

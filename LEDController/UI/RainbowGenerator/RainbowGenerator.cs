@@ -28,7 +28,7 @@ namespace LEDController.UI
             _hueGenerator = hueGenerator;
             _ledManager = ledManager;
             _animationThread = new AnimationThread(Animate);
-            _ledState = RainbowUtils.createEmptyArray(ledManager.LEDCount);
+            _ledState = Utils.Utils.createEmptyArray(ledManager.LEDCount);
         }
 
         public void Animate()
@@ -74,7 +74,8 @@ namespace LEDController.UI
 
         private void ClearButton(object sender, EventArgs e)
         {
-            RainbowUtils.TurnOff();
+            DRColor.RGB r = new DRColor.RGB(0, 0, 0);
+            _ledManager.SendColor(_ledManager.CreateMessage(r));
         }
 
         public double Slider1Value = 61;

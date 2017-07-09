@@ -1,6 +1,6 @@
 ﻿namespace LEDController.Utils
 {
-    public static class RainbowUtils
+    public static class Utils
     {
         public static DRColor.RGB[] createEmptyArray(int count)
         {
@@ -12,18 +12,6 @@
             return array;
         }
 
-        public static void fillBoth(DRColor.RGB rgb)
-        {
-        }
-
-        public static void update()
-        {
-        }
-
-
-        public static void TurnOff()
-        {
-        }
 
         public static DRColor.RGB increaseBrightness(DRColor.RGB rgb, int amt)
         {

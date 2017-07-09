@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Windows.Forms;
+
 namespace LEDController.UI
 {
     partial class RainbowGenerator
@@ -29,23 +31,23 @@ namespace LEDController.UI
         /// </summary>
         private void InitializeComponent()
         {
-            this.posBox = new System.Windows.Forms.TextBox();
-            this.tryButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.Slider1 = new System.Windows.Forms.HScrollBar();
-            this.Slider1Lbl = new System.Windows.Forms.Label();
-            this.Slider1ValueLbl = new System.Windows.Forms.Label();
-            this.RefreshBar = new System.Windows.Forms.HScrollBar();
-            this.Slider2ValueLbl = new System.Windows.Forms.Label();
-            this.Slider2Lbl = new System.Windows.Forms.Label();
-            this.Slider2 = new System.Windows.Forms.HScrollBar();
-            this.Slider3ValueLbl = new System.Windows.Forms.Label();
-            this.Slider3Lbl = new System.Windows.Forms.Label();
-            this.Slider3 = new System.Windows.Forms.HScrollBar();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.label1 = new System.Windows.Forms.Label();
-            this.refreshLbl = new System.Windows.Forms.Label();
+            this.posBox = new TextBox();
+            this.tryButton = new Button();
+            this.button1 = new Button();
+            this.button2 = new Button();
+            this.Slider1 = new HScrollBar();
+            this.Slider1Lbl = new Label();
+            this.Slider1ValueLbl = new Label();
+            this.RefreshBar = new HScrollBar();
+            this.Slider2ValueLbl = new Label();
+            this.Slider2Lbl = new Label();
+            this.Slider2 = new HScrollBar();
+            this.Slider3ValueLbl = new Label();
+            this.Slider3Lbl = new Label();
+            this.Slider3 = new HScrollBar();
+            this.openFileDialog1 = new OpenFileDialog();
+            this.label1 = new Label();
+            this.refreshLbl = new Label();
             this.SuspendLayout();
             // 
             // posBox
@@ -94,7 +96,7 @@ namespace LEDController.UI
             this.Slider1.SmallChange = 5;
             this.Slider1.TabIndex = 10;
             this.Slider1.Value = 60;
-            this.Slider1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.Slider1_Scroll);
+            this.Slider1.Scroll += new ScrollEventHandler(this.Slider1_Scroll);
             // 
             // Slider1Lbl
             // 
@@ -121,7 +123,7 @@ namespace LEDController.UI
             this.RefreshBar.Size = new System.Drawing.Size(216, 18);
             this.RefreshBar.TabIndex = 13;
             this.RefreshBar.Value = 50;
-            this.RefreshBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.RefreshBar_Scroll);
+            this.RefreshBar.Scroll += new ScrollEventHandler(this.RefreshBar_Scroll);
             // 
             // Slider2ValueLbl
             // 
@@ -150,7 +152,7 @@ namespace LEDController.UI
             this.Slider2.SmallChange = 5;
             this.Slider2.TabIndex = 14;
             this.Slider2.Value = 95;
-            this.Slider2.Scroll += new System.Windows.Forms.ScrollEventHandler(this.Slider2_Scroll);
+            this.Slider2.Scroll += new ScrollEventHandler(this.Slider2_Scroll);
             // 
             // Slider3ValueLbl
             // 
@@ -179,7 +181,7 @@ namespace LEDController.UI
             this.Slider3.SmallChange = 5;
             this.Slider3.TabIndex = 17;
             this.Slider3.Value = 125;
-            this.Slider3.Scroll += new System.Windows.Forms.ScrollEventHandler(this.Slider3_Scroll);
+            this.Slider3.Scroll += new ScrollEventHandler(this.Slider3_Scroll);
             // 
             // openFileDialog1
             // 
@@ -206,7 +208,7 @@ namespace LEDController.UI
             // RainbowGenerator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(357, 202);
             this.Controls.Add(this.refreshLbl);
             this.Controls.Add(this.label1);
@@ -233,23 +235,23 @@ namespace LEDController.UI
 
         #endregion
 
-        private System.Windows.Forms.TextBox posBox;
-        private System.Windows.Forms.Button tryButton;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.HScrollBar Slider1;
-        private System.Windows.Forms.Label Slider1Lbl;
-        private System.Windows.Forms.Label Slider1ValueLbl;
-        private System.Windows.Forms.HScrollBar RefreshBar;
-        private System.Windows.Forms.Label Slider2ValueLbl;
-        private System.Windows.Forms.Label Slider2Lbl;
-        private System.Windows.Forms.HScrollBar Slider2;
-        private System.Windows.Forms.Label Slider3ValueLbl;
-        private System.Windows.Forms.Label Slider3Lbl;
-        private System.Windows.Forms.HScrollBar Slider3;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label refreshLbl;
+        private TextBox posBox;
+        private Button tryButton;
+        private Button button1;
+        private Button button2;
+        private HScrollBar Slider1;
+        private Label Slider1Lbl;
+        private Label Slider1ValueLbl;
+        private HScrollBar RefreshBar;
+        private Label Slider2ValueLbl;
+        private Label Slider2Lbl;
+        private HScrollBar Slider2;
+        private Label Slider3ValueLbl;
+        private Label Slider3Lbl;
+        private HScrollBar Slider3;
+        private OpenFileDialog openFileDialog1;
+        private Label label1;
+        private Label refreshLbl;
     }
 }
 

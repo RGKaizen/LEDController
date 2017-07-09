@@ -1,4 +1,6 @@
-﻿namespace LEDController.UI
+﻿using System.Windows.Forms;
+
+namespace LEDController.UI
 {
     partial class MoodSelector
     {
@@ -29,15 +31,15 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.colorChsBtn = new System.Windows.Forms.Button();
-            this.addClrBtn = new System.Windows.Forms.Button();
-            this.animateBtn = new System.Windows.Forms.Button();
-            this.moodsCmbBox = new System.Windows.Forms.ComboBox();
-            this.addMoodBtn = new System.Windows.Forms.Button();
-            this.removeMoodBtn = new System.Windows.Forms.Button();
-            this.moodsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.button1 = new System.Windows.Forms.Button();
-            this.moodNameLbl = new System.Windows.Forms.Label();
+            this.colorChsBtn = new Button();
+            this.addClrBtn = new Button();
+            this.animateBtn = new Button();
+            this.moodsCmbBox = new ComboBox();
+            this.addMoodBtn = new Button();
+            this.removeMoodBtn = new Button();
+            this.moodsBindingSource = new BindingSource(this.components);
+            this.button1 = new Button();
+            this.moodNameLbl = new Label();
             ((System.ComponentModel.ISupportInitialize)(this.moodsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -73,7 +75,7 @@
             // 
             // moodsCmbBox
             // 
-            this.moodsCmbBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.moodsCmbBox.DropDownStyle = ComboBoxStyle.DropDownList;
             this.moodsCmbBox.Location = new System.Drawing.Point(12, 129);
             this.moodsCmbBox.Name = "moodsCmbBox";
             this.moodsCmbBox.Size = new System.Drawing.Size(128, 21);
@@ -122,7 +124,7 @@
             // MoodSelector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(295, 164);
             this.Controls.Add(this.moodNameLbl);
             this.Controls.Add(this.button1);
@@ -134,7 +136,7 @@
             this.Controls.Add(this.colorChsBtn);
             this.Name = "MoodSelector";
             this.Text = "Mood Selector";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MoodSelector_Closing);
+            this.FormClosing += new FormClosingEventHandler(this.MoodSelector_Closing);
             ((System.ComponentModel.ISupportInitialize)(this.moodsBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -143,15 +145,15 @@
 
         #endregion
 
-        private System.Windows.Forms.Button colorChsBtn;
-        private System.Windows.Forms.Button addClrBtn;
+        private Button colorChsBtn;
+        private Button addClrBtn;
 
-        private System.Windows.Forms.Button animateBtn;
-        private System.Windows.Forms.ComboBox moodsCmbBox;
-        private System.Windows.Forms.Button addMoodBtn;
-        private System.Windows.Forms.Button removeMoodBtn;
-        private System.Windows.Forms.BindingSource moodsBindingSource;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label moodNameLbl;
+        private Button animateBtn;
+        private ComboBox moodsCmbBox;
+        private Button addMoodBtn;
+        private Button removeMoodBtn;
+        private BindingSource moodsBindingSource;
+        private Button button1;
+        private Label moodNameLbl;
     }
 }

@@ -143,7 +143,7 @@ namespace LEDController.UI
                 while (j > 0.0)
                 {
                     DRColor.RGB show_color = new DRColor.RGB(127, 0, 0);
-                    RainbowUtils.fillBoth(show_color);
+                    //RainbowUtils.fillBoth(show_color);
                     Thread.Sleep(speed);
                     if (halt) return;
                     j -= 0.05;

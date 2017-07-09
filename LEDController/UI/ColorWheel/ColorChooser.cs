@@ -8,40 +8,40 @@ namespace LEDController.UI
     /// <summary>
     /// Written by Ken Getz
     /// </summary>
-	public class ColorChooser : System.Windows.Forms.Form
+	public class ColorChooser : Form
 	{
-		internal System.Windows.Forms.Label lblBlue;
-		internal System.Windows.Forms.Label lblGreen;
-		internal System.Windows.Forms.Label lblRed;
-		internal System.Windows.Forms.Label lblBrightness;
-		internal System.Windows.Forms.Label lblSaturation;
-		internal System.Windows.Forms.Label lblHue;
-		internal System.Windows.Forms.HScrollBar hsbBlue;
-		internal System.Windows.Forms.HScrollBar hsbGreen;
-		internal System.Windows.Forms.HScrollBar hsbRed;
-		internal System.Windows.Forms.HScrollBar hsbBrightness;
-		internal System.Windows.Forms.HScrollBar hsbSaturation;
-        internal System.Windows.Forms.HScrollBar hsbHue;
-		internal System.Windows.Forms.Label Label3;
-		internal System.Windows.Forms.Label Label7;
-		internal System.Windows.Forms.Panel pnlColor;
-		internal System.Windows.Forms.Label Label6;
-		internal System.Windows.Forms.Label Label1;
-		internal System.Windows.Forms.Label Label5;
-		internal System.Windows.Forms.Panel pnlSelectedColor;
-		internal System.Windows.Forms.Panel pnlBrightness;
-        internal System.Windows.Forms.Label Label2;
+		internal Label lblBlue;
+		internal Label lblGreen;
+		internal Label lblRed;
+		internal Label lblBrightness;
+		internal Label lblSaturation;
+		internal Label lblHue;
+		internal HScrollBar hsbBlue;
+		internal HScrollBar hsbGreen;
+		internal HScrollBar hsbRed;
+		internal HScrollBar hsbBrightness;
+		internal HScrollBar hsbSaturation;
+        internal HScrollBar hsbHue;
+		internal Label Label3;
+		internal Label Label7;
+		internal Panel pnlColor;
+		internal Label Label6;
+		internal Label Label1;
+		internal Label Label5;
+		internal Panel pnlSelectedColor;
+		internal Panel pnlBrightness;
+        internal Label Label2;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 
-        private ILEDManager _LEDManager { get; set; }
+        private ILEDManager _ledManager { get; set; }
 
 		public ColorChooser(ILEDManager ledManager)
 		{
 			InitializeComponent();
-            _LEDManager = ledManager;
+            _ledManager = ledManager;
         }
 
 		/// <summary>
@@ -66,27 +66,27 @@ namespace LEDController.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-            this.lblBlue = new System.Windows.Forms.Label();
-            this.lblGreen = new System.Windows.Forms.Label();
-            this.lblRed = new System.Windows.Forms.Label();
-            this.lblBrightness = new System.Windows.Forms.Label();
-            this.lblSaturation = new System.Windows.Forms.Label();
-            this.lblHue = new System.Windows.Forms.Label();
-            this.hsbBlue = new System.Windows.Forms.HScrollBar();
-            this.hsbGreen = new System.Windows.Forms.HScrollBar();
-            this.hsbRed = new System.Windows.Forms.HScrollBar();
-            this.hsbBrightness = new System.Windows.Forms.HScrollBar();
-            this.hsbSaturation = new System.Windows.Forms.HScrollBar();
-            this.hsbHue = new System.Windows.Forms.HScrollBar();
-            this.Label3 = new System.Windows.Forms.Label();
-            this.Label7 = new System.Windows.Forms.Label();
-            this.pnlColor = new System.Windows.Forms.Panel();
-            this.Label6 = new System.Windows.Forms.Label();
-            this.Label1 = new System.Windows.Forms.Label();
-            this.Label5 = new System.Windows.Forms.Label();
-            this.pnlSelectedColor = new System.Windows.Forms.Panel();
-            this.pnlBrightness = new System.Windows.Forms.Panel();
-            this.Label2 = new System.Windows.Forms.Label();
+            this.lblBlue = new Label();
+            this.lblGreen = new Label();
+            this.lblRed = new Label();
+            this.lblBrightness = new Label();
+            this.lblSaturation = new Label();
+            this.lblHue = new Label();
+            this.hsbBlue = new HScrollBar();
+            this.hsbGreen = new HScrollBar();
+            this.hsbRed = new HScrollBar();
+            this.hsbBrightness = new HScrollBar();
+            this.hsbSaturation = new HScrollBar();
+            this.hsbHue = new HScrollBar();
+            this.Label3 = new Label();
+            this.Label7 = new Label();
+            this.pnlColor = new Panel();
+            this.Label6 = new Label();
+            this.Label1 = new Label();
+            this.Label5 = new Label();
+            this.pnlSelectedColor = new Panel();
+            this.pnlBrightness = new Panel();
+            this.Label2 = new Label();
             this.SuspendLayout();
             // 
             // lblBlue
@@ -145,7 +145,7 @@ namespace LEDController.UI
             this.hsbBlue.Name = "hsbBlue";
             this.hsbBlue.Size = new System.Drawing.Size(224, 18);
             this.hsbBlue.TabIndex = 48;
-            this.hsbBlue.Scroll += new System.Windows.Forms.ScrollEventHandler(this.HandleRGBScroll);
+            this.hsbBlue.Scroll += new ScrollEventHandler(this.HandleRGBScroll);
             // 
             // hsbGreen
             // 
@@ -155,7 +155,7 @@ namespace LEDController.UI
             this.hsbGreen.Name = "hsbGreen";
             this.hsbGreen.Size = new System.Drawing.Size(224, 18);
             this.hsbGreen.TabIndex = 47;
-            this.hsbGreen.Scroll += new System.Windows.Forms.ScrollEventHandler(this.HandleRGBScroll);
+            this.hsbGreen.Scroll += new ScrollEventHandler(this.HandleRGBScroll);
             // 
             // hsbRed
             // 
@@ -165,7 +165,7 @@ namespace LEDController.UI
             this.hsbRed.Name = "hsbRed";
             this.hsbRed.Size = new System.Drawing.Size(224, 18);
             this.hsbRed.TabIndex = 46;
-            this.hsbRed.Scroll += new System.Windows.Forms.ScrollEventHandler(this.HandleRGBScroll);
+            this.hsbRed.Scroll += new ScrollEventHandler(this.HandleRGBScroll);
             // 
             // hsbBrightness
             // 
@@ -175,7 +175,7 @@ namespace LEDController.UI
             this.hsbBrightness.Name = "hsbBrightness";
             this.hsbBrightness.Size = new System.Drawing.Size(224, 18);
             this.hsbBrightness.TabIndex = 45;
-            this.hsbBrightness.Scroll += new System.Windows.Forms.ScrollEventHandler(this.HandleHSVScroll);
+            this.hsbBrightness.Scroll += new ScrollEventHandler(this.HandleHSVScroll);
             // 
             // hsbSaturation
             // 
@@ -185,7 +185,7 @@ namespace LEDController.UI
             this.hsbSaturation.Name = "hsbSaturation";
             this.hsbSaturation.Size = new System.Drawing.Size(224, 18);
             this.hsbSaturation.TabIndex = 44;
-            this.hsbSaturation.Scroll += new System.Windows.Forms.ScrollEventHandler(this.HandleHSVScroll);
+            this.hsbSaturation.Scroll += new ScrollEventHandler(this.HandleHSVScroll);
             // 
             // hsbHue
             // 
@@ -195,7 +195,7 @@ namespace LEDController.UI
             this.hsbHue.Name = "hsbHue";
             this.hsbHue.Size = new System.Drawing.Size(224, 18);
             this.hsbHue.TabIndex = 43;
-            this.hsbHue.Scroll += new System.Windows.Forms.ScrollEventHandler(this.HandleHSVScroll);
+            this.hsbHue.Scroll += new ScrollEventHandler(this.HandleHSVScroll);
             // 
             // Label3
             // 
@@ -306,14 +306,14 @@ namespace LEDController.UI
             this.Controls.Add(this.pnlSelectedColor);
             this.Controls.Add(this.pnlBrightness);
             this.Controls.Add(this.Label2);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.Name = "ColorChooser";
             this.Text = "Select Color";
             this.Load += new System.EventHandler(this.ColorChooser_Load);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.ColorChooser_Paint);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouse);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.HandleMouse);
-            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseUp);
+            this.Paint += new PaintEventHandler(this.ColorChooser_Paint);
+            this.MouseDown += new MouseEventHandler(this.HandleMouse);
+            this.MouseMove += new MouseEventHandler(this.HandleMouse);
+            this.MouseUp += new MouseEventHandler(this.frmMain_MouseUp);
             this.ResumeLayout(false);
 
 		}
@@ -427,9 +427,9 @@ namespace LEDController.UI
 
 		private void RefreshValue(HScrollBar hsb, int value) 
 		{
-            if (value >= 256)
+            if (value >= 128)
             {
-                value = 255;
+                value = 128;
             }
             hsb.Value = value;
 		}
@@ -468,8 +468,7 @@ namespace LEDController.UI
 
 			SetRGB(e.RGB);
 			SetHSV(e.HSV);
-            RainbowUtils.fillBoth(e.RGB);
-            
+            _ledManager.SendColor(_ledManager.CreateMessage(e.RGB));
         }
 
         // If the H, S, or V values change, use this 
@@ -484,7 +483,7 @@ namespace LEDController.UI
 			SetRGB(new DRColor.RGB(HSV));
 			SetHSVLabels(HSV);
 			this.Invalidate();
-            RainbowUtils.fillBoth(RGB);
+            _ledManager.SendColor(_ledManager.CreateMessage(new DRColor.RGB(HSV)));
 		}
 
         // If the R, G, or B values change, use this 
@@ -500,10 +499,10 @@ namespace LEDController.UI
             SetHSV(new DRColor.HSV(RGB));
 			SetRGBLabels(RGB);
 			this.Invalidate();
-            RainbowUtils.fillBoth(RGB);
-		}
+            _ledManager.SendColor(_ledManager.CreateMessage(RGB));
+        }
 
-		private void ColorChooser_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
+		private void ColorChooser_Paint(object sender, PaintEventArgs e)
 		{
 			// Depending on the circumstances, force angle repaint
 			// of the color wheel passing different information.

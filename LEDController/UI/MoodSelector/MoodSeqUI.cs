@@ -68,7 +68,7 @@ namespace LEDController.UI
                 foreach (DRColor.RGB rgb in mood.Color_List)
                 {
                     Point p = new Point(count * rect_size.Width, 0);
-                    SolidBrush myBrush = new SolidBrush(DRColor.RGBtoColor(RainbowUtils.increaseBrightness(rgb, 130)));
+                    SolidBrush myBrush = new SolidBrush(DRColor.RGBtoColor(Utils.Utils.increaseBrightness(rgb, 130)));
                     g.FillEllipse(myBrush, new Rectangle(p, rect_size));
                     myBrush.Dispose();             
                     count++;

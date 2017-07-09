@@ -14,19 +14,19 @@ namespace LEDController.Utils
         ThreadFunction _tf = null;
         public AnimationThread(ThreadFunction tf)
         {
-            this.WorkerSupportsCancellation = true;
-            this.DoWork += new System.ComponentModel.DoWorkEventHandler(this.this_DoWork);
+            WorkerSupportsCancellation = true;
+            DoWork += new DoWorkEventHandler(this_DoWork);
             _tf = tf;
         }
 
         public bool Start() {
-            if (!isOn && !this.IsBusy) 
+            if (!isOn && !IsBusy) 
             { 
-                this.RunWorkerAsync(10);
+                RunWorkerAsync(10);
                 isOn = true;
             }
 
-            if (this.IsBusy)
+            if (IsBusy)
             { 
                 return true;
             }
@@ -38,7 +38,7 @@ namespace LEDController.Utils
         {
             if (isOn)
             {
-                this.CancelAsync();
+                CancelAsync();
                 isOn = false;
             }
 
