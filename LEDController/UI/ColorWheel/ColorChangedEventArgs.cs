@@ -1,4 +1,5 @@
 using System;
+using LEDController.Utils;
 
 namespace LEDController.UI
 {

@@ -1,5 +1,4 @@
-﻿
-using LEDController.Utils;
+﻿using LEDController.Utils;
 
 namespace LEDController.Interfaces
 {

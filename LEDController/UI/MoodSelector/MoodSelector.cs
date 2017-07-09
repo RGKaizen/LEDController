@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using LEDController.Utils;
 
 namespace LEDController.UI
 {
@@ -142,7 +143,7 @@ namespace LEDController.UI
                 double j = 1.0;
                 while (j > 0.0)
                 {
-                    DRColor.RGB show_color = Blender.variableMix(cur, next, j);
+                    DRColor.RGB show_color = new DRColor.RGB(127, 0, 0);
                     RainbowUtils.fillBoth(show_color);
                     Thread.Sleep(speed);
                     if (halt) return;
