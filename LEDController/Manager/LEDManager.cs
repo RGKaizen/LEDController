@@ -16,22 +16,22 @@ namespace LEDController.Manager
 
         private DRColor.RGB[] _Buffer { get; set; }
 
-        public int LEDCount { get; }
+        public int TotalLEDCount { get; }
 
-        public int ChannelSegment { get; } = 60 ;
+        public int StripLength { get; } = 60 ;
 
         public LEDManager(string url, string port, int ledCount)
         {
             _URLWithPort = $"http://{url}:{port}";
             _HttpClient = new RestClient(_URLWithPort);
-            LEDCount = ledCount;
+            TotalLEDCount = ledCount;
             _Buffer = RainbowUtils.createEmptyArray(ledCount);
         }
 
         public RGBMessageDto CreateMessage(DRColor.RGB[] input)
         {
             var message = new RGBMessageDto();
-            for (var i = 0; i < LEDCount; i++)
+            for (var i = 0; i < TotalLEDCount; i++)
             {
                 if (_Buffer[i].different(input[i]))
                 {
@@ -55,7 +55,7 @@ namespace LEDController.Manager
         {
             var message = new RGBMessageDto();
 
-            for (var i = 0; i < LEDCount; i++)
+            for (var i = 0; i < TotalLEDCount; i++)
             {
                 if (_Buffer[i].different(input))
                 {

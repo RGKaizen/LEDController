@@ -96,7 +96,7 @@ namespace LEDController.Utils
             }
         }
 
-        public class RGB
+        public class RGB : IComparable<RGB>
         {
             private int _red;
             private int _green;
@@ -106,45 +106,17 @@ namespace LEDController.Utils
             public int Red
             {
                 get { return _red; }
-                set { setRed(value); }
+                set { value.Clamp(0, 256); }
             }
             public int Green
             {
                 get { return _green; }
-                set { setGreen(value); }
+                set { value.Clamp(0,256); }
             }
             public int Blue
             {
                 get { return _blue; }
-                set { setBlue(value); }
-            }
-
-            private void setRed(int r)
-            {
-                if (r > 256)
-                    _red = 256;
-                else if (r < 0)
-                    _red = 0;
-                else
-                    _red = r;
-            }
-            private void setGreen(int g)
-            {
-                if (g > 256)
-                    _green = 256;
-                else if (g < 0)
-                    _green = 0;
-                else
-                    _green = g;
-            }
-            private void setBlue(int b)
-            {
-                if (b > 256)
-                    _blue = 256;
-                else if (b < 0)
-                    _blue = 0;
-                else
-                    _blue = b;
+                set { value.Clamp(0, 256); }
             }
 
             #endregion
@@ -158,12 +130,12 @@ namespace LEDController.Utils
 
             public RGB(int r, int g, int b)
             {
-                setRed(r);
-                setGreen(g);
-                setBlue(b);
+                _red = r.Clamp(0, 256);
+                _green = g.Clamp(0, 256);
+                _blue = b.Clamp(0, 256);
             }
 
-            public RGB(DRColor.HSV hsv)
+            public RGB(HSV hsv)
             {
                 if (hsv == null)
                 {
@@ -272,29 +244,54 @@ namespace LEDController.Utils
                 }
                 // return an RGB structure, with values scaled
                 // to be between 0 and 255.
-                setRed((int)(r * 256));
-                setGreen((int)(g * 256));
-                setBlue((int)(b * 256));
+                _red = ((int)(r * 256)).Clamp(0, 256);
+                _green = ((int)(g * 256)).Clamp(0, 256);
+                _blue = ((int)(b * 256)).Clamp(0, 256);
             }
 
-            public RGB(Color c)
+            public RGB(Color c) : this(c.R, c.G, c.B)
             {
-                setRed(c.R);
-                setGreen(c.G);
-                setBlue(c.B);
+            }
+
+            public int CompareTo(RGB other)
+            {
+                if (Red < other.Red)
+                    return 1;
+                else if (Red > other.Red)
+                    return -1;
+                else
+                {
+                    if (Green < other.Green)
+                        return 1;
+                    else if (Green > other.Green)
+                        return -1;
+                    else
+                    {
+                        if (Blue < other.Blue)
+                            return 1;
+                        else if (Blue > other.Blue)
+                            return -1;
+                    }
+                }
+
+                return 0;
             }
 
             public Boolean different(RGB other)
             {
-                if (other._red != _red)
+                if (other?._red != _red)
                     return true;
-                if (other._blue != _blue)
+                if (other?._blue != _blue)
                     return true;
-                if (other._green != _green)
+                if (other?._green != _green)
                     return true;
                 return false;
             }
 
+            public override string ToString()
+            {
+                return $"{Red}, {Green}, {Blue}";
+            }
         }
 
         public static Color HSVtoColor(HSV hsv)
@@ -311,7 +308,10 @@ namespace LEDController.Utils
             return Color.FromArgb(rgb.Red, rgb.Green, rgb.Blue);
         }
 
-
+        public static readonly RGB Red = new RGB(256, 0, 0);
+        public static readonly RGB Green = new RGB(0, 256, 0);
+        public static readonly RGB Blue = new RGB(0, 0, 256);
+        public static readonly RGB Off = new RGB(1, 0, 0);
 
     }
 }

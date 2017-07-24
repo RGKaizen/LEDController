@@ -19,7 +19,7 @@ namespace LEDController.UI
             _hueGenerator = hueGenerator;
             _LEDManager = ledManager;
             _animationThread = new AnimationThread(Animate);
-            _ledState = RainbowUtils.createEmptyArray(ledManager.LEDCount);
+            _ledState = RainbowUtils.createEmptyArray(ledManager.TotalLEDCount);
         }
 
         public void Animate()
@@ -32,7 +32,7 @@ namespace LEDController.UI
                         (float)ValueSliderValue));
 
             // Position Generation
-            _ledState[_LEDManager.LEDCount / 2] = newColor;
+            _ledState[_LEDManager.TotalLEDCount / 2] = newColor;
             Push();
             _LEDManager.SendRGBMessage(_LEDManager.CreateMessage(_ledState));
             Thread.Sleep(refreshRate);
@@ -41,10 +41,10 @@ namespace LEDController.UI
         // Pushes from the center like this  <-- -->
         public void Push()
         {
-            for (int i = 0; i < _LEDManager.LEDCount/2; i++)
+            for (int i = 0; i < _LEDManager.TotalLEDCount/2; i++)
             {
                 int waveUp = i;
-                int waveDown = _LEDManager.LEDCount-1 - i;
+                int waveDown = _LEDManager.TotalLEDCount-1 - i;
                 _ledState[waveUp] = _ledState[waveUp + 1];
                 _ledState[waveDown] = _ledState[waveDown - 1];
             }
