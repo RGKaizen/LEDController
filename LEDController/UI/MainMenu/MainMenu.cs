@@ -13,8 +13,7 @@ namespace LEDController.UI
         public MainMenu()
         {
             InitializeComponent();
-            _LEDManager = new LEDManager("192.168.1.103", "5000", 60);
-            strip_comboBox.SelectedIndex = 2;
+            _LEDManager = new LEDManager("192.168.1.103", "5000", 120);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -25,11 +24,6 @@ namespace LEDController.UI
         private void button2_Click(object sender, EventArgs e)
         {
             new RainbowGenerator(new HueGenerator(0.0f, 0.0f, 0.0f), _LEDManager).Show();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            new MoodSelector(_LEDManager).Show();
         }
     }
 }

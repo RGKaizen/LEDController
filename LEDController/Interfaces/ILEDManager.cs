@@ -6,7 +6,9 @@ namespace LEDController.Interfaces
 {
     public interface ILEDManager
     {
-        int _LEDCount { get; }
+        int LEDCount { get; }
+
+        int ChannelSegment { get; }
 
         bool SendRGBMessage(RGBMessageDto rgbMessage);
 

@@ -62,22 +62,10 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\ColorWheel\ColorWheel.cs" />
-    <Compile Include="UI\MoodSelector\DlgNameChooser.cs">
+    <Compile Include="UI\MainMenu\MainMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\MoodSelector\MoodSelector.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\MoodSelector\MoodSelector.Designer.cs" />
-    <Compile Include="UI\MoodSelector\MoodSeq.cs" />
-    <Compile Include="UI\MoodSelector\MoodSeqUI.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\MoodSelector\MoodSeqUI.Designer.cs" />
-    <Compile Include="UI\OptionsMenu\OptionMenu.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\OptionsMenu\OptionMenu.Designer.cs" />
+    <Compile Include="UI\MainMenu\MainMenu.Designer.cs" />
     <Compile Include="UI\RainbowGenerator\RainbowGenerator.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +74,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Utils\DRColor.cs" />
+    <Compile Include="Utils\ExtensionMethods.cs" />
     <Compile Include="Utils\HueGenerator.cs" />
     <Compile Include="Utils\RainbowUtils.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -97,9 +86,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="UI\MoodSelector\DlgNameChooser.resx" />
-    <EmbeddedResource Include="UI\MoodSelector\MoodSelector.resx" />
-    <EmbeddedResource Include="UI\MoodSelector\MoodSeqUI.resx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

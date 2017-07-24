@@ -3,22 +3,13 @@ using System.Windows.Forms;
 using System.Threading;
 using LEDController.Interfaces;
 using LEDController.Utils;
-using LEDController.Dtos;
 
 namespace LEDController.UI
 {
-
-    /*
-     * Requirements:
-     * Event-driven lighting. Run scripts for animations by accepting requests or events
-     * events can be raised externally with custom scripts
-     * Structure: source pixel, active width (left and right independent), animation mask
-     * */
-
     public partial class RainbowGenerator : Form
     {
         private IHueGenerator _hueGenerator { get; set; }
-        private ILEDManager _ledManager { get; set; }
+        private ILEDManager _LEDManager { get; set; }
         private AnimationThread _animationThread = null;
         private DRColor.RGB[] _ledState { get; set; }
 
@@ -26,34 +17,36 @@ namespace LEDController.UI
         {
             InitializeComponent();
             _hueGenerator = hueGenerator;
-            _ledManager = ledManager;
+            _LEDManager = ledManager;
             _animationThread = new AnimationThread(Animate);
-            _ledState = Utils.RainbowUtils.createEmptyArray(ledManager._LEDCount);
+            _ledState = RainbowUtils.createEmptyArray(ledManager.LEDCount);
         }
 
         public void Animate()
         {
             // Color Generation 
-            DRColor.HSV color_gen = _hueGenerator.getNextColor((float)Slider1Value, (float)Slider2Value, (float)Slider3Value);
-            DRColor.RGB new_color = new DRColor.RGB(color_gen);
+            var newColor = new DRColor.RGB(
+                    _hueGenerator.getNextColor(
+                        (float)HueSliderValue,
+                        (float)SaturationSliderValue,
+                        (float)ValueSliderValue));
 
             // Position Generation
-            _ledState[_ledManager._LEDCount/2] = new_color;
-            _ledState[_ledManager._LEDCount/2 -1] = new_color;
+            _ledState[_LEDManager.LEDCount / 2] = newColor;
             Push();
-            _ledManager.SendRGBMessage(_ledManager.CreateMessage(_ledState));
+            _LEDManager.SendRGBMessage(_LEDManager.CreateMessage(_ledState));
             Thread.Sleep(refreshRate);
         }
 
-        // Pushes from the center like this --> <--
+        // Pushes from the center like this  <-- -->
         public void Push()
         {
-            for (int i = 0; i < _ledManager._LEDCount/2; i++)
+            for (int i = 0; i < _LEDManager.LEDCount/2; i++)
             {
-                int wave_up = i;
-                int wave_down = _ledManager._LEDCount-1 - i;
-                _ledState[wave_up] = _ledState[wave_up + 1];
-                _ledState[wave_down] = _ledState[wave_down - 1];
+                int waveUp = i;
+                int waveDown = _LEDManager.LEDCount-1 - i;
+                _ledState[waveUp] = _ledState[waveUp + 1];
+                _ledState[waveDown] = _ledState[waveDown - 1];
             }
         }
 
@@ -62,12 +55,12 @@ namespace LEDController.UI
         {
             if (_animationThread.isOn)
             {
-                button2.Text = "Play";
+                BtnStartStop.Text = "Play";
                 _animationThread.Stop();
             }
             else
             {
-                button2.Text = "Pause";
+                BtnStartStop.Text = "Pause";
                 _animationThread.Start();
             }
         }
@@ -75,28 +68,28 @@ namespace LEDController.UI
         private void ClearButton(object sender, EventArgs e)
         {
             DRColor.RGB r = new DRColor.RGB(0, 0, 0);
-            _ledManager.SendRGBMessage(_ledManager.CreateMessage(r));
+            _LEDManager.SendRGBMessage(_LEDManager.CreateMessage(r));
         }
 
-        public double Slider1Value = 61;
-        private void Slider1_Scroll(object sender, ScrollEventArgs e)
+        public double HueSliderValue = 61;
+        private void HueSlider_Scroll(object sender, ScrollEventArgs e)
         {
-            Slider1Value = Math.Pow(Math.E, (5.545d * Slider1.Value / 1000) );
-            Slider1ValueLbl.Text = "Val: " + String.Format("{0:N2}", Slider1Value);
+            HueSliderValue = Math.Pow(Math.E, (5.545d * Slider1.Value / 1000) );
+            Slider1ValueLbl.Text = "Val: " + String.Format("{0:N2}", HueSliderValue);
         }
 
-        public double Slider2Value = 45;
-        private void Slider2_Scroll(object sender, ScrollEventArgs e)
+        public double SaturationSliderValue = 45;
+        private void SaturationSlider_Scroll(object sender, ScrollEventArgs e)
         {
-            Slider2Value = Math.Pow(Math.E, (5.545d * Slider2.Value / 1000) );
-            Slider2ValueLbl.Text = "Val: " + String.Format("{0:N2}", Slider2Value);
+            SaturationSliderValue = Math.Pow(Math.E, (5.545d * Slider2.Value / 1000) );
+            Slider2ValueLbl.Text = "Val: " + String.Format("{0:N2}", SaturationSliderValue);
         }
 
-        public double Slider3Value = 34;
-        private void Slider3_Scroll(object sender, ScrollEventArgs e)
+        public double ValueSliderValue = 34;
+        private void ValueSlider_Scroll(object sender, ScrollEventArgs e)
         {
-            Slider3Value = Math.Pow(Math.E, (5.545d * Slider3.Value / 1000));
-            Slider3ValueLbl.Text = "Val: " + String.Format("{0:N2}", Slider3Value);
+            ValueSliderValue = Math.Pow(Math.E, (5.545d * Slider3.Value / 1000));
+            Slider3ValueLbl.Text = "Val: " + String.Format("{0:N2}", ValueSliderValue);
         }
 
         public int refreshRate = 0;
@@ -104,13 +97,6 @@ namespace LEDController.UI
         {
             refreshRate = RefreshBar.Value;
             refreshLbl.Text = refreshRate + " ms";
-        }
-
-        private DRColor.RGB AdjustVal(DRColor.RGB rgb, double perc)
-        {
-            DRColor.HSV hsv = new DRColor.HSV(rgb);
-            hsv.Value = (int)(hsv.Value * perc);
-            return new DRColor.RGB(hsv);
         }
 
     }

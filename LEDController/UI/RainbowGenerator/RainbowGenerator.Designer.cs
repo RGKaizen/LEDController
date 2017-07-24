@@ -34,7 +34,7 @@ namespace LEDController.UI
             this.posBox = new TextBox();
             this.tryButton = new Button();
             this.button1 = new Button();
-            this.button2 = new Button();
+            this.BtnStartStop = new Button();
             this.Slider1 = new HScrollBar();
             this.Slider1Lbl = new Label();
             this.Slider1ValueLbl = new Label();
@@ -79,13 +79,13 @@ namespace LEDController.UI
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(207, 38);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 9;
-            this.button2.Text = "PlayPause";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.PlayPause);
+            this.BtnStartStop.Location = new System.Drawing.Point(207, 38);
+            this.BtnStartStop.Name = "button2";
+            this.BtnStartStop.Size = new System.Drawing.Size(75, 23);
+            this.BtnStartStop.TabIndex = 9;
+            this.BtnStartStop.Text = "PlayPause";
+            this.BtnStartStop.UseVisualStyleBackColor = true;
+            this.BtnStartStop.Click += new System.EventHandler(this.PlayPause);
             // 
             // Slider1
             // 
@@ -96,7 +96,7 @@ namespace LEDController.UI
             this.Slider1.SmallChange = 5;
             this.Slider1.TabIndex = 10;
             this.Slider1.Value = 60;
-            this.Slider1.Scroll += new ScrollEventHandler(this.Slider1_Scroll);
+            this.Slider1.Scroll += new ScrollEventHandler(this.HueSlider_Scroll);
             // 
             // Slider1Lbl
             // 
@@ -152,7 +152,7 @@ namespace LEDController.UI
             this.Slider2.SmallChange = 5;
             this.Slider2.TabIndex = 14;
             this.Slider2.Value = 95;
-            this.Slider2.Scroll += new ScrollEventHandler(this.Slider2_Scroll);
+            this.Slider2.Scroll += new ScrollEventHandler(this.SaturationSlider_Scroll);
             // 
             // Slider3ValueLbl
             // 
@@ -181,7 +181,7 @@ namespace LEDController.UI
             this.Slider3.SmallChange = 5;
             this.Slider3.TabIndex = 17;
             this.Slider3.Value = 125;
-            this.Slider3.Scroll += new ScrollEventHandler(this.Slider3_Scroll);
+            this.Slider3.Scroll += new ScrollEventHandler(this.ValueSlider_Scroll);
             // 
             // openFileDialog1
             // 
@@ -222,7 +222,7 @@ namespace LEDController.UI
             this.Controls.Add(this.Slider1ValueLbl);
             this.Controls.Add(this.Slider1Lbl);
             this.Controls.Add(this.Slider1);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.BtnStartStop);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.tryButton);
             this.Controls.Add(this.posBox);
@@ -238,7 +238,7 @@ namespace LEDController.UI
         private TextBox posBox;
         private Button tryButton;
         private Button button1;
-        private Button button2;
+        private Button BtnStartStop;
         private HScrollBar Slider1;
         private Label Slider1Lbl;
         private Label Slider1ValueLbl;

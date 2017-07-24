@@ -33,8 +33,6 @@ namespace LEDController.UI
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenu));
             this.button1 = new Button();
             this.button2 = new Button();
-            this.button3 = new Button();
-            this.strip_comboBox = new ComboBox();
             this.SuspendLayout();
             // 
             // button1
@@ -57,39 +55,14 @@ namespace LEDController.UI
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(249, 12);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(78, 45);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "Mood Lighting";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // strip_comboBox
-            // 
-            this.strip_comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            this.strip_comboBox.FormattingEnabled = true;
-            this.strip_comboBox.Items.AddRange(new object[] {
-            "Kai",
-            "Zen",
-            "Both"});
-            this.strip_comboBox.Location = new System.Drawing.Point(32, 68);
-            this.strip_comboBox.Name = "strip_comboBox";
-            this.strip_comboBox.Size = new System.Drawing.Size(121, 21);
-            this.strip_comboBox.TabIndex = 3;
-            // 
             // OptionMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(487, 99);
-            this.Controls.Add(this.strip_comboBox);
-            this.Controls.Add(this.button3);
+            this.ClientSize = new System.Drawing.Size(350, 75);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Name = "OptionMenu";
+            this.Name = "MainMenu";
             this.Text = "Double Rainbow";
             this.ResumeLayout(false);
 
@@ -99,7 +72,5 @@ namespace LEDController.UI
 
         private Button button1;
         private Button button2;
-        private Button button3;
-        private ComboBox strip_comboBox;
     }
 }
