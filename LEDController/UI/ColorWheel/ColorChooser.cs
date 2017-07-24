@@ -468,7 +468,7 @@ namespace LEDController.UI
 
 			SetRGB(e.RGB);
 			SetHSV(e.HSV);
-            _ledManager.SendColor(_ledManager.CreateMessage(e.RGB));
+            _ledManager.SendRGBMessage(_ledManager.CreateMessage(e.RGB));
         }
 
         // If the H, S, or V values change, use this 
@@ -483,7 +483,7 @@ namespace LEDController.UI
 			SetRGB(new DRColor.RGB(HSV));
 			SetHSVLabels(HSV);
 			this.Invalidate();
-            _ledManager.SendColor(_ledManager.CreateMessage(new DRColor.RGB(HSV)));
+            _ledManager.SendRGBMessage(_ledManager.CreateMessage(new DRColor.RGB(HSV)));
 		}
 
         // If the R, G, or B values change, use this 
@@ -499,7 +499,7 @@ namespace LEDController.UI
             SetHSV(new DRColor.HSV(RGB));
 			SetRGBLabels(RGB);
 			this.Invalidate();
-            _ledManager.SendColor(_ledManager.CreateMessage(RGB));
+            _ledManager.SendRGBMessage(_ledManager.CreateMessage(RGB));
         }
 
 		private void ColorChooser_Paint(object sender, PaintEventArgs e)

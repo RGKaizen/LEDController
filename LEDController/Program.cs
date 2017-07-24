@@ -14,7 +14,7 @@ namespace LEDController
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new OptionMenu());
+            Application.Run(new UI.MainMenu());
         }
     }
 }

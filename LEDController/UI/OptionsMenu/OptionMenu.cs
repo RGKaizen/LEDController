@@ -6,14 +6,14 @@ using LEDController.Manager;
 
 namespace LEDController.UI
 {
-    public partial class OptionMenu : Form
+    public partial class MainMenu : Form
     {
         private ILEDManager _LEDManager { get; set; }
 
-        public OptionMenu()
+        public MainMenu()
         {
             InitializeComponent();
-            _LEDManager = new LEDManager("192.168.1.102", "5000", 60);
+            _LEDManager = new LEDManager("192.168.1.103", "5000", 60);
             strip_comboBox.SelectedIndex = 2;
         }
 
@@ -24,7 +24,7 @@ namespace LEDController.UI
 
         private void button2_Click(object sender, EventArgs e)
         {
-            new RainbowGenerator(new HueGenerator(127.0f, 55.0f, 127.0f), _LEDManager).Show();
+            new RainbowGenerator(new HueGenerator(0.0f, 0.0f, 0.0f), _LEDManager).Show();
         }
 
         private void button3_Click(object sender, EventArgs e)

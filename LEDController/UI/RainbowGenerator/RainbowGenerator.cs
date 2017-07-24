@@ -28,7 +28,7 @@ namespace LEDController.UI
             _hueGenerator = hueGenerator;
             _ledManager = ledManager;
             _animationThread = new AnimationThread(Animate);
-            _ledState = Utils.Utils.createEmptyArray(ledManager.LEDCount);
+            _ledState = Utils.RainbowUtils.createEmptyArray(ledManager._LEDCount);
         }
 
         public void Animate()
@@ -38,20 +38,20 @@ namespace LEDController.UI
             DRColor.RGB new_color = new DRColor.RGB(color_gen);
 
             // Position Generation
-            _ledState[_ledManager.LEDCount/2] = new_color;
-            _ledState[_ledManager.LEDCount/2 -1] = new_color;
+            _ledState[_ledManager._LEDCount/2] = new_color;
+            _ledState[_ledManager._LEDCount/2 -1] = new_color;
             Push();
-            _ledManager.SendColor(_ledManager.CreateMessage(_ledState));
+            _ledManager.SendRGBMessage(_ledManager.CreateMessage(_ledState));
             Thread.Sleep(refreshRate);
         }
 
         // Pushes from the center like this --> <--
         public void Push()
         {
-            for (int i = 0; i < _ledManager.LEDCount/2; i++)
+            for (int i = 0; i < _ledManager._LEDCount/2; i++)
             {
                 int wave_up = i;
-                int wave_down = _ledManager.LEDCount-1 - i;
+                int wave_down = _ledManager._LEDCount-1 - i;
                 _ledState[wave_up] = _ledState[wave_up + 1];
                 _ledState[wave_down] = _ledState[wave_down - 1];
             }
@@ -75,7 +75,7 @@ namespace LEDController.UI
         private void ClearButton(object sender, EventArgs e)
         {
             DRColor.RGB r = new DRColor.RGB(0, 0, 0);
-            _ledManager.SendColor(_ledManager.CreateMessage(r));
+            _ledManager.SendRGBMessage(_ledManager.CreateMessage(r));
         }
 
         public double Slider1Value = 61;

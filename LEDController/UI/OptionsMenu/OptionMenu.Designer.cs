@@ -2,7 +2,7 @@
 
 namespace LEDController.UI
 {
-    partial class OptionMenu
+    partial class MainMenu
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@ namespace LEDController.UI
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OptionMenu));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenu));
             this.button1 = new Button();
             this.button2 = new Button();
             this.button3 = new Button();

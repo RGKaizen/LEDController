@@ -1,6 +1,6 @@
 ﻿namespace LEDController.Utils
 {
-    public static class Utils
+    public static class RainbowUtils
     {
         public static DRColor.RGB[] createEmptyArray(int count)
         {

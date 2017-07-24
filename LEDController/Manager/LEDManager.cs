@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Net;
+
 namespace LEDController.Manager
 {
     public class LEDManager : ILEDManager
@@ -13,36 +14,39 @@ namespace LEDController.Manager
 
         private string _URLWithPort { get; set; }
 
-        private DRColor.RGB[] _buffer { get; set; }
+        private DRColor.RGB[] _Buffer { get; set; }
 
-        public int LEDCount { get; }
+        public int _LEDCount { get; }
 
-        private int _channelSegment = 60;
+        private int _ChannelSegment = 60;
 
         public LEDManager(string url, string port, int ledCount)
         {
-            _URLWithPort = $"http://{url}:{port}";          
+            _URLWithPort = $"http://{url}:{port}";
             _HttpClient = new RestClient(_URLWithPort);
-            LEDCount = ledCount;
-            _buffer = Utils.Utils.createEmptyArray(ledCount);
+            _LEDCount = ledCount;
+            _Buffer = RainbowUtils.createEmptyArray(ledCount);
         }
 
         public RGBMessageDto CreateMessage(DRColor.RGB[] input)
         {
             var message = new RGBMessageDto();
-
-            for(var i = 0; i < LEDCount; i++)
+            for (var c = 0; c < 2; c++)
             {
-                if(_buffer[i].different(input[i]))
+                for (var i = 0; i < _LEDCount; i++)
                 {
-                    message.pixels.Add(new RGBData
+                    if (_Buffer[i].different(input[i]))
                     {
-                        channel = i < _channelSegment ? 1 : 2,
-                        position = i,
-                        red = input[i].Red,
-                        green = input[i].Green,
-                        blue = input[i].Blue
-                    });
+                        _Buffer[i] = input[i];
+                        message.pixels.Add(new RGBData
+                            {
+                                channel = c,
+                                position = i,
+                                red = input[i].Red,
+                                green = input[i].Green,
+                                blue = input[i].Blue
+                            });                       
+                    }
                 }
             }
 
@@ -53,13 +57,14 @@ namespace LEDController.Manager
         {
             var message = new RGBMessageDto();
 
-            for (var i = 0; i < LEDCount; i++)
+            for (var i = 0; i < _LEDCount; i++)
             {
-                if (_buffer[i].different(input))
+                if (_Buffer[i].different(input))
                 {
+                    _Buffer[i] = input;
                     message.pixels.Add(new RGBData
                     {
-                        channel = i < _channelSegment ? 1 : 2,
+                        channel = i < _ChannelSegment ? 1 : 2,
                         position = i,
                         red = input.Red,
                         green = input.Green,
@@ -71,7 +76,7 @@ namespace LEDController.Manager
             return message;
         }
 
-        public bool SendColor(RGBMessageDto rgbMessage)
+        public bool SendRGBMessage(RGBMessageDto rgbMessage)
         {
             if(rgbMessage.pixels.Count == 0)
             {
