@@ -69,7 +69,6 @@
     <Compile Include="UI\RainbowGenerator\RainbowGenerator.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\RainbowGenerator\RainbowGenerator.Designer.cs" />
     <Compile Include="Utils\AnimationThread.cs">
       <SubType>Component</SubType>
     </Compile>

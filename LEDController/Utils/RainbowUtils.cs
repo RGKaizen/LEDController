@@ -11,14 +11,5 @@
             }
             return array;
         }
-
-
-        public static MyColor.RGB increaseBrightness(MyColor.RGB rgb, int amt)
-        {
-            MyColor.HSV hsv = new MyColor.HSV(rgb);
-            hsv.Value = hsv.Value + amt > 256 ? 256 : hsv.Value + amt;
-            return new MyColor.RGB(hsv);
-        }
-
     }
 }
