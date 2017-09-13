@@ -1,7 +1,7 @@
+using LEDController.Interfaces;
+using LEDController.Utils;
 using System.Drawing;
 using System.Windows.Forms;
-using LEDController.Utils;
-using LEDController.Interfaces;
 
 namespace LEDController.UI
 {
@@ -66,255 +66,255 @@ namespace LEDController.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-            this.lblBlue = new Label();
-            this.lblGreen = new Label();
-            this.lblRed = new Label();
-            this.lblBrightness = new Label();
-            this.lblSaturation = new Label();
-            this.lblHue = new Label();
-            this.hsbBlue = new HScrollBar();
-            this.hsbGreen = new HScrollBar();
-            this.hsbRed = new HScrollBar();
-            this.hsbBrightness = new HScrollBar();
-            this.hsbSaturation = new HScrollBar();
-            this.hsbHue = new HScrollBar();
-            this.Label3 = new Label();
-            this.Label7 = new Label();
-            this.pnlColor = new Panel();
-            this.Label6 = new Label();
-            this.Label1 = new Label();
-            this.Label5 = new Label();
-            this.pnlSelectedColor = new Panel();
-            this.pnlBrightness = new Panel();
-            this.Label2 = new Label();
-            this.SuspendLayout();
+            lblBlue = new Label();
+            lblGreen = new Label();
+            lblRed = new Label();
+            lblBrightness = new Label();
+            lblSaturation = new Label();
+            lblHue = new Label();
+            hsbBlue = new HScrollBar();
+            hsbGreen = new HScrollBar();
+            hsbRed = new HScrollBar();
+            hsbBrightness = new HScrollBar();
+            hsbSaturation = new HScrollBar();
+            hsbHue = new HScrollBar();
+            Label3 = new Label();
+            Label7 = new Label();
+            pnlColor = new Panel();
+            Label6 = new Label();
+            Label1 = new Label();
+            Label5 = new Label();
+            pnlSelectedColor = new Panel();
+            pnlBrightness = new Panel();
+            Label2 = new Label();
+            SuspendLayout();
             // 
             // lblBlue
             // 
-            this.lblBlue.Location = new System.Drawing.Point(312, 360);
-            this.lblBlue.Name = "lblBlue";
-            this.lblBlue.Size = new System.Drawing.Size(40, 23);
-            this.lblBlue.TabIndex = 54;
-            this.lblBlue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            lblBlue.Location = new System.Drawing.Point(312, 360);
+            lblBlue.Name = "lblBlue";
+            lblBlue.Size = new System.Drawing.Size(40, 23);
+            lblBlue.TabIndex = 54;
+            lblBlue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblGreen
             // 
-            this.lblGreen.Location = new System.Drawing.Point(312, 336);
-            this.lblGreen.Name = "lblGreen";
-            this.lblGreen.Size = new System.Drawing.Size(40, 23);
-            this.lblGreen.TabIndex = 53;
-            this.lblGreen.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            lblGreen.Location = new System.Drawing.Point(312, 336);
+            lblGreen.Name = "lblGreen";
+            lblGreen.Size = new System.Drawing.Size(40, 23);
+            lblGreen.TabIndex = 53;
+            lblGreen.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblRed
             // 
-            this.lblRed.Location = new System.Drawing.Point(312, 312);
-            this.lblRed.Name = "lblRed";
-            this.lblRed.Size = new System.Drawing.Size(40, 23);
-            this.lblRed.TabIndex = 52;
-            this.lblRed.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            lblRed.Location = new System.Drawing.Point(312, 312);
+            lblRed.Name = "lblRed";
+            lblRed.Size = new System.Drawing.Size(40, 23);
+            lblRed.TabIndex = 52;
+            lblRed.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblBrightness
             // 
-            this.lblBrightness.Location = new System.Drawing.Point(312, 280);
-            this.lblBrightness.Name = "lblBrightness";
-            this.lblBrightness.Size = new System.Drawing.Size(40, 23);
-            this.lblBrightness.TabIndex = 51;
-            this.lblBrightness.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            lblBrightness.Location = new System.Drawing.Point(312, 280);
+            lblBrightness.Name = "lblBrightness";
+            lblBrightness.Size = new System.Drawing.Size(40, 23);
+            lblBrightness.TabIndex = 51;
+            lblBrightness.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblSaturation
             // 
-            this.lblSaturation.Location = new System.Drawing.Point(312, 256);
-            this.lblSaturation.Name = "lblSaturation";
-            this.lblSaturation.Size = new System.Drawing.Size(40, 23);
-            this.lblSaturation.TabIndex = 50;
-            this.lblSaturation.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            lblSaturation.Location = new System.Drawing.Point(312, 256);
+            lblSaturation.Name = "lblSaturation";
+            lblSaturation.Size = new System.Drawing.Size(40, 23);
+            lblSaturation.TabIndex = 50;
+            lblSaturation.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblHue
             // 
-            this.lblHue.Location = new System.Drawing.Point(312, 232);
-            this.lblHue.Name = "lblHue";
-            this.lblHue.Size = new System.Drawing.Size(40, 23);
-            this.lblHue.TabIndex = 49;
-            this.lblHue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            lblHue.Location = new System.Drawing.Point(312, 232);
+            lblHue.Name = "lblHue";
+            lblHue.Size = new System.Drawing.Size(40, 23);
+            lblHue.TabIndex = 49;
+            lblHue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // hsbBlue
             // 
-            this.hsbBlue.LargeChange = 1;
-            this.hsbBlue.Location = new System.Drawing.Point(80, 360);
-            this.hsbBlue.Maximum = 128;
-            this.hsbBlue.Name = "hsbBlue";
-            this.hsbBlue.Size = new System.Drawing.Size(224, 18);
-            this.hsbBlue.TabIndex = 48;
-            this.hsbBlue.Scroll += new ScrollEventHandler(this.HandleRGBScroll);
+            hsbBlue.LargeChange = 1;
+            hsbBlue.Location = new System.Drawing.Point(80, 360);
+            hsbBlue.Maximum = 128;
+            hsbBlue.Name = "hsbBlue";
+            hsbBlue.Size = new System.Drawing.Size(224, 18);
+            hsbBlue.TabIndex = 48;
+            hsbBlue.Scroll += new ScrollEventHandler(HandleRGBScroll);
             // 
             // hsbGreen
             // 
-            this.hsbGreen.LargeChange = 1;
-            this.hsbGreen.Location = new System.Drawing.Point(80, 336);
-            this.hsbGreen.Maximum = 128;
-            this.hsbGreen.Name = "hsbGreen";
-            this.hsbGreen.Size = new System.Drawing.Size(224, 18);
-            this.hsbGreen.TabIndex = 47;
-            this.hsbGreen.Scroll += new ScrollEventHandler(this.HandleRGBScroll);
+            hsbGreen.LargeChange = 1;
+            hsbGreen.Location = new System.Drawing.Point(80, 336);
+            hsbGreen.Maximum = 128;
+            hsbGreen.Name = "hsbGreen";
+            hsbGreen.Size = new System.Drawing.Size(224, 18);
+            hsbGreen.TabIndex = 47;
+            hsbGreen.Scroll += new ScrollEventHandler(HandleRGBScroll);
             // 
             // hsbRed
             // 
-            this.hsbRed.LargeChange = 1;
-            this.hsbRed.Location = new System.Drawing.Point(80, 312);
-            this.hsbRed.Maximum = 128;
-            this.hsbRed.Name = "hsbRed";
-            this.hsbRed.Size = new System.Drawing.Size(224, 18);
-            this.hsbRed.TabIndex = 46;
-            this.hsbRed.Scroll += new ScrollEventHandler(this.HandleRGBScroll);
+            hsbRed.LargeChange = 1;
+            hsbRed.Location = new System.Drawing.Point(80, 312);
+            hsbRed.Maximum = 128;
+            hsbRed.Name = "hsbRed";
+            hsbRed.Size = new System.Drawing.Size(224, 18);
+            hsbRed.TabIndex = 46;
+            hsbRed.Scroll += new ScrollEventHandler(HandleRGBScroll);
             // 
             // hsbBrightness
             // 
-            this.hsbBrightness.LargeChange = 1;
-            this.hsbBrightness.Location = new System.Drawing.Point(80, 280);
-            this.hsbBrightness.Maximum = 255;
-            this.hsbBrightness.Name = "hsbBrightness";
-            this.hsbBrightness.Size = new System.Drawing.Size(224, 18);
-            this.hsbBrightness.TabIndex = 45;
-            this.hsbBrightness.Scroll += new ScrollEventHandler(this.HandleHSVScroll);
+            hsbBrightness.LargeChange = 1;
+            hsbBrightness.Location = new System.Drawing.Point(80, 280);
+            hsbBrightness.Maximum = 255;
+            hsbBrightness.Name = "hsbBrightness";
+            hsbBrightness.Size = new System.Drawing.Size(224, 18);
+            hsbBrightness.TabIndex = 45;
+            hsbBrightness.Scroll += new ScrollEventHandler(HandleHSVScroll);
             // 
             // hsbSaturation
             // 
-            this.hsbSaturation.LargeChange = 1;
-            this.hsbSaturation.Location = new System.Drawing.Point(80, 256);
-            this.hsbSaturation.Maximum = 255;
-            this.hsbSaturation.Name = "hsbSaturation";
-            this.hsbSaturation.Size = new System.Drawing.Size(224, 18);
-            this.hsbSaturation.TabIndex = 44;
-            this.hsbSaturation.Scroll += new ScrollEventHandler(this.HandleHSVScroll);
+            hsbSaturation.LargeChange = 1;
+            hsbSaturation.Location = new System.Drawing.Point(80, 256);
+            hsbSaturation.Maximum = 255;
+            hsbSaturation.Name = "hsbSaturation";
+            hsbSaturation.Size = new System.Drawing.Size(224, 18);
+            hsbSaturation.TabIndex = 44;
+            hsbSaturation.Scroll += new ScrollEventHandler(HandleHSVScroll);
             // 
             // hsbHue
             // 
-            this.hsbHue.LargeChange = 1;
-            this.hsbHue.Location = new System.Drawing.Point(80, 232);
-            this.hsbHue.Maximum = 255;
-            this.hsbHue.Name = "hsbHue";
-            this.hsbHue.Size = new System.Drawing.Size(224, 18);
-            this.hsbHue.TabIndex = 43;
-            this.hsbHue.Scroll += new ScrollEventHandler(this.HandleHSVScroll);
+            hsbHue.LargeChange = 1;
+            hsbHue.Location = new System.Drawing.Point(80, 232);
+            hsbHue.Maximum = 255;
+            hsbHue.Name = "hsbHue";
+            hsbHue.Size = new System.Drawing.Size(224, 18);
+            hsbHue.TabIndex = 43;
+            hsbHue.Scroll += new ScrollEventHandler(HandleHSVScroll);
             // 
             // Label3
             // 
-            this.Label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label3.Location = new System.Drawing.Point(8, 360);
-            this.Label3.Name = "Label3";
-            this.Label3.Size = new System.Drawing.Size(72, 18);
-            this.Label3.TabIndex = 34;
-            this.Label3.Text = "Blue";
-            this.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            Label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            Label3.Location = new System.Drawing.Point(8, 360);
+            Label3.Name = "Label3";
+            Label3.Size = new System.Drawing.Size(72, 18);
+            Label3.TabIndex = 34;
+            Label3.Text = "Blue";
+            Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Label7
             // 
-            this.Label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label7.Location = new System.Drawing.Point(8, 280);
-            this.Label7.Name = "Label7";
-            this.Label7.Size = new System.Drawing.Size(72, 18);
-            this.Label7.TabIndex = 37;
-            this.Label7.Text = "Brightness";
-            this.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            Label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            Label7.Location = new System.Drawing.Point(8, 280);
+            Label7.Name = "Label7";
+            Label7.Size = new System.Drawing.Size(72, 18);
+            Label7.TabIndex = 37;
+            Label7.Text = "Brightness";
+            Label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pnlColor
             // 
-            this.pnlColor.Location = new System.Drawing.Point(8, 8);
-            this.pnlColor.Name = "pnlColor";
-            this.pnlColor.Size = new System.Drawing.Size(224, 216);
-            this.pnlColor.TabIndex = 38;
-            this.pnlColor.Visible = false;
+            pnlColor.Location = new System.Drawing.Point(8, 8);
+            pnlColor.Name = "pnlColor";
+            pnlColor.Size = new System.Drawing.Size(224, 216);
+            pnlColor.TabIndex = 38;
+            pnlColor.Visible = false;
             // 
             // Label6
             // 
-            this.Label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label6.Location = new System.Drawing.Point(8, 256);
-            this.Label6.Name = "Label6";
-            this.Label6.Size = new System.Drawing.Size(72, 18);
-            this.Label6.TabIndex = 36;
-            this.Label6.Text = "Saturation";
-            this.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            Label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            Label6.Location = new System.Drawing.Point(8, 256);
+            Label6.Name = "Label6";
+            Label6.Size = new System.Drawing.Size(72, 18);
+            Label6.TabIndex = 36;
+            Label6.Text = "Saturation";
+            Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Label1
             // 
-            this.Label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label1.Location = new System.Drawing.Point(8, 312);
-            this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(72, 18);
-            this.Label1.TabIndex = 32;
-            this.Label1.Text = "Red";
-            this.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            Label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            Label1.Location = new System.Drawing.Point(8, 312);
+            Label1.Name = "Label1";
+            Label1.Size = new System.Drawing.Size(72, 18);
+            Label1.TabIndex = 32;
+            Label1.Text = "Red";
+            Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Label5
             // 
-            this.Label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label5.Location = new System.Drawing.Point(8, 232);
-            this.Label5.Name = "Label5";
-            this.Label5.Size = new System.Drawing.Size(72, 18);
-            this.Label5.TabIndex = 35;
-            this.Label5.Text = "Hue";
-            this.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            Label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            Label5.Location = new System.Drawing.Point(8, 232);
+            Label5.Name = "Label5";
+            Label5.Size = new System.Drawing.Size(72, 18);
+            Label5.TabIndex = 35;
+            Label5.Text = "Hue";
+            Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pnlSelectedColor
             // 
-            this.pnlSelectedColor.Location = new System.Drawing.Point(287, 93);
-            this.pnlSelectedColor.Name = "pnlSelectedColor";
-            this.pnlSelectedColor.Size = new System.Drawing.Size(44, 47);
-            this.pnlSelectedColor.TabIndex = 40;
-            this.pnlSelectedColor.Visible = false;
+            pnlSelectedColor.Location = new System.Drawing.Point(287, 93);
+            pnlSelectedColor.Name = "pnlSelectedColor";
+            pnlSelectedColor.Size = new System.Drawing.Size(44, 47);
+            pnlSelectedColor.TabIndex = 40;
+            pnlSelectedColor.Visible = false;
             // 
             // pnlBrightness
             // 
-            this.pnlBrightness.Location = new System.Drawing.Point(240, 8);
-            this.pnlBrightness.Name = "pnlBrightness";
-            this.pnlBrightness.Size = new System.Drawing.Size(24, 216);
-            this.pnlBrightness.TabIndex = 39;
-            this.pnlBrightness.Visible = false;
+            pnlBrightness.Location = new System.Drawing.Point(240, 8);
+            pnlBrightness.Name = "pnlBrightness";
+            pnlBrightness.Size = new System.Drawing.Size(24, 216);
+            pnlBrightness.TabIndex = 39;
+            pnlBrightness.Visible = false;
             // 
             // Label2
             // 
-            this.Label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label2.Location = new System.Drawing.Point(8, 336);
-            this.Label2.Name = "Label2";
-            this.Label2.Size = new System.Drawing.Size(72, 18);
-            this.Label2.TabIndex = 33;
-            this.Label2.Text = "Green";
-            this.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            Label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            Label2.Location = new System.Drawing.Point(8, 336);
+            Label2.Name = "Label2";
+            Label2.Size = new System.Drawing.Size(72, 18);
+            Label2.TabIndex = 33;
+            Label2.Text = "Green";
+            Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ColorChooser
             // 
-            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-            this.ClientSize = new System.Drawing.Size(362, 386);
-            this.Controls.Add(this.lblBlue);
-            this.Controls.Add(this.lblGreen);
-            this.Controls.Add(this.lblRed);
-            this.Controls.Add(this.lblBrightness);
-            this.Controls.Add(this.lblSaturation);
-            this.Controls.Add(this.lblHue);
-            this.Controls.Add(this.hsbBlue);
-            this.Controls.Add(this.hsbGreen);
-            this.Controls.Add(this.hsbRed);
-            this.Controls.Add(this.hsbBrightness);
-            this.Controls.Add(this.hsbSaturation);
-            this.Controls.Add(this.hsbHue);
-            this.Controls.Add(this.Label3);
-            this.Controls.Add(this.Label7);
-            this.Controls.Add(this.pnlColor);
-            this.Controls.Add(this.Label6);
-            this.Controls.Add(this.Label1);
-            this.Controls.Add(this.Label5);
-            this.Controls.Add(this.pnlSelectedColor);
-            this.Controls.Add(this.pnlBrightness);
-            this.Controls.Add(this.Label2);
-            this.FormBorderStyle = FormBorderStyle.FixedDialog;
-            this.Name = "ColorChooser";
-            this.Text = "Select Color";
-            this.Load += new System.EventHandler(this.ColorChooser_Load);
-            this.Paint += new PaintEventHandler(this.ColorChooser_Paint);
-            this.MouseDown += new MouseEventHandler(this.HandleMouse);
-            this.MouseMove += new MouseEventHandler(this.HandleMouse);
-            this.MouseUp += new MouseEventHandler(this.frmMain_MouseUp);
-            this.ResumeLayout(false);
+            AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+            ClientSize = new System.Drawing.Size(362, 386);
+            Controls.Add(lblBlue);
+            Controls.Add(lblGreen);
+            Controls.Add(lblRed);
+            Controls.Add(lblBrightness);
+            Controls.Add(lblSaturation);
+            Controls.Add(lblHue);
+            Controls.Add(hsbBlue);
+            Controls.Add(hsbGreen);
+            Controls.Add(hsbRed);
+            Controls.Add(hsbBrightness);
+            Controls.Add(hsbSaturation);
+            Controls.Add(hsbHue);
+            Controls.Add(Label3);
+            Controls.Add(Label7);
+            Controls.Add(pnlColor);
+            Controls.Add(Label6);
+            Controls.Add(Label1);
+            Controls.Add(Label5);
+            Controls.Add(pnlSelectedColor);
+            Controls.Add(pnlBrightness);
+            Controls.Add(Label2);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            Name = "ColorChooser";
+            Text = "Select Color";
+            Load += new System.EventHandler(ColorChooser_Load);
+            Paint += new PaintEventHandler(ColorChooser_Paint);
+            MouseDown += new MouseEventHandler(HandleMouse);
+            MouseMove += new MouseEventHandler(HandleMouse);
+            MouseUp += new MouseEventHandler(frmMain_MouseUp);
+            ResumeLayout(false);
 
 		}
 		#endregion
@@ -331,17 +331,17 @@ namespace LEDController.UI
 		private Point _selectedPoint;
 
 		private ColorWheel myColorWheel;
-        private Utils.MyColor.RGB RGB;
-		private Utils.MyColor.HSV HSV;
+        private MyColor.RGB RGB;
+		private MyColor.HSV HSV;
 
 		private void ColorChooser_Load(object sender, System.EventArgs e)
 		{
-            Utils.MyColor.HSV default_color = new Utils.MyColor.HSV(127, 256, 82);
+            MyColor.HSV default_color = new MyColor.HSV(127, 256, 82);
 
-			// Turn on double-buffering, so the form looks better. 
-			this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-			this.SetStyle(ControlStyles.UserPaint, true);
-			this.SetStyle(ControlStyles.DoubleBuffer, true);
+            // Turn on double-buffering, so the form looks better. 
+            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            SetStyle(ControlStyles.UserPaint, true);
+            SetStyle(ControlStyles.DoubleBuffer, true);
 
 			// These properties are set in design view, as well, but they
 			// have to be set to false in order for the Paint
@@ -361,11 +361,11 @@ namespace LEDController.UI
 			// the locations of the color wheel itself, the
 			// brightness area, and the position of the selected color.
             myColorWheel = new ColorWheel(ColorRectangle, BrightnessRectangle, SelectedColorRectangle, default_color);
-			myColorWheel.ColorChanged += new ColorWheel.ColorChangedEventHandler(this.colorWheel_Changed);
+			myColorWheel.ColorChanged += new ColorWheel.ColorChangedEventHandler(colorWheel_Changed);
 
             // Set the RGB and HSV values 
             // of the NumericUpDown controls.
-            SetRGB(new Utils.MyColor.RGB(default_color));
+            SetRGB(new MyColor.RGB(default_color));
             SetHSV(default_color);		
 		}
 
@@ -378,7 +378,7 @@ namespace LEDController.UI
 			{
 				_changeType = ChangeStyle.MouseMove;
 				_selectedPoint = new Point(e.X, e.Y);
-				this.Invalidate();
+                Invalidate();
 			}
 		}
 
@@ -388,21 +388,21 @@ namespace LEDController.UI
 			_changeType = ChangeStyle.None;
 		}
 
-        private void SetRGBLabels(Utils.MyColor.RGB RGB) 
+        private void SetRGBLabels(MyColor.RGB RGB) 
 		{
 			RefreshText(lblRed, RGB.Red);
 			RefreshText(lblBlue, RGB.Blue);
 			RefreshText(lblGreen, RGB.Green);
 		}
 
-		private void SetHSVLabels(Utils.MyColor.HSV HSV) 
+		private void SetHSVLabels(MyColor.HSV HSV) 
 		{
 			RefreshText(lblHue, HSV.Hue);
 			RefreshText(lblSaturation, HSV.Saturation);
 			RefreshText(lblBrightness, HSV.Value);
 		}
 
-        private void SetRGB(Utils.MyColor.RGB RGB) 
+        private void SetRGB(MyColor.RGB RGB) 
 		{
             if (RGB == null)
                 return;
@@ -413,7 +413,7 @@ namespace LEDController.UI
 			SetRGBLabels(RGB);
 	   }
 
-		private void SetHSV(Utils.MyColor.HSV HSV) 
+		private void SetHSV(MyColor.HSV HSV) 
 		{
             if (HSV == null)
                 return;
@@ -439,7 +439,7 @@ namespace LEDController.UI
 			lbl.Text = value.ToString();
 		}
 
-		public System.Drawing.Color ActiveColor  
+		public Color ActiveColor  
 		{
 			// Get or set the color to be
 			// displayed in the color wheel.
@@ -454,8 +454,8 @@ namespace LEDController.UI
 				// will cause the color wheel to update the position
 				// of the pointer.
 				_changeType = ChangeStyle.RGB;
-                SetRGB(new Utils.MyColor.RGB((int)value.R, (int)value.G, (int)value.B));
-                SetHSV(new Utils.MyColor.HSV(RGB));
+                SetRGB(new MyColor.RGB(value.R, value.G, value.B));
+                SetHSV(new MyColor.HSV(RGB));
 			}
 		}
 
@@ -479,11 +479,11 @@ namespace LEDController.UI
         private void HandleHSVScroll(object sender, ScrollEventArgs e)  
 		{
 			_changeType = ChangeStyle.HSV;
-            HSV = new Utils.MyColor.HSV(hsbHue.Value, hsbSaturation.Value, hsbBrightness.Value);
-            SetRGB(new Utils.MyColor.RGB(HSV));
+            HSV = new MyColor.HSV(hsbHue.Value, hsbSaturation.Value, hsbBrightness.Value);
+            SetRGB(new MyColor.RGB(HSV));
 			SetHSVLabels(HSV);
 			Invalidate();
-            _ledManager.SendRGBMessage(_ledManager.CreateMessage(new Utils.MyColor.RGB(HSV)));
+            _ledManager.SendRGBMessage(_ledManager.CreateMessage(new MyColor.RGB(HSV)));
 		}
 
         // If the R, G, or B values change, use this 
@@ -495,8 +495,8 @@ namespace LEDController.UI
 		{
 
 			_changeType = ChangeStyle.RGB;
-            RGB = new Utils.MyColor.RGB(hsbRed.Value, hsbGreen.Value, hsbBlue.Value);
-            SetHSV(new Utils.MyColor.HSV(RGB));
+            RGB = new MyColor.RGB(hsbRed.Value, hsbGreen.Value, hsbBlue.Value);
+            SetHSV(new MyColor.HSV(RGB));
 			SetRGBLabels(RGB);
 			Invalidate();
             _ledManager.SendRGBMessage(_ledManager.CreateMessage(RGB));

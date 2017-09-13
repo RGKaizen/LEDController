@@ -33,7 +33,7 @@ namespace LEDController.Manager
             var message = new RGBMessageDto();
             for (var i = 0; i < TotalLEDCount; i++)
             {
-                if (_Buffer[i].different(input[i]))
+                if (_Buffer[i].CompareTo(input[i]) != 0)
                 {
                     _Buffer[i] = input[i];
                     message.Pixels.Add(new RGBData
@@ -57,7 +57,7 @@ namespace LEDController.Manager
 
             for (var i = 0; i < TotalLEDCount; i++)
             {
-                if (_Buffer[i].different(input))
+                if (_Buffer[i].CompareTo(input) != 0)
                 {
                     _Buffer[i] = input;
                     message.Pixels.Add(new RGBData

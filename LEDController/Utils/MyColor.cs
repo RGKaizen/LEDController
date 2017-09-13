@@ -119,18 +119,11 @@ namespace LEDController.Utils
 
             #endregion
 
-            public RGB()
+            public RGB(int red = 0, int green = 0, int blue = 0)
             {
-                _red = 0;
-                _green = 0;
-                _blue = 0;
-            }
-
-            public RGB(int r, int g, int b)
-            {
-                _red = r.Clamp(0, 256);
-                _green = g.Clamp(0, 256);
-                _blue = b.Clamp(0, 256);
+                Red = red;
+                Green = green;
+                Blue = blue;
             }
 
             public RGB(HSV hsv)
@@ -242,9 +235,9 @@ namespace LEDController.Utils
                 }
                 // return an RGB structure, with values scaled
                 // to be between 0 and 255.
-                _red = ((int)(r * 256)).Clamp(0, 256);
-                _green = ((int)(g * 256)).Clamp(0, 256);
-                _blue = ((int)(b * 256)).Clamp(0, 256);
+                Red = (int)(r * 256);
+                Green = (int)(g * 256);
+                Blue = (int)(b * 256);
             }
 
             public RGB(System.Drawing.Color c) : this(c.R, c.G, c.B)
@@ -275,17 +268,6 @@ namespace LEDController.Utils
                 return 0;
             }
 
-            public Boolean different(RGB other)
-            {
-                if (other?._red != _red)
-                    return true;
-                if (other?._blue != _blue)
-                    return true;
-                if (other?._green != _green)
-                    return true;
-                return false;
-            }
-
             public override string ToString()
             {
                 return $"{Red}, {Green}, {Blue}";
@@ -297,7 +279,7 @@ namespace LEDController.Utils
             if (hsv == null)
                 return System.Drawing.Color.Blue;
 
-            MyColor.RGB RGB = new RGB(hsv);
+            RGB RGB = new RGB(hsv);
             return System.Drawing.Color.FromArgb(RGB.Red, RGB.Green, RGB.Blue);
         }
 
