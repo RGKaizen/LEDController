@@ -99,7 +99,6 @@ namespace LEDController.UI
             this.HueSliderLbl.Size = new System.Drawing.Size(83, 20);
             this.HueSliderLbl.TabIndex = 11;
             this.HueSliderLbl.Text = "Hue Slider";
-            this.HueSliderLbl.Click += new System.EventHandler(this.HueSliderLbl_Click);
             // 
             // HueSliderValueLbl
             // 
@@ -338,11 +337,6 @@ namespace LEDController.UI
                 components.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private void HueSliderLbl_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

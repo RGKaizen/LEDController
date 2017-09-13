@@ -25,6 +25,11 @@ namespace LEDController.Utils
             brightnessSign = true;
         }
 
+        public MyColor.HSV getNextColor(MyColor.HSV hsv)
+        {
+            return getNextColor(hsv.Hue, hsv.Saturation, hsv.Value);
+        }
+
         public MyColor.HSV getNextColor(float hueDelta, float saturationDelta, float brightnessDelta)
         {
             // Add or subtract delta based on flag state
