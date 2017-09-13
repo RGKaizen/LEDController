@@ -1,18 +1,21 @@
-﻿using LEDController.Dtos;
-using LEDController.Utils;
+﻿using LEDController.Utils;
 
 namespace LEDController.Interfaces
 {
     public interface ILEDManager
     {
+        MyColor.RGB[] _State { get; }
+
         int TotalLEDCount { get; }
 
         int LEDStripLength { get; }
 
-        bool SendRGBMessage(RGBMessageDto rgbMessage);
+        int StripCount { get; }
 
-        RGBMessageDto CreateMessage(MyColor.RGB[] input);
+        bool setColor(int strip, int pos, MyColor.RGB color);
 
-        RGBMessageDto CreateMessage(MyColor.RGB input);
+        bool setColor(int pos, MyColor.RGB color);
+
+        bool setColor(MyColor.RGB[] state);
     }
 }

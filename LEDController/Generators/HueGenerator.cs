@@ -1,8 +1,9 @@
 ﻿using LEDController.Interfaces;
+using LEDController.Utils;
 
-namespace LEDController.Utils
+namespace LEDController.Generators
 {
-    public class HueGenerator : IHueGenerator
+    public class HueGenerator : IColorGenerator
     {
         private float hueAngle;
         private float saturation;
@@ -25,12 +26,12 @@ namespace LEDController.Utils
             brightnessSign = true;
         }
 
-        public MyColor.HSV getNextColor(MyColor.HSV hsv)
+        public MyColor.RGB getNextColor(MyColor.HSV hsv)
         {
             return getNextColor(hsv.Hue, hsv.Saturation, hsv.Value);
         }
 
-        public MyColor.HSV getNextColor(float hueDelta, float saturationDelta, float brightnessDelta)
+        public MyColor.RGB getNextColor(float hueDelta, float saturationDelta, float brightnessDelta)
         {
             // Add or subtract delta based on flag state
             saturation = saturationSign ? saturation += saturationDelta : saturation -= saturationDelta;
@@ -53,7 +54,7 @@ namespace LEDController.Utils
             // Angle to 8 bit color
             var hue = hueAngle * 256 / 360;
 
-            return new MyColor.HSV((int)hue, (int)saturation, (int)brightness);
+            return new MyColor.RGB(new MyColor.HSV((int)hue, (int)saturation, (int)brightness));
         }
 
     }

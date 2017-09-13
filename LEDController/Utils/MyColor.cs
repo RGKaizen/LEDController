@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 
 namespace LEDController.Utils
 {
@@ -104,17 +105,17 @@ namespace LEDController.Utils
             public int Red
             {
                 get { return _red; }
-                set { value.Clamp(0, 256); }
+                set { _red = value.Clamp(0, 256); }
             }
             public int Green
             {
                 get { return _green; }
-                set { value.Clamp(0,256); }
+                set { _green = value.Clamp(0,256); }
             }
             public int Blue
             {
                 get { return _blue; }
-                set { value.Clamp(0, 256); }
+                set { _blue = value.Clamp(0, 256); }
             }
 
             #endregion
@@ -246,6 +247,12 @@ namespace LEDController.Utils
 
             public int CompareTo(RGB other)
             {
+
+                if(other == null)
+                {
+                    return 1;
+                }
+
                 if (Red < other.Red)
                     return 1;
                 else if (Red > other.Red)

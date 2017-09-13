@@ -36,12 +36,12 @@ namespace LEDController.UI
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 
-        private ILEDManager _ledManager { get; set; }
+        private ILEDRestClient _ledClient { get; set; }
 
-		public ColorChooser(ILEDManager ledManager)
+		public ColorChooser(ILEDRestClient ledClient)
 		{
 			InitializeComponent();
-            _ledManager = ledManager;
+            _ledClient = ledClient;
         }
 
 		/// <summary>
@@ -468,7 +468,7 @@ namespace LEDController.UI
 
 			SetRGB(e.RGB);
 			SetHSV(e.HSV);
-            _ledManager.SendRGBMessage(_ledManager.CreateMessage(e.RGB));
+            _ledClient.Send(e.RGB);
         }
 
         // If the H, S, or V values change, use this 
@@ -483,7 +483,7 @@ namespace LEDController.UI
             SetRGB(new MyColor.RGB(HSV));
 			SetHSVLabels(HSV);
 			Invalidate();
-            _ledManager.SendRGBMessage(_ledManager.CreateMessage(new MyColor.RGB(HSV)));
+            _ledClient.Send(new MyColor.RGB(HSV));
 		}
 
         // If the R, G, or B values change, use this 
@@ -499,7 +499,7 @@ namespace LEDController.UI
             SetHSV(new MyColor.HSV(RGB));
 			SetRGBLabels(RGB);
 			Invalidate();
-            _ledManager.SendRGBMessage(_ledManager.CreateMessage(RGB));
+            _ledClient.Send(RGB);
         }
 
 		private void ColorChooser_Paint(object sender, PaintEventArgs e)

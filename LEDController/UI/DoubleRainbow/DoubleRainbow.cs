@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Threading;
 using LEDController.Interfaces;
 using LEDController.Utils;
 
 namespace LEDController.UI
 {
-    public partial class RainbowGenerator : Form
+    public partial class DoubleRainbow : Form
     {
 
         #region Windows Form code
-
-        private Button ClearBtn;
         private Button PlayPauseBtn;
 
         private HScrollBar SleepSlider;
@@ -36,7 +33,6 @@ namespace LEDController.UI
         /// </summary>
         private void InitializeComponent()
         {
-            this.ClearBtn = new System.Windows.Forms.Button();
             this.PlayPauseBtn = new System.Windows.Forms.Button();
 
             this.SleepSlider = new System.Windows.Forms.HScrollBar();
@@ -56,17 +52,6 @@ namespace LEDController.UI
             this.BrightnessSliderValueLbl = new System.Windows.Forms.Label();
 
             this.SuspendLayout();
-            // 
-            // ClearBtn
-            // 
-            this.ClearBtn.Location = new System.Drawing.Point(77, 14);
-            this.ClearBtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.ClearBtn.Name = "ClearBtn";
-            this.ClearBtn.Size = new System.Drawing.Size(112, 35);
-            this.ClearBtn.TabIndex = 5;
-            this.ClearBtn.Text = "Clear";
-            this.ClearBtn.UseVisualStyleBackColor = true;
-            this.ClearBtn.Click += new System.EventHandler(this.ClearButton);
             // 
             // PlayPauseBtn
             // 
@@ -219,7 +204,6 @@ namespace LEDController.UI
             this.Controls.Add(this.HueSliderLbl);
             this.Controls.Add(this.HueSlider);
             this.Controls.Add(this.PlayPauseBtn);
-            this.Controls.Add(this.ClearBtn);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "RainbowGenerator";
             this.Text = "Main Window";
@@ -230,87 +214,50 @@ namespace LEDController.UI
 
         #endregion
 
-        private IHueGenerator _hueGenerator { get; set; }
-        private ILEDManager _LEDManager { get; set; }
-        private AnimationThread _animationThread = null;
-        private MyColor.RGB[] _ledState { get; set; }
+        private IAnimatorClient _AnimatorClient { get; set; }
 
-        public RainbowGenerator(IHueGenerator hueGenerator, ILEDManager ledManager)
+        public DoubleRainbow(IAnimatorClient animatorClient)
         {
-            InitializeComponent();
-            _hueGenerator = hueGenerator;
-            _LEDManager = ledManager;
-            _animationThread = new AnimationThread(Animate);
-            _ledState = RainbowUtils.createEmptyArray(ledManager.TotalLEDCount);
-        }
-
-        private void Animate()
-        {
-            // Color Generation 
-            var newColor = new MyColor.RGB(
-                    _hueGenerator.getNextColor(
-                        (float)HueSliderValue,
-                        (float)SaturationSliderValue,
-                        (float)BrightnessSliderValue));
-
-            // Position Generation
-            _ledState[_LEDManager.TotalLEDCount / 2] = newColor;
-            Push();
-            _LEDManager.SendRGBMessage(_LEDManager.CreateMessage(_ledState));
-            Thread.Sleep(refreshRate);
-        }
-
-        // Pushes from the center like this  <-- -->
-        private void Push()
-        {
-            for (int i = 0; i < _LEDManager.TotalLEDCount/2; i++)
-            {
-                int waveUp = i;
-                int waveDown = _LEDManager.TotalLEDCount-1 - i;
-                _ledState[waveUp] = _ledState[waveUp + 1];
-                _ledState[waveDown] = _ledState[waveDown - 1];
-            }
+            InitializeComponent();          
+            _AnimatorClient = animatorClient;
         }
 
         // Starts/stops repeat thread
         private void PlayPauseEvent(object sender, EventArgs e)
         {
-            if (_animationThread.isOn)
+            _AnimatorClient.PlayPause();
+            if (_AnimatorClient.isRunning)
             {
-                PlayPauseBtn.Text = "Play";
-                _animationThread.Stop();
+                PlayPauseBtn.Text = "Pause";
             }
             else
             {
-                PlayPauseBtn.Text = "Pause";
-                _animationThread.Start();
+                PlayPauseBtn.Text = "Play";
             }
         }
 
-        private void ClearButton(object sender, EventArgs e)
-        {
-            _LEDManager.SendRGBMessage(_LEDManager.CreateMessage(MyColor.Off));
-        }
-
-        public double HueSliderValue = 61;
+        public int HueSliderValue = 61;
         private void HueSlider_Scroll(object sender, ScrollEventArgs e)
         {
-            HueSliderValue = Math.Pow(Math.E, (5.545d * HueSlider.Value / 1000) );
+            HueSliderValue = (int)Math.Pow(Math.E, (5.545d * HueSlider.Value / 1000) );
             HueSliderValueLbl.Text = "Val: " + String.Format("{0:N2}", HueSliderValue);
+            _AnimatorClient.hsvDelta.Hue = HueSliderValue;
         }
 
-        public double SaturationSliderValue = 45;
+        public int SaturationSliderValue = 45;
         private void SaturationSlider_Scroll(object sender, ScrollEventArgs e)
         {
-            SaturationSliderValue = Math.Pow(Math.E, (5.545d * SaturationSlider.Value / 1000) );
+            SaturationSliderValue = (int)Math.Pow(Math.E, (5.545d * SaturationSlider.Value / 1000) );
             SaturationSliderValueLbl.Text = "Val: " + String.Format("{0:N2}", SaturationSliderValue);
+            _AnimatorClient.hsvDelta.Saturation = SaturationSliderValue;
         }
 
-        public double BrightnessSliderValue = 34;
+        public int BrightnessSliderValue = 34;
         private void ValueSlider_Scroll(object sender, ScrollEventArgs e)
         {
-            BrightnessSliderValue = Math.Pow(Math.E, (5.545d * BrightnessSlider.Value / 1000));
+            BrightnessSliderValue = (int)Math.Pow(Math.E, (5.545d * BrightnessSlider.Value / 1000));
             BrightnessSliderLbl.Text = "Val: " + String.Format("{0:N2}", BrightnessSliderValue);
+            _AnimatorClient.hsvDelta.Value = BrightnessSliderValue;
         }
 
         public int refreshRate = 0;
@@ -318,6 +265,7 @@ namespace LEDController.UI
         {
             refreshRate = SleepSlider.Value;
             SleepValueLbl.Text = refreshRate + " ms";
+            _AnimatorClient.RefreshRate = refreshRate;
         }
 
 
