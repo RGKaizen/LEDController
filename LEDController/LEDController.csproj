@@ -51,11 +51,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dtos\RGBData.cs" />
     <Compile Include="Dtos\RGBMessageDto.cs" />
     <Compile Include="Interfaces\IHueGenerator.cs" />
     <Compile Include="Interfaces\ILEDManager.cs" />
     <Compile Include="Manager\LEDManager.cs" />
-    <Compile Include="Manager\LEDStrip.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\ColorWheel\ColorChangedEventArgs.cs" />
@@ -73,7 +73,7 @@
     <Compile Include="Utils\AnimationThread.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Utils\DRColor.cs" />
+    <Compile Include="Utils\MyColor.cs" />
     <Compile Include="Utils\ExtensionMethods.cs" />
     <Compile Include="Utils\HueGenerator.cs" />
     <Compile Include="Utils\RainbowUtils.cs" />

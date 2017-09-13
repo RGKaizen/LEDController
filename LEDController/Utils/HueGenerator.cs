@@ -4,52 +4,51 @@ namespace LEDController.Utils
 {
     public class HueGenerator : IHueGenerator
     {
-        // Functions
         private float hueAngle;
         private float saturation;
-        private float value;
+        private float brightness;
         private bool saturationSign;
-        private bool valueSign;
+        private bool brightnessSign;
 
+        private const float saturationMin = 230.0f;
         private const float saturationMax = 256.0f;
-        private const float valueMax = 256.0f;
 
-        private const float saturationMin = 0.0f;
-        private const float valueMin = 0.0f;
+        private const float brightnessMin = 0.0f;
+        private const float brightnessMax = 256.0f;     
 
-        public HueGenerator(float startHue, float startSaturation, float startValue)
+        public HueGenerator()
         {
-            hueAngle = startHue;
-            saturation = startSaturation;
-            value = startValue;
+            hueAngle = 0f;
+            saturation = 256f;
+            brightness = 256f;
             saturationSign = true;
-            valueSign = true;
+            brightnessSign = true;
         }
 
-        public DRColor.HSV getNextColor(float hueDelta, float saturationDelta, float valueDelta)
+        public MyColor.HSV getNextColor(float hueDelta, float saturationDelta, float brightnessDelta)
         {
             // Add or subtract delta based on flag state
             saturation = saturationSign ? saturation += saturationDelta : saturation -= saturationDelta;
-            value = valueSign ? value += valueDelta : value -= valueDelta;
+            brightness = brightnessSign ? brightness += brightnessDelta : brightness -= brightnessDelta;
 
             // Flip flag state when borders hit
-            if(saturation > saturationMax || saturation <= saturationMin)
+            if(saturation != saturation.Clamp(saturationMin, saturationMax))
             {
                 saturationSign = !saturationSign;
             }
-            if (value > valueMax || value <= valueMin)
+            if (brightness != brightness.Clamp(brightnessMin, brightnessMax))
             {
-                valueSign = !valueSign;
+                brightnessSign = !brightnessSign;
             }
 
             saturation = saturation.Clamp(saturationMin, saturationMax);
-            value = value.Clamp(valueMin, valueMax);
+            brightness = brightness.Clamp(brightnessMin, brightnessMax);
             hueAngle = (hueAngle + hueDelta) % 360;
 
             // Angle to 8 bit color
             var hue = hueAngle * 256 / 360;
 
-            return new DRColor.HSV((int)hue, (int)saturation, (int)value);
+            return new MyColor.HSV((int)hue, (int)saturation, (int)brightness);
         }
 
     }

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LEDController.Utils
 {
@@ -11,12 +7,12 @@ namespace LEDController.Utils
     {
         public Boolean isOn { get; private set; }
         public delegate void ThreadFunction();
-        ThreadFunction _tf = null;
-        public AnimationThread(ThreadFunction tf)
+        ThreadFunction _threadFunction = null;
+        public AnimationThread(ThreadFunction threadFunction)
         {
             WorkerSupportsCancellation = true;
             DoWork += new DoWorkEventHandler(this_DoWork);
-            _tf = tf;
+            _threadFunction = threadFunction;
         }
 
         public bool Start() {
@@ -49,10 +45,10 @@ namespace LEDController.Utils
         {
             // Do not access the form's BackgroundWorker reference directly. 
             // Instead, use the reference provided by the sender parameter.
-            BackgroundWorker bw = sender as BackgroundWorker;
+            var bw = sender as BackgroundWorker;
             while (isOn)
             {
-                _tf();
+                _threadFunction();
             }
 
             // If the operation was canceled by the user,  

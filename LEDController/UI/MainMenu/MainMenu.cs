@@ -9,58 +9,49 @@ namespace LEDController.UI
     public class MainMenu : Form
     {
 
-        private Button button1;
-        private Button button2;
-        private Button button4;
+        private Button colorWheelBtn;
+        private Button rainbowBtn;
+        private Button sortBtn;
 
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.SuspendLayout();
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(32, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(78, 45);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Color Wheel";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(138, 12);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(78, 45);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Rainbow Gen";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(239, 12);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(80, 45);
-            this.button4.TabIndex = 2;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            colorWheelBtn = new Button();
+            rainbowBtn = new Button();
+            sortBtn = new Button();
+            SuspendLayout();
+
+            colorWheelBtn.Location = new System.Drawing.Point(32, 12);
+            colorWheelBtn.Size = new System.Drawing.Size(78, 45);
+            colorWheelBtn.TabIndex = 0;
+            colorWheelBtn.Text = "Color Wheel";
+            colorWheelBtn.UseVisualStyleBackColor = true;
+            colorWheelBtn.Click += new System.EventHandler(this.ColorWheelBtn_Click);
+
+            rainbowBtn.Location = new System.Drawing.Point(138, 12);
+            rainbowBtn.Size = new System.Drawing.Size(78, 45);
+            rainbowBtn.TabIndex = 1;
+            rainbowBtn.Text = "Rainbow Gen";
+            rainbowBtn.UseVisualStyleBackColor = true;
+            rainbowBtn.Click += new System.EventHandler(RainbowBtn_Click);
+
+            sortBtn.Location = new System.Drawing.Point(239, 12);
+            sortBtn.Size = new System.Drawing.Size(80, 45);
+            sortBtn.TabIndex = 2;
+            sortBtn.Text = "Sort";
+            sortBtn.UseVisualStyleBackColor = true;
+            sortBtn.Click += new EventHandler(SortBtn_Click);
             // 
             // MainMenu
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(350, 75);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Name = "MainMenu";
-            this.Text = "Double Rainbow";
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(350, 75);
+            Controls.Add(sortBtn);
+            Controls.Add(rainbowBtn);
+            Controls.Add(colorWheelBtn);
+            Name = "MainMenu";
+            Text = "Double Rainbow";
+            ResumeLayout(false);
 
         }
 
@@ -72,14 +63,14 @@ namespace LEDController.UI
             _LEDManager = new LEDManager("192.168.1.103", "5000", 120);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void ColorWheelBtn_Click(object sender, EventArgs e)
         {
             new ColorChooser(_LEDManager).Show();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void RainbowBtn_Click(object sender, EventArgs e)
         {
-            new RainbowGenerator(new HueGenerator(0.0f, 0.0f, 0.0f), _LEDManager).Show();
+            new RainbowGenerator(new HueGenerator(), _LEDManager).Show();
         }
 
         /// <summary>
@@ -100,10 +91,10 @@ namespace LEDController.UI
             base.Dispose(disposing);
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void SortBtn_Click(object sender, EventArgs e)
         {
-            var ledStrip1 = RainbowUtils.createEmptyArray(_LEDManager.StripLength);
-            var ledStrip2 = RainbowUtils.createEmptyArray(_LEDManager.StripLength);
+            var ledStrip1 = RainbowUtils.createEmptyArray(_LEDManager.LEDStripLength);
+            var ledStrip2 = RainbowUtils.createEmptyArray(_LEDManager.LEDStripLength);
             var ledState = RainbowUtils.createEmptyArray(_LEDManager.TotalLEDCount);
             var r = new Random();
             for(int i = 0; i < _LEDManager.TotalLEDCount/2; i++)
@@ -111,22 +102,22 @@ namespace LEDController.UI
                 var s = r.Next(0, 3);
                 if(s ==0)
                 {
-                    ledStrip1[i] = DRColor.Red;
+                    ledStrip1[i] = MyColor.Red;
                 }
                 if (s == 1)
                 {
-                    ledStrip1[i] = DRColor.Green;
+                    ledStrip1[i] = MyColor.Green;
                 }
                 if (s == 2)
                 {
-                    ledStrip1[i] = DRColor.Blue;
+                    ledStrip1[i] = MyColor.Blue;
                 }
 
             }
-            _LEDManager.SendRGBMessage(_LEDManager.CreateMessage(DRColor.Off));
-            Array.Copy(ledStrip1, ledState, _LEDManager.StripLength);
+            _LEDManager.SendRGBMessage(_LEDManager.CreateMessage(MyColor.Off));
+            Array.Copy(ledStrip1, ledState, _LEDManager.LEDStripLength);
 
-            Array.Copy(ledStrip1, ledStrip2, _LEDManager.StripLength);
+            Array.Copy(ledStrip1, ledStrip2, _LEDManager.LEDStripLength);
             Array.Sort(ledStrip2);
             Array.Copy(ledStrip2, 0, ledState, ledStrip1.Length, ledStrip2.Length);
 

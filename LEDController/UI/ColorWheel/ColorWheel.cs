@@ -63,11 +63,11 @@ namespace LEDController.UI
         // selectedColor is the actual value selected
         // by the user. fullColor is the same color, 
         // with its brightness set to 255.
-        private Color selectedColor = Color.White;
-        private Color fullColor;
+        private System.Drawing.Color selectedColor = System.Drawing.Color.White;
+        private System.Drawing.Color fullColor;
 
-        private DRColor.RGB RGB;
-        private DRColor.HSV HSV = new DRColor.HSV(0,0,0);
+        private Utils.MyColor.RGB RGB;
+        private Utils.MyColor.HSV HSV = new Utils.MyColor.HSV(0,0,0);
 
         // Locations for the two "pointers" on the form.
         private Point colorPoint;
@@ -77,7 +77,7 @@ namespace LEDController.UI
         private int brightnessMin;
         private int brightnessMax;
 
-        public ColorWheel(Rectangle colorRectangle, Rectangle brightnessRectangle, Rectangle selectedColorRectangle, DRColor.HSV default_color)
+        public ColorWheel(Rectangle colorRectangle, Rectangle brightnessRectangle, Rectangle selectedColorRectangle, Utils.MyColor.HSV default_color)
         {
 
             // Caller must provide locations for color wheel
@@ -142,13 +142,13 @@ namespace LEDController.UI
             }
         }
 
-        protected void OnColorChanged(DRColor.RGB RGB, DRColor.HSV HSV)
+        protected void OnColorChanged(Utils.MyColor.RGB RGB, Utils.MyColor.HSV HSV)
         {
             ColorChangedEventArgs e = new ColorChangedEventArgs(RGB, HSV);
             ColorChanged(this, e);
         }
 
-        public Color Color
+        public System.Drawing.Color Color
         {
             get
             {
@@ -176,7 +176,7 @@ namespace LEDController.UI
             currentState = MouseState.MouseUp;
         }
 
-        public void Draw(Graphics g, DRColor.HSV HSV)
+        public void Draw(Graphics g, Utils.MyColor.HSV HSV)
         {
             // Given HSV values, update the screen.
             this._g = g;
@@ -185,11 +185,11 @@ namespace LEDController.UI
             UpdateDisplay();
         }
 
-        public void Draw(Graphics g, DRColor.RGB RGB)
+        public void Draw(Graphics g, Utils.MyColor.RGB RGB)
         {
             // Given RGB values, calculate HSV and then update the screen.
             this._g = g;
-            this.HSV = new DRColor.HSV(RGB);
+            this.HSV = new Utils.MyColor.HSV(RGB);
             CalcCoordsAndUpdate(this.HSV);
             UpdateDisplay();
         }
@@ -259,7 +259,7 @@ namespace LEDController.UI
                     newBrightnessPoint = new Point(brightnessX, newPoint.Y);
                     brightness = (int)((brightnessMax - newPoint.Y) * brightnessScaling);
                     HSV.Value = brightness;
-                    RGB = new DRColor.RGB(HSV);
+                    RGB = new Utils.MyColor.RGB(HSV);
                     break;
 
                 case MouseState.ClickOnColor:
@@ -298,11 +298,11 @@ namespace LEDController.UI
                     HSV.Hue = (int)(degrees * 255 / 360);
                     HSV.Saturation = (int)(distance * 255);
                     HSV.Value = brightness;
-                    RGB = new DRColor.RGB(HSV);
-                    fullColor = DRColor.HSVtoColor(new DRColor.HSV(HSV.Hue, HSV.Saturation, 255));
+                    RGB = new Utils.MyColor.RGB(HSV);
+                    fullColor = Utils.MyColor.HSVtoColor(new Utils.MyColor.HSV(HSV.Hue, HSV.Saturation, 255));
                     break;
             }
-            selectedColor = DRColor.HSVtoColor(HSV);
+            selectedColor = Utils.MyColor.HSVtoColor(HSV);
 
             // Raise an event back to the parent form,
             // so the form can update any UI it's using 
@@ -364,7 +364,7 @@ namespace LEDController.UI
             }
         }
 
-        private void CalcCoordsAndUpdate(DRColor.HSV HSV)
+        private void CalcCoordsAndUpdate(Utils.MyColor.HSV HSV)
         {
             // Convert color to real-world coordinates and then calculate
             // the various points. HSV.Hue represents the degrees (0 to 360), 
@@ -387,26 +387,26 @@ namespace LEDController.UI
 
             // Store information about the selected color.
             brightness = HSV.Value;
-            selectedColor = DRColor.HSVtoColor(HSV);
-            RGB = new DRColor.RGB(HSV);
+            selectedColor = Utils.MyColor.HSVtoColor(HSV);
+            RGB = new Utils.MyColor.RGB(HSV);
 
             // The full color is the same as HSV, except that the 
             // brightness is set to full (255). This is the top-most
             // color in the brightness gradient.
-            fullColor = DRColor.HSVtoColor(new DRColor.HSV(HSV.Hue, HSV.Saturation, 255));
+            fullColor = Utils.MyColor.HSVtoColor(new Utils.MyColor.HSV(HSV.Hue, HSV.Saturation, 255));
         }
 
-        private void DrawLinearGradient(Color TopColor)
+        private void DrawLinearGradient(System.Drawing.Color TopColor)
         {
 
-            Color temp = Color.FromArgb(max(TopColor.R * 2), max(TopColor.G * 2), max(TopColor.B * 2));
+            System.Drawing.Color temp = System.Drawing.Color.FromArgb(max(TopColor.R * 2), max(TopColor.G * 2), max(TopColor.B * 2));
 
             // Given the top color, draw angle linear gradient
             // ranging from black to the top color. Use the 
             // brightness rectangle as the area to fill.
             using (LinearGradientBrush lgb =
                              new LinearGradientBrush(brightnessRectangle, temp,
-                             Color.Black, LinearGradientMode.Vertical))
+                             System.Drawing.Color.Black, LinearGradientMode.Vertical))
             {
                 _g.FillRectangle(lgb, brightnessRectangle);
             }
@@ -471,7 +471,7 @@ namespace LEDController.UI
                 // property, which contains an array of points, 
                 // in angle one-to-one relationship with the points
                 // that created the gradient.
-                pgb.CenterColor = Color.White;
+                pgb.CenterColor = System.Drawing.Color.White;
                 pgb.CenterPoint = new PointF(radius, radius);
                 pgb.SurroundColors = GetColors();
 
@@ -493,7 +493,7 @@ namespace LEDController.UI
             }
         }
 
-        private Color[] GetColors()
+        private System.Drawing.Color[] GetColors()
         {
             // Create an array of COLOR_COUNT
             // colors, looping through all the 
@@ -502,15 +502,15 @@ namespace LEDController.UI
             // particularly well-suited for this, 
             // because the only value that changes
             // as you create colors is the Hue.
-            Color[] Colors = new Color[COLOR_COUNT];
+            System.Drawing.Color[] Colors = new System.Drawing.Color[COLOR_COUNT];
 
             for (int i = 0; i <= COLOR_COUNT - 1; i++)
             {
-                Color temp = DRColor.HSVtoColor(new DRColor.HSV((int)((double)(i * 255) / COLOR_COUNT), 255, 255));
+                System.Drawing.Color temp = Utils.MyColor.HSVtoColor(new Utils.MyColor.HSV((int)((double)(i * 255) / COLOR_COUNT), 255, 255));
                 int r = max(temp.R * 2);
                 int g = max(temp.G * 2);
                 int b = max(temp.B * 2);
-                Colors[i] = Color.FromArgb(r, g, b);
+                Colors[i] = System.Drawing.Color.FromArgb(r, g, b);
             }
             return Colors;
         }

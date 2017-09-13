@@ -1,10 +1,8 @@
 using System;
-using System.Drawing;
-using System.Text;
 
 namespace LEDController.Utils
 {
-    public class DRColor
+    public class MyColor
     {
 
         public class HSV
@@ -21,7 +19,7 @@ namespace LEDController.Utils
                 Value = V;
             }
 
-            public HSV(DRColor.RGB rgb)
+            public HSV(MyColor.RGB rgb)
             {
 
                 // In this function, R, G, and B values must be scaled 
@@ -249,7 +247,7 @@ namespace LEDController.Utils
                 _blue = ((int)(b * 256)).Clamp(0, 256);
             }
 
-            public RGB(Color c) : this(c.R, c.G, c.B)
+            public RGB(System.Drawing.Color c) : this(c.R, c.G, c.B)
             {
             }
 
@@ -294,18 +292,18 @@ namespace LEDController.Utils
             }
         }
 
-        public static Color HSVtoColor(HSV hsv)
+        public static System.Drawing.Color HSVtoColor(HSV hsv)
         {
             if (hsv == null)
-                return Color.Blue;
+                return System.Drawing.Color.Blue;
 
-            DRColor.RGB RGB = new RGB(hsv);
-            return Color.FromArgb(RGB.Red, RGB.Green, RGB.Blue);
+            MyColor.RGB RGB = new RGB(hsv);
+            return System.Drawing.Color.FromArgb(RGB.Red, RGB.Green, RGB.Blue);
         }
 
-        public static Color RGBtoColor(RGB rgb)
+        public static System.Drawing.Color RGBtoColor(RGB rgb)
         {
-            return Color.FromArgb(rgb.Red, rgb.Green, rgb.Blue);
+            return System.Drawing.Color.FromArgb(rgb.Red, rgb.Green, rgb.Blue);
         }
 
         public static readonly RGB Red = new RGB(256, 0, 0);

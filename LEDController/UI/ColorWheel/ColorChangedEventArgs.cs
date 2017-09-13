@@ -8,16 +8,16 @@ namespace LEDController.UI
         /// <summary>
         /// Written by Ken Getz
         /// </summary>
-        private DRColor.RGB mRGB;
-        private DRColor.HSV mHSV;
+        private MyColor.RGB mRGB;
+        private MyColor.HSV mHSV;
 
-        public ColorChangedEventArgs(DRColor.RGB RGB, DRColor.HSV HSV)
+        public ColorChangedEventArgs(MyColor.RGB RGB, MyColor.HSV HSV)
         {
             mRGB = RGB;
             mHSV = HSV;
         }
 
-        public DRColor.RGB RGB
+        public MyColor.RGB RGB
         {
             get
             {
@@ -25,7 +25,7 @@ namespace LEDController.UI
             }
         }
 
-        public DRColor.HSV HSV
+        public MyColor.HSV HSV
         {
             get
             {

@@ -331,12 +331,12 @@ namespace LEDController.UI
 		private Point _selectedPoint;
 
 		private ColorWheel myColorWheel;
-        private DRColor.RGB RGB;
-		private DRColor.HSV HSV;
+        private Utils.MyColor.RGB RGB;
+		private Utils.MyColor.HSV HSV;
 
 		private void ColorChooser_Load(object sender, System.EventArgs e)
 		{
-            DRColor.HSV default_color = new DRColor.HSV(127, 256, 82);
+            Utils.MyColor.HSV default_color = new Utils.MyColor.HSV(127, 256, 82);
 
 			// Turn on double-buffering, so the form looks better. 
 			this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -363,9 +363,9 @@ namespace LEDController.UI
             myColorWheel = new ColorWheel(ColorRectangle, BrightnessRectangle, SelectedColorRectangle, default_color);
 			myColorWheel.ColorChanged += new ColorWheel.ColorChangedEventHandler(this.colorWheel_Changed);
 
-			// Set the RGB and HSV values 
-			// of the NumericUpDown controls.
-            SetRGB(new DRColor.RGB(default_color));
+            // Set the RGB and HSV values 
+            // of the NumericUpDown controls.
+            SetRGB(new Utils.MyColor.RGB(default_color));
             SetHSV(default_color);		
 		}
 
@@ -388,21 +388,21 @@ namespace LEDController.UI
 			_changeType = ChangeStyle.None;
 		}
 
-        private void SetRGBLabels(DRColor.RGB RGB) 
+        private void SetRGBLabels(Utils.MyColor.RGB RGB) 
 		{
 			RefreshText(lblRed, RGB.Red);
 			RefreshText(lblBlue, RGB.Blue);
 			RefreshText(lblGreen, RGB.Green);
 		}
 
-		private void SetHSVLabels(DRColor.HSV HSV) 
+		private void SetHSVLabels(Utils.MyColor.HSV HSV) 
 		{
 			RefreshText(lblHue, HSV.Hue);
 			RefreshText(lblSaturation, HSV.Saturation);
 			RefreshText(lblBrightness, HSV.Value);
 		}
 
-        private void SetRGB(DRColor.RGB RGB) 
+        private void SetRGB(Utils.MyColor.RGB RGB) 
 		{
             if (RGB == null)
                 return;
@@ -413,7 +413,7 @@ namespace LEDController.UI
 			SetRGBLabels(RGB);
 	   }
 
-		private void SetHSV(DRColor.HSV HSV) 
+		private void SetHSV(Utils.MyColor.HSV HSV) 
 		{
             if (HSV == null)
                 return;
@@ -439,7 +439,7 @@ namespace LEDController.UI
 			lbl.Text = value.ToString();
 		}
 
-		public Color ActiveColor  
+		public System.Drawing.Color ActiveColor  
 		{
 			// Get or set the color to be
 			// displayed in the color wheel.
@@ -454,8 +454,8 @@ namespace LEDController.UI
 				// will cause the color wheel to update the position
 				// of the pointer.
 				_changeType = ChangeStyle.RGB;
-                SetRGB(new DRColor.RGB(value.R, value.G, value.B));
-                SetHSV(new DRColor.HSV(RGB));
+                SetRGB(new Utils.MyColor.RGB((int)value.R, (int)value.G, (int)value.B));
+                SetHSV(new Utils.MyColor.HSV(RGB));
 			}
 		}
 
@@ -479,11 +479,11 @@ namespace LEDController.UI
         private void HandleHSVScroll(object sender, ScrollEventArgs e)  
 		{
 			_changeType = ChangeStyle.HSV;
-			HSV = new DRColor.HSV(hsbHue.Value, hsbSaturation.Value, hsbBrightness.Value);
-			SetRGB(new DRColor.RGB(HSV));
+            HSV = new Utils.MyColor.HSV(hsbHue.Value, hsbSaturation.Value, hsbBrightness.Value);
+            SetRGB(new Utils.MyColor.RGB(HSV));
 			SetHSVLabels(HSV);
-			this.Invalidate();
-            _ledManager.SendRGBMessage(_ledManager.CreateMessage(new DRColor.RGB(HSV)));
+			Invalidate();
+            _ledManager.SendRGBMessage(_ledManager.CreateMessage(new Utils.MyColor.RGB(HSV)));
 		}
 
         // If the R, G, or B values change, use this 
@@ -495,10 +495,10 @@ namespace LEDController.UI
 		{
 
 			_changeType = ChangeStyle.RGB;
-            RGB = new DRColor.RGB(hsbRed.Value, hsbGreen.Value, hsbBlue.Value);
-            SetHSV(new DRColor.HSV(RGB));
+            RGB = new Utils.MyColor.RGB(hsbRed.Value, hsbGreen.Value, hsbBlue.Value);
+            SetHSV(new Utils.MyColor.HSV(RGB));
 			SetRGBLabels(RGB);
-			this.Invalidate();
+			Invalidate();
             _ledManager.SendRGBMessage(_ledManager.CreateMessage(RGB));
         }
 

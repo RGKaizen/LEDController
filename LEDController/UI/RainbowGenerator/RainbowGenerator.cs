@@ -11,7 +11,7 @@ namespace LEDController.UI
         private IHueGenerator _hueGenerator { get; set; }
         private ILEDManager _LEDManager { get; set; }
         private AnimationThread _animationThread = null;
-        private DRColor.RGB[] _ledState { get; set; }
+        private MyColor.RGB[] _ledState { get; set; }
 
         public RainbowGenerator(IHueGenerator hueGenerator, ILEDManager ledManager)
         {
@@ -25,7 +25,7 @@ namespace LEDController.UI
         public void Animate()
         {
             // Color Generation 
-            var newColor = new DRColor.RGB(
+            var newColor = new MyColor.RGB(
                     _hueGenerator.getNextColor(
                         (float)HueSliderValue,
                         (float)SaturationSliderValue,
@@ -67,7 +67,7 @@ namespace LEDController.UI
 
         private void ClearButton(object sender, EventArgs e)
         {
-            DRColor.RGB r = new DRColor.RGB(0, 0, 0);
+            MyColor.RGB r = new MyColor.RGB(0, 0, 0);
             _LEDManager.SendRGBMessage(_LEDManager.CreateMessage(r));
         }
 

@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using LEDController.Dtos;
+﻿using LEDController.Dtos;
 using LEDController.Utils;
 
 namespace LEDController.Interfaces
@@ -8,12 +7,12 @@ namespace LEDController.Interfaces
     {
         int TotalLEDCount { get; }
 
-        int StripLength { get; }
+        int LEDStripLength { get; }
 
         bool SendRGBMessage(RGBMessageDto rgbMessage);
 
-        RGBMessageDto CreateMessage(DRColor.RGB[] input);
+        RGBMessageDto CreateMessage(MyColor.RGB[] input);
 
-        RGBMessageDto CreateMessage(DRColor.RGB input);
+        RGBMessageDto CreateMessage(MyColor.RGB input);
     }
 }
