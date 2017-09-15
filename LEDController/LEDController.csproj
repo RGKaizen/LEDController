@@ -51,15 +51,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Manager\LEDManager.cs" />
+    <Compile Include="Generators\AnimatorBase.cs" />
+    <Compile Include="Generators\LooperAnimation.cs" />
+    <Compile Include="Manager\LedManager.cs" />
     <Compile Include="Dtos\RGBData.cs" />
     <Compile Include="Dtos\RGBMessageDto.cs" />
     <Compile Include="Interfaces\IAnimator.cs" />
     <Compile Include="Generators\PushAnimator.cs" />
     <Compile Include="Interfaces\IColorGenerator.cs" />
-    <Compile Include="Interfaces\ILEDManager.cs" />
-    <Compile Include="Interfaces\ILEDRestClient.cs" />
-    <Compile Include="Manager\LEDRestClient.cs" />
+    <Compile Include="Interfaces\ILedManager.cs" />
+    <Compile Include="Interfaces\ILedClient.cs" />
+    <Compile Include="Manager\LedRestClient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Manager\AnimatorClient.cs" />

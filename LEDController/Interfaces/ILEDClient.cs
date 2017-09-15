@@ -2,7 +2,7 @@
 
 namespace LEDController.Interfaces
 {
-    public interface ILEDRestClient
+    public interface ILedClient
     {
         bool Send(MyColor.RGB[] input);
 

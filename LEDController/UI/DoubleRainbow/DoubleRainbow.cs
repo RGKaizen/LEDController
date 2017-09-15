@@ -220,6 +220,8 @@ namespace LEDController.UI
         {
             InitializeComponent();          
             _AnimatorClient = animatorClient;
+            _AnimatorClient.RefreshRate = 0;
+            _AnimatorClient.PlayPause();
         }
 
         // Starts/stops repeat thread

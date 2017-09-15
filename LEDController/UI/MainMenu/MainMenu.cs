@@ -82,14 +82,17 @@ namespace LEDController.UI
 
         }
 
-        private ILEDRestClient _ledClient { get; set; }
-        private ILEDManager _ledManager { get; set; }
+        private ILedClient _ledClient { get; set; }
+        private ILedManager _ledManager { get; set; }
 
         public MainMenu()
         {
             InitializeComponent();
-            _ledManager = new LEDManager(120, 2);
-            _ledClient = new LEDRestClient("192.168.1.103", "5000", 120);
+            _ledManager = new LedManager(120, 2);
+            _ledClient = new LedRestClient("192.168.1.101", "5000", 120);
+
+            new DoubleRainbow(new AnimatorClient(_ledClient, new LooperAnimator(_ledManager), new HueGenerator())
+                ).Show();
         }
 
         private void ColorWheelBtn_Click(object sender, EventArgs e)
@@ -99,7 +102,7 @@ namespace LEDController.UI
 
         private void RainbowBtn_Click(object sender, EventArgs e)
         {
-            new DoubleRainbow(new AnimatorClient(_ledClient, new PushAnimator(_ledManager), new HueGenerator())
+            new DoubleRainbow(new AnimatorClient(_ledClient, new LooperAnimator(_ledManager), new HueGenerator())
                 ).Show();
         }
 
@@ -125,9 +128,9 @@ namespace LEDController.UI
         {
             var ledStrip1 = RainbowUtils.createEmptyArray(_ledManager.LEDStripLength);
             var ledStrip2 = RainbowUtils.createEmptyArray(_ledManager.LEDStripLength);
-            var ledState = RainbowUtils.createEmptyArray(_ledManager.TotalLEDCount);
+            var ledState = RainbowUtils.createEmptyArray(_ledManager.LEDCount);
             var r = new Random();
-            for(int i = 0; i < _ledManager.TotalLEDCount/2; i++)
+            for(int i = 0; i < _ledManager.LEDCount/2; i++)
             {
                 var s = r.Next(0, 3);
                 if(s ==0)

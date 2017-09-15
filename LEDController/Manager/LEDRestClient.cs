@@ -8,7 +8,7 @@ using System.Net;
 
 namespace LEDController.Manager
 {
-    public class LEDRestClient : ILEDRestClient
+    public class LedRestClient : ILedClient
     {
         private RestClient _HttpClient { get; set; }
 
@@ -16,7 +16,7 @@ namespace LEDController.Manager
 
         private string _URLWithPort { get; set; }
 
-        public LEDRestClient(string url, string port, int ledCount)
+        public LedRestClient(string url, string port, int ledCount)
         {
             _URLWithPort = $"http://{url}:{port}";
             _HttpClient = new RestClient(_URLWithPort);

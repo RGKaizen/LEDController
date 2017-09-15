@@ -2,11 +2,11 @@
 
 namespace LEDController.Interfaces
 {
-    public interface ILEDManager
+    public interface ILedManager
     {
         MyColor.RGB[] _State { get; }
 
-        int TotalLEDCount { get; }
+        int LEDCount { get; }
 
         int LEDStripLength { get; }
 
@@ -17,5 +17,9 @@ namespace LEDController.Interfaces
         bool setColor(int pos, MyColor.RGB color);
 
         bool setColor(MyColor.RGB[] state);
+
+        bool clear();
+
+        bool fill(MyColor.RGB color);
     }
 }

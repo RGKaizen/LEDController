@@ -3,25 +3,26 @@ using LEDController.Utils;
 
 namespace LEDController.Manager
 {
-    public class LEDManager : ILEDManager
+    public class LedManager : ILedManager
     {
         public MyColor.RGB[] _State { get; }
 
-        public int TotalLEDCount { get; }
+        public int LEDCount { get; }
 
         public int LEDStripLength { get; } = 60;
 
         public int StripCount { get; }
 
-        public LEDManager(int ledCount, int stripCount)
+        public LedManager(int ledCount, int stripCount)
         {
-            TotalLEDCount = ledCount;
+            LEDCount = ledCount;
             StripCount = stripCount;
+            _State = new MyColor.RGB[ledCount];
         }
 
         public bool setColor(int strip, int pos, MyColor.RGB color)
         {
-            if(pos > LEDStripLength || pos < 0)
+            if(pos >= LEDStripLength || pos < 0)
             {
                 return false;
             }
@@ -39,7 +40,7 @@ namespace LEDController.Manager
 
         public bool setColor(int pos, MyColor.RGB color)
         {
-            if (pos > TotalLEDCount || pos < 0)
+            if (pos > LEDCount || pos < 0)
             {
                 return false;
             }
@@ -56,12 +57,27 @@ namespace LEDController.Manager
             if (state == null)
                 return false;
 
-            for(var i = 0; i < TotalLEDCount; i++)
+            for(var i = 0; i < LEDCount; i++)
             {
                 _State[i] = state[i] ?? MyColor.Off;
             }
             
             return true;
+        }
+
+        public bool fill(MyColor.RGB color)
+        {
+            for (var i = 0; i < LEDCount; i++)
+            {
+                _State[i] = color;
+            }
+
+            return true;
+        }
+
+        public bool clear()
+        {
+            return fill(MyColor.Off);
         }
 
     }

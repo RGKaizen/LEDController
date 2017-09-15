@@ -36,9 +36,9 @@ namespace LEDController.UI
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 
-        private ILEDRestClient _ledClient { get; set; }
+        private ILedClient _ledClient { get; set; }
 
-		public ColorChooser(ILEDRestClient ledClient)
+		public ColorChooser(ILedClient ledClient)
 		{
 			InitializeComponent();
             _ledClient = ledClient;
