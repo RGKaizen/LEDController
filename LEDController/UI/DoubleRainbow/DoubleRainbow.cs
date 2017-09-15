@@ -72,7 +72,6 @@ namespace LEDController.UI
             this.HueSlider.Size = new System.Drawing.Size(324, 18);
             this.HueSlider.SmallChange = 5;
             this.HueSlider.TabIndex = 10;
-            this.HueSlider.Value = 60;
             this.HueSlider.Scroll += new System.Windows.Forms.ScrollEventHandler(this.HueSlider_Scroll);
             // 
             // HueSliderLbl
@@ -101,7 +100,6 @@ namespace LEDController.UI
             this.SleepSlider.Name = "RefreshBar";
             this.SleepSlider.Size = new System.Drawing.Size(324, 18);
             this.SleepSlider.TabIndex = 13;
-            this.SleepSlider.Value = 50;
             this.SleepSlider.Scroll += new System.Windows.Forms.ScrollEventHandler(this.RefreshBar_Scroll);
             // 
             // SaturationSliderValueLbl
@@ -132,7 +130,6 @@ namespace LEDController.UI
             this.SaturationSlider.Size = new System.Drawing.Size(324, 18);
             this.SaturationSlider.SmallChange = 5;
             this.SaturationSlider.TabIndex = 14;
-            this.SaturationSlider.Value = 95;
             this.SaturationSlider.Scroll += new System.Windows.Forms.ScrollEventHandler(this.SaturationSlider_Scroll);
             // 
             // BrightnessSliderValueLbl
@@ -163,7 +160,6 @@ namespace LEDController.UI
             this.BrightnessSlider.Size = new System.Drawing.Size(324, 18);
             this.BrightnessSlider.SmallChange = 5;
             this.BrightnessSlider.TabIndex = 17;
-            this.BrightnessSlider.Value = 125;
             this.BrightnessSlider.Scroll += new System.Windows.Forms.ScrollEventHandler(this.ValueSlider_Scroll);
             // 
             // SleepLbl
@@ -238,31 +234,31 @@ namespace LEDController.UI
             }
         }
 
-        public int HueSliderValue = 61;
+        public int HueSliderValue = 15;
         private void HueSlider_Scroll(object sender, ScrollEventArgs e)
         {
             HueSliderValue = (int)Math.Pow(Math.E, (5.545d * HueSlider.Value / 1000) );
-            HueSliderValueLbl.Text = "Val: " + String.Format("{0:N2}", HueSliderValue);
+            HueSliderValueLbl.Text = "Val: " + String.Format("{0:N0}", HueSliderValue);
             _AnimatorClient.hsvDelta.Hue = HueSliderValue;
         }
 
-        public int SaturationSliderValue = 45;
+        public int SaturationSliderValue = 15;
         private void SaturationSlider_Scroll(object sender, ScrollEventArgs e)
         {
             SaturationSliderValue = (int)Math.Pow(Math.E, (5.545d * SaturationSlider.Value / 1000) );
-            SaturationSliderValueLbl.Text = "Val: " + String.Format("{0:N2}", SaturationSliderValue);
+            SaturationSliderValueLbl.Text = "Val: " + String.Format("{0:N0}", SaturationSliderValue);
             _AnimatorClient.hsvDelta.Saturation = SaturationSliderValue;
         }
 
-        public int BrightnessSliderValue = 34;
+        public int BrightnessSliderValue = 15;
         private void ValueSlider_Scroll(object sender, ScrollEventArgs e)
         {
             BrightnessSliderValue = (int)Math.Pow(Math.E, (5.545d * BrightnessSlider.Value / 1000));
-            BrightnessSliderLbl.Text = "Val: " + String.Format("{0:N2}", BrightnessSliderValue);
+            BrightnessSliderValueLbl.Text = "Val: " + String.Format("{0:N0}", BrightnessSliderValue);
             _AnimatorClient.hsvDelta.Value = BrightnessSliderValue;
         }
 
-        public int refreshRate = 0;
+        public int refreshRate = 15;
         private void RefreshBar_Scroll(object sender, ScrollEventArgs e)
         {
             refreshRate = SleepSlider.Value;

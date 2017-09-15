@@ -29,17 +29,17 @@ namespace LEDController.Generators
 
         public MyColor.RGB[] getNextFrame()
         {
-            dot1.color = palette[0];
-            dot2.color = palette[1];
+            dot1.color = MyColor.Red;//palette[0];
+            dot2.color = MyColor.Blue;// palette[1]; 
 
             dot1.position = dot1.position + 1 * dot1.direction;
             dot2.position = dot2.position + 1 * dot2.direction;
 
-            _LEDManager.clear();
             _LEDManager.setColor(dot1.strip, dot1.position, dot1.color);
             _LEDManager.setColor(dot2.strip, dot2.position, dot2.color);
+            _LEDManager.mix(MyColor.Off, 0.1);
 
-            if (dot1.position == 30)
+            if (dot1.position == _LEDManager.LEDStripLength / 2)
             {
                 dot1.direction = -1;
                 dot1.strip = 2;
@@ -50,12 +50,12 @@ namespace LEDController.Generators
                 dot1.strip = 1;
             }
 
-            if (dot2.position == 30)
+            if (dot2.position == _LEDManager.LEDStripLength / 2)
             {
                 dot2.direction = 1;
                 dot2.strip = 1;
             }
-            if (dot2.position == 60)
+            if (dot2.position == _LEDManager.LEDStripLength)
             {
                 dot2.direction = -1;
                 dot2.strip = 2;

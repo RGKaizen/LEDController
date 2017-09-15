@@ -17,7 +17,7 @@ namespace LEDController.Manager
         {
             LEDCount = ledCount;
             StripCount = stripCount;
-            _State = new MyColor.RGB[ledCount];
+            _State = RainbowUtils.createEmptyArray(ledCount);
         }
 
         public bool setColor(int strip, int pos, MyColor.RGB color)
@@ -73,6 +73,27 @@ namespace LEDController.Manager
             }
 
             return true;
+        }
+
+        public bool mix(MyColor.RGB color, double ratio = 0.5)
+        {
+            for (var i = 0; i < LEDCount; i++)
+            {
+                var oldcolor = _State[i];
+                var newcolor = new MyColor.RGB(
+                        weightedAverage(oldcolor.Red, color.Red, ratio),
+                        weightedAverage(oldcolor.Green, color.Green, ratio),
+                        weightedAverage(oldcolor.Blue, color.Blue, ratio)
+                    );
+                _State[i] = newcolor;
+            }
+
+            return true;
+        }
+
+        private int weightedAverage(int a, int b, double ratio)
+        {
+            return (int)(a * (1.0 - ratio) + b * ratio);
         }
 
         public bool clear()

@@ -21,5 +21,7 @@ namespace LEDController.Interfaces
         bool clear();
 
         bool fill(MyColor.RGB color);
+
+        bool mix(MyColor.RGB color, double ratio);
     }
 }
