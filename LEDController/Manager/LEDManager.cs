@@ -67,6 +67,9 @@ namespace LEDController.Manager
 
         public bool fill(MyColor.RGB color)
         {
+            if (color == null)
+                return false;
+
             for (var i = 0; i < LEDCount; i++)
             {
                 _State[i] = color;
@@ -77,6 +80,9 @@ namespace LEDController.Manager
 
         public bool mix(MyColor.RGB color, double ratio = 0.5)
         {
+            if (color == null)
+                return false;
+
             for (var i = 0; i < LEDCount; i++)
             {
                 var oldcolor = _State[i];
