@@ -9,20 +9,21 @@ namespace LEDController.Manager
 
         public int LEDCount { get; }
 
-        public int LEDStripLength { get; } = 60;
+        public int StripLength { get; } = 60;
 
         public int StripCount { get; }
 
         public LedManager(int ledCount, int stripCount)
         {
             LEDCount = ledCount;
+            _State = new MyColor.RGB[LEDCount];
             StripCount = stripCount;
-            _State = RainbowUtils.createEmptyArray(ledCount);
+            clear();
         }
 
         public bool setColor(int strip, int pos, MyColor.RGB color)
         {
-            if(pos >= LEDStripLength || pos < 0)
+            if(pos >= StripLength || pos < 0)
             {
                 return false;
             }

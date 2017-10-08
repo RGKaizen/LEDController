@@ -8,19 +8,18 @@ namespace LEDController.Generators
         private Dot dot1;
         private Dot dot2;
 
-        public LooperAnimator(ILedManager ledManager) : base(ledManager)
+        public LooperAnimator(ILedManager ledManager, IPaletteManager palette) : base(ledManager, palette)
         {
-            palette = new MyColor.RGB[2];
             dot1 = new Dot
             {
-                color = palette[0],
+                color = palette.GetColor(0),
                 position = 0,
                 direction = 1,
                 strip = 1
             };
             dot2 = new Dot
             {
-                color = palette[1],
+                color = palette.GetColor(1),
                 position = 60,
                 direction = -1,
                 strip = 2
@@ -29,17 +28,17 @@ namespace LEDController.Generators
 
         public MyColor.RGB[] getNextFrame()
         {
-            dot1.color = MyColor.Red;//palette[0];
-            dot2.color = MyColor.Blue;// palette[1]; 
+            dot1.color = palette.GetColor(0);
+            dot2.color = palette.GetColor(1);
 
             dot1.position = dot1.position + 1 * dot1.direction;
             dot2.position = dot2.position + 1 * dot2.direction;
 
-            _LEDManager.setColor(dot1.strip, dot1.position, dot1.color);
-            _LEDManager.setColor(dot2.strip, dot2.position, dot2.color);
-            _LEDManager.mix(MyColor.Off, 0.1);
+            ledManager.setColor(dot1.strip, dot1.position, dot1.color);
+            ledManager.setColor(dot2.strip, dot2.position, dot2.color);
+            ledManager.mix(MyColor.Off, 0.1);
 
-            if (dot1.position == _LEDManager.LEDStripLength / 2)
+            if (dot1.position == ledManager.StripLength / 2)
             {
                 dot1.direction = -1;
                 dot1.strip = 2;
@@ -50,18 +49,18 @@ namespace LEDController.Generators
                 dot1.strip = 1;
             }
 
-            if (dot2.position == _LEDManager.LEDStripLength / 2)
+            if (dot2.position == ledManager.StripLength / 2)
             {
                 dot2.direction = 1;
                 dot2.strip = 1;
             }
-            if (dot2.position == _LEDManager.LEDStripLength)
+            if (dot2.position == ledManager.StripLength)
             {
                 dot2.direction = -1;
                 dot2.strip = 2;
             }
 
-            return _LEDManager._State;
+            return ledManager._State;
         }
     }
 

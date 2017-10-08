@@ -5,29 +5,28 @@ namespace LEDController.Generators
 {
     public class PushAnimator : AnimatorBase, IAnimator
     {
-        public PushAnimator(ILedManager ledManager) : base(ledManager)
+        public PushAnimator(ILedManager ledManager, IPaletteManager palette) : base(ledManager, palette)
         {
-            _LEDManager = ledManager;
-            _ledState = RainbowUtils.createEmptyArray(ledManager.LEDCount);
-            palette = new MyColor.RGB[1];
         }
 
         public MyColor.RGB[] getNextFrame()
         {
-            _ledState[_LEDManager.LEDCount / 2] = palette[0] ?? MyColor.Red;
+            ledManager.setColor(1, ledManager.StripLength / 2, palette.GetColor());
             Push();
-            return _ledState;
+            return ledManager._State;
         }
 
         // Pushes from the center like this  <-- -->
         private void Push()
         {
-            for (int i = 0; i < _LEDManager.LEDCount / 2; i++)
+            for (int i = 0; i < ledManager.StripLength / 2; i++)
             {
                 int waveUp = i;
-                int waveDown = _LEDManager.LEDCount - 1 - i;
-                _ledState[waveUp] = _ledState[waveUp + 1];
-                _ledState[waveDown] = _ledState[waveDown - 1];
+                int waveDown = ledManager.StripLength - 1 - i;
+                ledManager.setColor(1, waveUp, ledManager._State[waveUp + 1]);
+                ledManager.setColor(1, waveDown, ledManager._State[waveDown - 1]);
+                ledManager.setColor(2, waveUp, ledManager._State[waveUp + 1]);
+                ledManager.setColor(2, waveDown, ledManager._State[waveDown - 1]);
             }
         }
     }

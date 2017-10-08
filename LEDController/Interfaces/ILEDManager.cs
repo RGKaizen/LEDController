@@ -8,7 +8,7 @@ namespace LEDController.Interfaces
 
         int LEDCount { get; }
 
-        int LEDStripLength { get; }
+        int StripLength { get; }
 
         int StripCount { get; }
 

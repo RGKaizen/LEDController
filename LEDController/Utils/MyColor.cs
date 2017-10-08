@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel;
 
 namespace LEDController.Utils
 {
@@ -13,7 +12,7 @@ namespace LEDController.Utils
             public int Saturation;
             public int Value;
 
-            public HSV(int H, int S, int V)
+            public HSV(int H = 1, int S = 1, int V = 1)
             {
                 Hue = H;
                 Saturation = S;

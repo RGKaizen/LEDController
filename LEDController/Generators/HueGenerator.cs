@@ -5,56 +5,54 @@ namespace LEDController.Generators
 {
     public class HueGenerator : IColorGenerator
     {
-        private float hueAngle;
-        private float saturation;
-        private float brightness;
         private bool saturationSign;
         private bool brightnessSign;
 
-        private const float saturationMin = 230.0f;
-        private const float saturationMax = 256.0f;
+        private const int saturationMin = 230;
+        private const int saturationMax = 256;
 
-        private const float brightnessMin = 0.0f;
-        private const float brightnessMax = 256.0f;     
+        private const int brightnessMin = 0;
+        private const int brightnessMax = 256;
+
+        private MyColor.HSV _hsv;
+        public MyColor.HSV hsvDelta { get; set; }
 
         public HueGenerator()
         {
-            hueAngle = 0f;
-            saturation = 256f;
-            brightness = 256f;
+            _hsv = new MyColor.HSV(0, 256, 256);
             saturationSign = true;
             brightnessSign = true;
+
+            hsvDelta = new MyColor.HSV();
         }
 
-        public MyColor.RGB getNextColor(MyColor.HSV hsv)
-        {
-            return getNextColor(hsv.Hue, hsv.Saturation, hsv.Value);
-        }
-
-        public MyColor.RGB getNextColor(float hueDelta, float saturationDelta, float brightnessDelta)
+        public MyColor.RGB getNextColor()
         {
             // Add or subtract delta based on flag state
-            saturation = saturationSign ? saturation += saturationDelta : saturation -= saturationDelta;
-            brightness = brightnessSign ? brightness += brightnessDelta : brightness -= brightnessDelta;
+            _hsv.Saturation = saturationSign ? _hsv.Saturation += hsvDelta.Saturation : _hsv.Saturation -= hsvDelta.Saturation;
+            _hsv.Value = brightnessSign ? _hsv.Value += hsvDelta.Value : _hsv.Value -= hsvDelta.Value;
 
             // Flip flag state when borders hit
-            if(saturation != saturation.Clamp(saturationMin, saturationMax))
+            if (_hsv.Saturation != _hsv.Saturation.Clamp(saturationMin, saturationMax))
             {
                 saturationSign = !saturationSign;
             }
-            if (brightness != brightness.Clamp(brightnessMin, brightnessMax))
+            if (_hsv.Value != _hsv.Value.Clamp(brightnessMin, brightnessMax))
             {
                 brightnessSign = !brightnessSign;
             }
 
-            saturation = saturation.Clamp(saturationMin, saturationMax);
-            brightness = brightness.Clamp(brightnessMin, brightnessMax);
-            hueAngle = (hueAngle + hueDelta) % 360;
+            _hsv.Saturation = _hsv.Saturation.Clamp(saturationMin, saturationMax);
+            _hsv.Value = _hsv.Value.Clamp(brightnessMin, brightnessMax);
+            _hsv.Hue = (_hsv.Hue + hsvDelta.Hue) % 360 * 256 / 360; // [0 - 360] => [0 - 256]
 
-            // Angle to 8 bit color
-            var hue = hueAngle * 256 / 360;
+            return new MyColor.RGB(_hsv);
+        }
 
-            return new MyColor.RGB(new MyColor.HSV((int)hue, (int)saturation, (int)brightness));
+        public MyColor.RGB getNextColor(MyColor.HSV hsvDelta)
+        {
+            this.hsvDelta = hsvDelta;
+            return getNextColor();
         }
 
     }

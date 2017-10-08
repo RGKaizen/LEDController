@@ -84,14 +84,17 @@ namespace LEDController.UI
 
         private ILedClient _ledClient { get; set; }
         private ILedManager _ledManager { get; set; }
+        private IPaletteManager _paletteManager { get; set; }
 
         public MainMenu()
         {
             InitializeComponent();
-            _ledManager = new LedManager(120, 2);
-            _ledClient = new LedRestClient("192.168.1.101", "5000", 120);
 
-            new DoubleRainbow(new AnimatorClient(_ledClient, new LooperAnimator(_ledManager), new HueGenerator())
+            _ledClient = new LedRestClient("192.168.1.101", "5000", 120);
+            _ledManager = new LedManager(120, 2);
+            _paletteManager = new PaletteManager(1);       
+
+            new DoubleRainbow(new AnimatorClient(_ledClient, new PushAnimator(_ledManager, _paletteManager), new HueGenerator())
                 ).Show();
         }
 
@@ -102,8 +105,8 @@ namespace LEDController.UI
 
         private void RainbowBtn_Click(object sender, EventArgs e)
         {
-            new DoubleRainbow(new AnimatorClient(_ledClient, new LooperAnimator(_ledManager), new HueGenerator())
-                ).Show();
+            //new DoubleRainbow(new AnimatorClient(_ledClient, new LooperAnimator(_ledManager), new HueGenerator())
+            //    ).Show();
         }
 
         /// <summary>
@@ -126,8 +129,8 @@ namespace LEDController.UI
 
         private void SortBtn_Click(object sender, EventArgs e)
         {
-            var ledStrip1 = RainbowUtils.createEmptyArray(_ledManager.LEDStripLength);
-            var ledStrip2 = RainbowUtils.createEmptyArray(_ledManager.LEDStripLength);
+            var ledStrip1 = RainbowUtils.createEmptyArray(_ledManager.StripLength);
+            var ledStrip2 = RainbowUtils.createEmptyArray(_ledManager.StripLength);
             var ledState = RainbowUtils.createEmptyArray(_ledManager.LEDCount);
             var r = new Random();
             for(int i = 0; i < _ledManager.LEDCount/2; i++)
@@ -148,9 +151,9 @@ namespace LEDController.UI
 
             }
             //_LEDManager.SendRGBMessage(_LEDManager.CreateMessage(MyColor.Off));
-            Array.Copy(ledStrip1, ledState, _ledManager.LEDStripLength);
+            Array.Copy(ledStrip1, ledState, _ledManager.StripLength);
 
-            Array.Copy(ledStrip1, ledStrip2, _ledManager.LEDStripLength);
+            Array.Copy(ledStrip1, ledStrip2, _ledManager.StripLength);
             Array.Sort(ledStrip2);
             Array.Copy(ledStrip2, 0, ledState, ledStrip1.Length, ledStrip2.Length);
 
