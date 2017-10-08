@@ -1,5 +1,6 @@
 ﻿using LEDController.Interfaces;
 using LEDController.Utils;
+using System;
 
 namespace LEDController.Generators
 {
@@ -44,7 +45,7 @@ namespace LEDController.Generators
 
             _hsv.Saturation = _hsv.Saturation.Clamp(saturationMin, saturationMax);
             _hsv.Value = _hsv.Value.Clamp(brightnessMin, brightnessMax);
-            _hsv.Hue = (_hsv.Hue + hsvDelta.Hue) % 360 * 256 / 360; // [0 - 360] => [0 - 256]
+            _hsv.Hue = (_hsv.Hue + hsvDelta.Hue) % 256; // [0 - 360] => [0 - 256]
 
             return new MyColor.RGB(_hsv);
         }
