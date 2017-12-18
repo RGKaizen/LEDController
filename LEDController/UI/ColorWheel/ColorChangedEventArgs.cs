@@ -5,9 +5,6 @@ namespace LEDController.UI
 {
     public class ColorChangedEventArgs : EventArgs
     {
-        /// <summary>
-        /// Written by Ken Getz
-        /// </summary>
         private MyColor.RGB mRGB;
         private MyColor.HSV mHSV;
 
@@ -17,20 +14,7 @@ namespace LEDController.UI
             mHSV = HSV;
         }
 
-        public MyColor.RGB RGB
-        {
-            get
-            {
-                return mRGB;
-            }
-        }
-
-        public MyColor.HSV HSV
-        {
-            get
-            {
-                return mHSV;
-            }
-        }
+        public MyColor.RGB RGB => mRGB;
+        public MyColor.HSV HSV => mHSV;
     }
 }

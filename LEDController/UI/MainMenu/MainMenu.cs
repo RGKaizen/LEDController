@@ -90,12 +90,12 @@ namespace LEDController.UI
         {
             InitializeComponent();
 
-            _ledClient = new LedRestClient("192.168.1.101", "5000", 120);
+            _ledClient = new LedRestClient("192.168.1.200", "5000", 120);
             _ledManager = new LedManager(120, 2);
             _paletteManager = new PaletteManager(1);       
 
-            new DoubleRainbow(new AnimatorClient(_ledClient, new PushAnimator(_ledManager, _paletteManager), new HueGenerator())
-                ).Show();
+            //new DoubleRainbow(new AnimatorClient(_ledClient, new PushAnimator(_ledManager, _paletteManager), new HueGenerator())
+            //    ).Show();
         }
 
         private void ColorWheelBtn_Click(object sender, EventArgs e)

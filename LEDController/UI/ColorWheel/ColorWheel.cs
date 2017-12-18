@@ -11,8 +11,6 @@ namespace LEDController.UI
         /// <summary>
         /// Written by Ken Getz
         /// </summary>
-        // These resources should be disposed
-        // of when you're done with them.
         private Graphics _g;
         private Region _colorRegion;
         private Region _brightnessRegion;
@@ -32,7 +30,7 @@ namespace LEDController.UI
             ClickOutsideRegion,
             DragOutsideRegion,
         }
-        private MouseState currentState = MouseState.MouseUp;
+        private MouseState _currentState = MouseState.MouseUp;
 
         // The code needs to convert back and forth between 
         // degrees and radians. There are 2*PI radians in angle 
@@ -51,108 +49,79 @@ namespace LEDController.UI
         // 256 colors. Seems like angle reasonable compromise.
         private const int COLOR_COUNT = 6 * 256;
 
-        private Point centerPoint;
-        private int radius;
+        private Point _centerPoint;
+        private int _radius;
 
-        private Rectangle colorRectangle;
-        private Rectangle brightnessRectangle;
-        private Rectangle selectedColorRectangle;
-        private int brightnessX;
-        private double brightnessScaling;
+        private Rectangle _colorRect;
+        private Rectangle _brightnessRect;
+        private Rectangle _selectedColorRect;
+        private int _brightnessCursorX;
+        private double _brightnessScaling;
 
-        // selectedColor is the actual value selected
-        // by the user. fullColor is the same color, 
-        // with its brightness set to 255.
-        private Color selectedColor = Color.White;
-        private Color fullColor;
-
-        private MyColor.RGB RGB;
-        private MyColor.HSV HSV = new MyColor.HSV(0,0,0);
+        private MyColor.HSV _HSV = new MyColor.HSV(0,0,0);
+        private MyColor.RGB _RGB => new MyColor.RGB(_HSV);
+        public Color Color => MyColor.HSVtoColor(_HSV);
 
         // Locations for the two "pointers" on the form.
-        private Point colorPoint;
-        private Point brightnessPoint;
+        private Point _colorPointer;
+        private Point _brightnessPointer;
 
-        private int brightness;
-        private int brightnessMin;
-        private int brightnessMax;
+        private int _brightness => _HSV.Value;
+        private int _brightnessMin;
+        private int _brightnessMax;
 
-        public ColorWheel(Rectangle colorRectangle, Rectangle brightnessRectangle, Rectangle selectedColorRectangle, MyColor.HSV default_color)
+        protected void OnColorChanged(MyColor.RGB RGB, MyColor.HSV HSV) => ColorChanged(this, new ColorChangedEventArgs(RGB, HSV));
+
+        public ColorWheel(Rectangle clrRect, Rectangle brightRect, Rectangle selectedClrRect, MyColor.HSV defaultClr)
         {
-
-            // Caller must provide locations for color wheel
-            // (colorRectangle), brightness "strip" (brightnessRectangle)
-            // and location to display selected color (selectedColorRectangle).
-
             using (GraphicsPath path = new GraphicsPath())
             {
                 // Store away locations for later use. 
-                this.colorRectangle = colorRectangle;
-                this.brightnessRectangle = brightnessRectangle;
-                this.selectedColorRectangle = selectedColorRectangle;
+                _colorRect = clrRect;
+                _brightnessRect = brightRect;
+                _selectedColorRect = selectedClrRect;
 
-                // Calculate the center of the circle.
-                // Start with the location, then offset
-                // the point by the radius_norm.
-                // Use the smaller of the width and height of
-                // the colorRectangle value.
-                this.radius = (int)Math.Min(colorRectangle.Width, colorRectangle.Height) / 2;
-                this.centerPoint = colorRectangle.Location;
-                this.centerPoint.Offset(radius, radius);
+                _radius = Math.Min(_colorRect.Width, _colorRect.Height) / 2;
+                _centerPoint = _colorRect.Location;
+                _centerPoint.Offset(_radius, _radius);
+                _colorPointer = _centerPoint;
 
-                // Start the pointer in the center.
-                this.colorPoint = this.centerPoint;
-
-                // Create angle region corresponding to the color circle.
-                // Code uses this later to determine if angle specified
-                // point is within the region, using the IsVisible 
-                // method.
-                path.AddEllipse(colorRectangle);
+                path.AddEllipse(_colorRect);
                 _colorRegion = new Region(path);
 
-                // set { the range for the brightness selector.
-                this.brightnessMin = this.brightnessRectangle.Top;
-                this.brightnessMax = this.brightnessRectangle.Bottom;
+                _brightnessMin = _brightnessRect.Top;
+                _brightnessMax = _brightnessRect.Bottom;
 
-                // Create angle region corresponding to the
-                // brightness rectangle, with angle little extra 
-                // "breathing room". 
-
-                path.AddRectangle(new Rectangle(brightnessRectangle.Left, brightnessRectangle.Top - 10, brightnessRectangle.Width + 10, brightnessRectangle.Height + 20));
-                // Create region corresponding to brightness
-                // rectangle. Later code uses this to 
-                // determine if angle specified point is within
-                // the region, using the IsVisible method.
+                path.AddRectangle(new Rectangle(_brightnessRect.Left, _brightnessRect.Top - 10, _brightnessRect.Width + 10, _brightnessRect.Height + 20));
                 _brightnessRegion = new Region(path);
 
-                // Set the location for the brightness indicator "marker".
-                // Also calculate the scaling factor, scaling the height
-                // to be between 0 and 255. 
-                brightnessX = brightnessRectangle.Left + brightnessRectangle.Width;
-                brightnessScaling = (double)255 / (brightnessMax - brightnessMin);
+                _brightnessCursorX = _brightnessRect.Left + _brightnessRect.Width;
+                _brightnessScaling = (double)255 / (_brightnessMax - _brightnessMin);
 
-                // Calculate the location of the brightness
-                // pointer. Assume it's at the highest position.
-                brightnessPoint = new Point(brightnessX, brightnessMax);
+                _brightnessPointer = new Point(_brightnessCursorX, _brightnessMax);
 
-                // Create the bitmap that contains the circular gradient.
                 CreateGradient();
-
-                CalcCoordsAndUpdate(default_color);
+                UpdatePointers(defaultClr);
             }
         }
 
-        protected void OnColorChanged(MyColor.RGB RGB, MyColor.HSV HSV)
+        private void CreateGradient()
         {
-            ColorChangedEventArgs e = new ColorChangedEventArgs(RGB, HSV);
-            ColorChanged(this, e);
-        }
-
-        public Color Color
-        {
-            get
+            using (var pgb = new PathGradientBrush(GetPoints(_radius, new Point(_radius, _radius))))
             {
-                return selectedColor;
+                pgb.CenterColor = Color.White;
+                pgb.CenterPoint = new PointF(_radius, _radius);
+                pgb.SurroundColors = GetColors();
+
+                _colorImage = new Bitmap(
+                    _colorRect.Width, _colorRect.Height,
+                    PixelFormat.Format32bppArgb);
+
+                using (var newGraphics = Graphics.FromImage(_colorImage))
+                {
+                    newGraphics.FillEllipse(pgb, 0, 0,
+                        _colorRect.Width, _colorRect.Height);
+                }
             }
         }
 
@@ -171,248 +140,97 @@ namespace LEDController.UI
 
         public void SetMouseUp()
         {
-            // Indicate that the user has
-            // released the mouse.
-            currentState = MouseState.MouseUp;
-        }
-
-        public void Draw(Graphics g, MyColor.HSV HSV)
-        {
-            // Given HSV values, update the screen.
-            this._g = g;
-            this.HSV = HSV;
-            CalcCoordsAndUpdate(this.HSV);
-            UpdateDisplay();
+            _currentState = MouseState.MouseUp;
         }
 
         public void Draw(Graphics g, MyColor.RGB RGB)
         {
-            // Given RGB values, calculate HSV and then update the screen.
-            this._g = g;
-            this.HSV = new MyColor.HSV(RGB);
-            CalcCoordsAndUpdate(this.HSV);
+            Draw(g, new MyColor.HSV(RGB));
+        }
+
+        public void Draw(Graphics g, MyColor.HSV hsv)
+        {
+            _g = g;
+            _HSV = hsv;
+            UpdatePointers(_HSV);
             UpdateDisplay();
         }
 
         public void Draw(Graphics g, Point mousePoint)
-        {
-            // You've moved the mouse. 
-            // Now update the screen to match.
-
-            double distance;
-            int degrees;
-            Point delta;
-            Point newColorPoint;
-            Point newBrightnessPoint;
-            Point newPoint;
-
-            // Keep track of the previous color pointer point, 
-            // so you can put the mouse there in case the 
-            // user has clicked outside the circle.
-            newColorPoint = colorPoint;
-            newBrightnessPoint = brightnessPoint;
-
-            // Store this away for later use.
-            this._g = g;
-
-            if (currentState == MouseState.MouseUp)
+        {       
+            _g = g;
+            if (_currentState == MouseState.MouseUp && !mousePoint.IsEmpty)
             {
-                if (!mousePoint.IsEmpty)
+                if (_colorRegion.IsVisible(mousePoint))
                 {
-                    if (_colorRegion.IsVisible(mousePoint))
-                    {
-                        // Is the mouse point within the color circle?
-                        // If so, you just clicked on the color wheel.
-                        currentState = MouseState.ClickOnColor;
-                    }
-                    else if (_brightnessRegion.IsVisible(mousePoint))
-                    {
-                        // Is the mouse point within the brightness area?
-                        // You clicked on the brightness area.
-                        currentState = MouseState.ClickOnBrightness;
-                    }
-                    else
-                    {
-                        // Clicked outside the color and the brightness
-                        // regions. In that case, just put the 
-                        // pointers back where they were.
-                        currentState = MouseState.ClickOutsideRegion;
-                    }
+                    _currentState = MouseState.ClickOnColor;
                 }
+                else if (_brightnessRegion.IsVisible(mousePoint))
+                {
+                    _currentState = MouseState.ClickOnBrightness;
+                }
+                else
+                {
+                    _currentState = MouseState.ClickOutsideRegion;
+                }               
             }
 
-            switch (currentState)
+            switch (_currentState)
             {
                 case MouseState.ClickOnBrightness:
                 case MouseState.DragInBrightness:
-                    // Calculate new color information
-                    // based on the brightness, which may have changed.
-                    newPoint = mousePoint;
-                    if (newPoint.Y < brightnessMin)
-                    {
-                        newPoint.Y = brightnessMin;
-                    }
-                    else if (newPoint.Y > brightnessMax)
-                    {
-                        newPoint.Y = brightnessMax;
-                    }
-                    newBrightnessPoint = new Point(brightnessX, newPoint.Y);
-                    brightness = (int)((brightnessMax - newPoint.Y) * brightnessScaling);
-                    HSV.Value = brightness;
-                    RGB = new MyColor.RGB(HSV);
+                    BrightnessSliderUpdate(mousePoint);
+                    _currentState = MouseState.DragInBrightness;
                     break;
 
                 case MouseState.ClickOnColor:
                 case MouseState.DragInColor:
-                    // Calculate new color information
-                    // based on selected color, which may have changed.
-                    newColorPoint = mousePoint;
-
-                    // Calculate x and y distance from the center,
-                    // and then calculate the angle corresponding to the
-                    // new location.
-                    delta = new Point(
-                        mousePoint.X - centerPoint.X, mousePoint.Y - centerPoint.Y);
-                    degrees = CalcDegrees(delta);
-
-                    // Calculate distance from the center to the new point 
-                    // as angle fraction of the radius_norm. Use your old friend, 
-                    // the Pythagorean theorem, to calculate this value.
-                    distance = Math.Sqrt(delta.X * delta.X + delta.Y * delta.Y) / radius;
-
-                    if (currentState == MouseState.DragInColor)
-                    {
-                        if (distance > 1)
-                        {
-                            // Mouse is down, and outside the circle, but you 
-                            // were previously dragging in the color circle. 
-                            // What to do?
-                            // In that case, move the point to the edge of the 
-                            // circle at the correct angle.
-                            distance = 1;
-                            newColorPoint = GetPoint(degrees, radius, centerPoint);
-                        }
-                    }
-
-                    // Calculate the new HSV and RGB values.
-                    HSV.Hue = (int)(degrees * 255 / 360);
-                    HSV.Saturation = (int)(distance * 255);
-                    HSV.Value = brightness;
-                    RGB = new MyColor.RGB(HSV);
-                    fullColor = MyColor.HSVtoColor(new MyColor.HSV(HSV.Hue, HSV.Saturation, 255));
+                    ColorWheelUpdate(mousePoint);
+                    _currentState = MouseState.DragInColor;
                     break;
-            }
-            selectedColor = MyColor.HSVtoColor(HSV);
-
-            // Raise an event back to the parent form,
-            // so the form can update any UI it's using 
-            // to display selected color values.
-
-
-            // On the way out, set the new state.
-            switch (currentState)
-            {
-                case MouseState.ClickOnBrightness:
-                    currentState = MouseState.DragInBrightness;
-                    break;
-                case MouseState.ClickOnColor:
-                    currentState = MouseState.DragInColor;
-                    break;
+                case MouseState.MouseUp:
                 case MouseState.ClickOutsideRegion:
-                    currentState = MouseState.DragOutsideRegion;
+                case MouseState.DragOutsideRegion:
+                    _currentState = MouseState.DragOutsideRegion;
                     break;
             }
 
-            // Store away the current points for next time.
-            colorPoint = newColorPoint;
-            brightnessPoint = newBrightnessPoint;
-
-            // Draw the gradients and points. 
             UpdateDisplay();
-            OnColorChanged(RGB, HSV);
+            OnColorChanged(_RGB, _HSV);
         }
 
-        private Point CalcBrightnessPoint(int brightness)
+        private void BrightnessSliderUpdate(Point mousePoint)
         {
-            // Take the value for brightness (0 to 255), scale to the 
-            // scaling used in the brightness bar, then add the value 
-            // to the bottom of the bar. return the correct point at which 
-            // to display the brightness pointer.
-            return new Point(brightnessX,
-                (int)(brightnessMax - brightness / brightnessScaling));
+            var clampedY = mousePoint.Y.Clamp(_brightnessMin, _brightnessMax);
+            _brightnessPointer = new Point(_brightnessCursorX, clampedY);
+            _HSV.Value = (int)((_brightnessMax - clampedY) * _brightnessScaling);      
         }
 
-        private void UpdateDisplay()
+        private void ColorWheelUpdate(Point mousePoint)
         {
-            // Update the gradients, and place the 
-            // pointers correctly based on colors and 
-            // brightness.
-
-            using (Brush selectedBrush = new SolidBrush(selectedColor))
+            _colorPointer = mousePoint;
+            var delta = new Point(mousePoint.X - _centerPoint.X, mousePoint.Y - _centerPoint.Y);
+            var degrees = CalcDegrees(delta);
+            var distance = Math.Sqrt(delta.X * delta.X + delta.Y * delta.Y) / _radius;
+            if (_currentState == MouseState.DragInColor)
             {
-                // Draw the saved color wheel image.
-                _g.DrawImage(_colorImage, colorRectangle);
-
-                // Draw the "selected color" rectangle.
-                _g.FillRectangle(selectedBrush, selectedColorRectangle);
-
-                // Draw the "brightness" rectangle.
-                DrawLinearGradient(fullColor);
-                // Draw the two pointers.
-                DrawColorPointer(colorPoint);
-                DrawBrightnessPointer(brightnessPoint);
+                if (distance > 1)
+                {
+                    distance = 1;
+                    _colorPointer = GetPoint(degrees, _radius, _centerPoint);
+                }
             }
+            _HSV = new MyColor.HSV(degrees * 255 / 360, (int)(distance * 255), _brightness);
         }
 
-        private void CalcCoordsAndUpdate(MyColor.HSV HSV)
+        private void UpdatePointers(MyColor.HSV HSV)
         {
-            // Convert color to real-world coordinates and then calculate
-            // the various points. HSV.Hue represents the degrees (0 to 360), 
-            // HSV.Saturation represents the radius_norm. 
-            // This procedure doesn't draw anything--it simply 
-            // updates class-level variables. The UpdateDisplay
-            // procedure uses these values to update the screen.
+            _colorPointer = GetPoint(
+                (double)HSV.Hue / 255 * 360,
+                (double)HSV.Saturation / 255 * _radius,
+                _centerPoint);
 
-            // Given the angle (HSV.Hue), and distance from 
-            // the center (HSV.Saturation), and the center, 
-            // calculate the point corresponding to 
-            // the selected color, on the color wheel.
-            colorPoint = GetPoint((double)HSV.Hue / 255 * 360,
-                (double)HSV.Saturation / 255 * radius,
-                centerPoint);
-
-            // Given the brightness (HSV.value), calculate the 
-            // point corresponding to the brightness indicator.
-            brightnessPoint = CalcBrightnessPoint(HSV.Value);
-
-            // Store information about the selected color.
-            brightness = HSV.Value;
-            selectedColor = MyColor.HSVtoColor(HSV);
-            RGB = new MyColor.RGB(HSV);
-
-            // The full color is the same as HSV, except that the 
-            // brightness is set to full (255). This is the top-most
-            // color in the brightness gradient.
-            fullColor = MyColor.HSVtoColor(new MyColor.HSV(HSV.Hue, HSV.Saturation, 255));
-        }
-
-        private void DrawLinearGradient(Color TopColor)
-        {
-
-            Color temp = Color.FromArgb(
-                (TopColor.R * 2).Clamp(0,255), 
-                (TopColor.G * 2).Clamp(0, 255), 
-                (TopColor.B * 2).Clamp(0, 255));
-
-            // Given the top color, draw angle linear gradient
-            // ranging from black to the top color. Use the 
-            // brightness rectangle as the area to fill.
-            using (LinearGradientBrush lgb =
-                             new LinearGradientBrush(brightnessRectangle, temp,
-                             Color.Black, LinearGradientMode.Vertical))
-            {
-                _g.FillRectangle(lgb, brightnessRectangle);
-            }
+            _brightnessPointer = new Point(_brightnessCursorX, (int)(_brightnessMax - _brightness / _brightnessScaling));
         }
 
         private int CalcDegrees(Point pt)
@@ -421,11 +239,6 @@ namespace LEDController.UI
 
             if (pt.X == 0)
             {
-                // The point is on the y-axis. Determine whether 
-                // it's above or below the x-axis, and return the 
-                // corresponding angle. Note that the orientation of the
-                // y-coordinate is backwards. That is, A positive Y value 
-                // indicates angle point BELOW the x-axis.
                 if (pt.Y > 0)
                 {
                     degrees = 270;
@@ -437,130 +250,79 @@ namespace LEDController.UI
             }
             else
             {
-                // This value needs to be multiplied
-                // by -1 because the y-coordinate
-                // is opposite from the normal direction here.
-                // That is, angle y-coordinate that's "higher" on 
-                // the form has angle lower y-value, in this coordinate
-                // system. So everything's off by angle factor of -1 when
-                // performing the ratio calculations.
                 degrees = (int)(-Math.Atan((double)pt.Y / pt.X) * DEGREES_PER_RADIAN);
-
-                // If the x-coordinate of the selected point
-                // is to the left of the center of the circle, you 
-                // need to add 180 degrees to the angle. ArcTan only
-                // gives you angle value on the right-hand side of the circle.
                 if (pt.X < 0)
                 {
                     degrees += 180;
                 }
 
-                // Ensure that the return value is 
-                // between 0 and 360.
                 degrees = (degrees + 360) % 360;
             }
             return degrees;
         }
 
-        private void CreateGradient()
-        {
-            // Create angle new PathGradientBrush, supplying
-            // an array of points created by calling
-            // the GetPoints method.
-            using (PathGradientBrush pgb =
-                new PathGradientBrush(GetPoints(radius, new Point(radius, radius))))
-            {
-                // Set the various properties. Note the SurroundColors
-                // property, which contains an array of points, 
-                // in angle one-to-one relationship with the points
-                // that created the gradient.
-                pgb.CenterColor = Color.White;
-                pgb.CenterPoint = new PointF(radius, radius);
-                pgb.SurroundColors = GetColors();
-
-                // Create angle new bitmap containing
-                // the color wheel gradient, so the 
-                // code only needs to do all this 
-                // work once. Later code uses the bitmap
-                // rather than recreating the gradient.
-                _colorImage = new Bitmap(
-                    colorRectangle.Width, colorRectangle.Height,
-                    PixelFormat.Format32bppArgb);
-
-                using (Graphics newGraphics =
-                                 Graphics.FromImage(_colorImage))
-                {
-                    newGraphics.FillEllipse(pgb, 0, 0,
-                        colorRectangle.Width, colorRectangle.Height);
-                }
-            }
-        }
-
         private Color[] GetColors()
         {
-            // Create an array of COLOR_COUNT
-            // colors, looping through all the 
-            // hues between 0 and 255, broken
-            // into COLOR_COUNT intervals. HSV is
-            // particularly well-suited for this, 
-            // because the only value that changes
-            // as you create colors is the Hue.
-            Color[] Colors = new Color[COLOR_COUNT];
+            var Colors = new Color[COLOR_COUNT];
 
-            for (int i = 0; i <= COLOR_COUNT - 1; i++)
+            for (var i = 0; i <= COLOR_COUNT - 1; i++)
             {
-                Color temp = MyColor.HSVtoColor(new MyColor.HSV((int)((double)(i * 255) / COLOR_COUNT), 255, 255));
-                int r = (temp.R * 2).Clamp(0, 255);
-                int g = (temp.G * 2).Clamp(0, 255);
-                int b = (temp.B * 2).Clamp(0, 255);
-                Colors[i] = Color.FromArgb(r, g, b);
+                var temp = MyColor.HSVtoColor(new MyColor.HSV((int)((double)(i * 255) / COLOR_COUNT), 255, 255));
+                Colors[i] = Color.FromArgb(temp.R, temp.G, temp.B);
             }
             return Colors;
         }
 
         private Point[] GetPoints(double radius, Point centerPoint)
         {
-            // Generate the array of points that describe
-            // the locations of the COLOR_COUNT colors to be 
-            // displayed on the color wheel.
-            Point[] Points = new Point[COLOR_COUNT];
+            var Points = new Point[COLOR_COUNT];
 
-            for (int i = 0; i <= COLOR_COUNT - 1; i++)
+            for (var i = 0; i <= COLOR_COUNT - 1; i++)
                 Points[i] = GetPoint((double)(i * 360) / COLOR_COUNT, radius, centerPoint);
             return Points;
         }
 
         private Point GetPoint(double degrees, double radius, Point centerPoint)
         {
-            // Given the center of angle circle and its radius_norm, along
-            // with the angle corresponding to the point, find the coordinates. 
-            // In other words, conver  t from polar to rectangular coordinates.
             double radians = degrees / DEGREES_PER_RADIAN;
 
             return new Point((int)(centerPoint.X + Math.Floor(radius * Math.Cos(radians))),
-                (int)(centerPoint.Y - Math.Floor(radius * Math.Sin(radians))));
+                             (int)(centerPoint.Y - Math.Floor(radius * Math.Sin(radians))));
+        }
+
+        private void UpdateDisplay()
+        {
+            using (Brush selectedBrush = new SolidBrush(Color))
+            {
+                _g.DrawImage(_colorImage, _colorRect);
+                _g.FillRectangle(selectedBrush, _selectedColorRect);
+
+                DrawLinearGradient(_RGB);
+                DrawColorPointer(_colorPointer);
+                DrawBrightnessPointer(_brightnessPointer);
+            }
+        }
+
+        private void DrawLinearGradient(MyColor.RGB TopColor)
+        {
+            using (var lgb = new LinearGradientBrush(_brightnessRect, MyColor.RGBtoColor(TopColor), Color.Black, LinearGradientMode.Vertical))
+            {
+                _g.FillRectangle(lgb, _brightnessRect);
+            }
         }
 
         private void DrawColorPointer(Point pt)
         {
-            // Given angle point, draw the color selector. 
-            // The constant SIZE represents half
-            // the width -- the square will be twice
-            // this value in width and height.
             const int SIZE = 3;
-            _g.DrawRectangle(Pens.Black,
-                pt.X - SIZE, pt.Y - SIZE, SIZE * 2, SIZE * 2);
+            _g.DrawRectangle(Pens.Black, pt.X - SIZE, pt.Y - SIZE, SIZE * 2, SIZE * 2);
         }
 
         private void DrawBrightnessPointer(Point pt)
         {
-            // Draw angle triangle for the 
-            // brightness indicator that "points"
-            // at the provided point.
             const int HEIGHT = 10;
             const int WIDTH = 7;
 
-            Point[] Points = new Point[3];
+            var Points = new Point[3];
             Points[0] = pt;
             Points[1] = new Point(pt.X + WIDTH, pt.Y + HEIGHT / 2);
             Points[2] = new Point(pt.X + WIDTH, pt.Y - HEIGHT / 2);

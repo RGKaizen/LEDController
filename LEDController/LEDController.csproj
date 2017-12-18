@@ -8,9 +8,10 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>LEDController</RootNamespace>
     <AssemblyName>LEDController</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -51,14 +52,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Generators\AnimatorBase.cs" />
-    <Compile Include="Generators\LooperAnimation.cs" />
+    <Compile Include="Generators\Animation\AnimatorBase.cs" />
+    <Compile Include="Generators\Animation\LooperAnimator.cs" />
     <Compile Include="Interfaces\IPaletteManager.cs" />
     <Compile Include="Manager\LedManager.cs" />
     <Compile Include="Dtos\RGBData.cs" />
     <Compile Include="Dtos\RGBMessageDto.cs" />
     <Compile Include="Interfaces\IAnimator.cs" />
-    <Compile Include="Generators\PushAnimator.cs" />
+    <Compile Include="Generators\Animation\PushAnimator.cs" />
     <Compile Include="Interfaces\IColorGenerator.cs" />
     <Compile Include="Interfaces\ILedManager.cs" />
     <Compile Include="Interfaces\ILedClient.cs" />
@@ -84,7 +85,7 @@
     </Compile>
     <Compile Include="Utils\MyColor.cs" />
     <Compile Include="Utils\ExtensionMethods.cs" />
-    <Compile Include="Generators\HueGenerator.cs" />
+    <Compile Include="Generators\Color\HueGenerator.cs" />
     <Compile Include="Utils\RainbowUtils.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -94,6 +95,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="UI\MainMenu\MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
