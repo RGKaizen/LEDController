@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using LEDController.Utils;
+using static LEDController.Utils.MyColor;
 
 namespace LEDController.UI
 {
@@ -32,21 +33,7 @@ namespace LEDController.UI
         }
         private MouseState _currentState = MouseState.MouseUp;
 
-        // The code needs to convert back and forth between 
-        // degrees and radians. There are 2*PI radians in angle 
-        // full circle, and 360 degrees. This constant allows
-        // you to convert back and forth.
         private const double DEGREES_PER_RADIAN = 180.0 / Math.PI;
-
-        // COLOR_COUNT represents the number of distinct colors
-        // used to create the circular gradient. Its value 
-        // is somewhat arbitrary -- change this to 6, for 
-        // example, to see what happens. 1536 (6 * 256) seems 
-        // angle good compromise -- it's enough to get angle full 
-        // range of colors, but it doesn't overwhelm the processor
-        // attempting to generate the image. The color wheel
-        // contains 6 sections, and each section displays 
-        // 256 colors. Seems like angle reasonable compromise.
         private const int COLOR_COUNT = 6 * 256;
 
         private Point _centerPoint;
@@ -59,8 +46,8 @@ namespace LEDController.UI
         private double _brightnessScaling;
 
         private MyColor.HSV _HSV = new MyColor.HSV(0,0,0);
-        private MyColor.RGB _RGB => new MyColor.RGB(_HSV);
-        public Color Color => MyColor.HSVtoColor(_HSV);
+        private RGB _RGB => _HSV.toRGB();
+        public Color Color => _HSV.toColor();
 
         // Locations for the two "pointers" on the form.
         private Point _colorPointer;
@@ -70,13 +57,12 @@ namespace LEDController.UI
         private int _brightnessMin;
         private int _brightnessMax;
 
-        protected void OnColorChanged(MyColor.RGB RGB, MyColor.HSV HSV) => ColorChanged(this, new ColorChangedEventArgs(RGB, HSV));
+        protected void OnColorChanged(RGB RGB, MyColor.HSV HSV) => ColorChanged(this, new ColorChangedEventArgs(RGB, HSV));
 
         public ColorWheel(Rectangle clrRect, Rectangle brightRect, Rectangle selectedClrRect, MyColor.HSV defaultClr)
         {
             using (GraphicsPath path = new GraphicsPath())
             {
-                // Store away locations for later use. 
                 _colorRect = clrRect;
                 _brightnessRect = brightRect;
                 _selectedColorRect = selectedClrRect;
@@ -143,7 +129,7 @@ namespace LEDController.UI
             _currentState = MouseState.MouseUp;
         }
 
-        public void Draw(Graphics g, MyColor.RGB RGB)
+        public void Draw(Graphics g, RGB RGB)
         {
             Draw(g, new MyColor.HSV(RGB));
         }
@@ -267,8 +253,9 @@ namespace LEDController.UI
 
             for (var i = 0; i <= COLOR_COUNT - 1; i++)
             {
-                var temp = MyColor.HSVtoColor(new MyColor.HSV((int)((double)(i * 255) / COLOR_COUNT), 255, 255));
-                Colors[i] = Color.FromArgb(temp.R, temp.G, temp.B);
+                var hue = (int)((double)(i * 255) / COLOR_COUNT);
+                var hsv =new HSV(hue, 255, 255).toColor();
+                Colors[i] = Color.FromArgb(hsv.R, hsv.G, hsv.B);
             }
             return Colors;
         }
@@ -303,9 +290,9 @@ namespace LEDController.UI
             }
         }
 
-        private void DrawLinearGradient(MyColor.RGB TopColor)
+        private void DrawLinearGradient(RGB TopColor)
         {
-            using (var lgb = new LinearGradientBrush(_brightnessRect, MyColor.RGBtoColor(TopColor), Color.Black, LinearGradientMode.Vertical))
+            using (var lgb = new LinearGradientBrush(_brightnessRect, TopColor.toColor(), Color.Black, LinearGradientMode.Vertical))
             {
                 _g.FillRectangle(lgb, _brightnessRect);
             }

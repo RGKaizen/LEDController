@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Net;
+using static LEDController.Utils.MyColor;
 
 namespace LEDController.Manager
 {
@@ -12,7 +13,7 @@ namespace LEDController.Manager
     {
         private RestClient _HttpClient { get; set; }
 
-        private MyColor.RGB[] _Buffer { get; set; }
+        private RGB[] _Buffer { get; set; }
 
         private string _URLWithPort { get; set; }
 
@@ -23,17 +24,17 @@ namespace LEDController.Manager
             _Buffer = RainbowUtils.createEmptyArray(ledCount);
         }
 
-        public bool Send(MyColor.RGB[] input)
+        public bool Send(RGB[] input)
         {
             return SendRGBMessage(CreateMessage(input));
         }
 
-        public bool Send(MyColor.RGB input)
+        public bool Send(RGB input)
         {
-            return SendRGBMessage(CreateMessage(input));
+            return SendRGBMessage(CreateMessageFromRGB(input));
         }
 
-        private RGBMessageDto CreateMessage(MyColor.RGB[] input)
+        private RGBMessageDto CreateMessage(RGB[] input)
         {
             var message = new RGBMessageDto();
             for (var i = 0; i < _Buffer.Length; i++)
@@ -56,7 +57,7 @@ namespace LEDController.Manager
             return message;
         }
 
-        private RGBMessageDto CreateMessage(MyColor.RGB input)
+        private RGBMessageDto CreateMessageFromRGB(RGB input)
         {
             var message = new RGBMessageDto();
 

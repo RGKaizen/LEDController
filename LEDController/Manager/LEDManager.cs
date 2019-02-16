@@ -1,11 +1,12 @@
 ﻿using LEDController.Interfaces;
 using LEDController.Utils;
+using static LEDController.Utils.MyColor;
 
 namespace LEDController.Manager
 {
     public class LedManager : ILedManager
     {
-        public MyColor.RGB[] _State { get; }
+        public RGB[] _State { get; }
 
         public int LEDCount { get; }
 
@@ -16,12 +17,12 @@ namespace LEDController.Manager
         public LedManager(int ledCount, int stripCount)
         {
             LEDCount = ledCount;
-            _State = new MyColor.RGB[LEDCount];
+            _State = new RGB[LEDCount];
             StripCount = stripCount;
             clear();
         }
 
-        public bool setColor(int strip, int pos, MyColor.RGB color)
+        public bool setColor(int strip, int pos, RGB color)
         {
             if(pos >= StripLength || pos < 0)
             {
@@ -39,7 +40,7 @@ namespace LEDController.Manager
             return true;
         }
 
-        public bool setColor(int pos, MyColor.RGB color)
+        public bool setColor(int pos, RGB color)
         {
             if (pos > LEDCount || pos < 0)
             {
@@ -53,7 +54,7 @@ namespace LEDController.Manager
             return true;
         }
 
-        public bool setColor(MyColor.RGB[] state)
+        public bool setColor(RGB[] state)
         {
             if (state == null)
                 return false;
@@ -66,7 +67,7 @@ namespace LEDController.Manager
             return true;
         }
 
-        public bool fill(MyColor.RGB color)
+        public bool fill(RGB color)
         {
             if (color == null)
                 return false;
@@ -79,7 +80,7 @@ namespace LEDController.Manager
             return true;
         }
 
-        public bool mix(MyColor.RGB color, double ratio = 0.5)
+        public bool mix(RGB color, double ratio = 0.5)
         {
             if (color == null)
                 return false;
@@ -87,7 +88,7 @@ namespace LEDController.Manager
             for (var i = 0; i < LEDCount; i++)
             {
                 var oldcolor = _State[i];
-                var newcolor = new MyColor.RGB(
+                var newcolor = new RGB(
                         weightedAverage(oldcolor.Red, color.Red, ratio),
                         weightedAverage(oldcolor.Green, color.Green, ratio),
                         weightedAverage(oldcolor.Blue, color.Blue, ratio)

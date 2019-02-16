@@ -1,5 +1,6 @@
 ﻿using LEDController.Interfaces;
 using LEDController.Utils;
+using static LEDController.Utils.MyColor;
 
 namespace LEDController.Generators
 {
@@ -26,7 +27,7 @@ namespace LEDController.Generators
             };
         }
 
-        public MyColor.RGB[] getNextFrame()
+        public RGB[] getNextFrame()
         {
             dot1.color = palette.GetColor(0);
             dot2.color = palette.GetColor(1);
@@ -66,7 +67,7 @@ namespace LEDController.Generators
 
     class Dot
     {
-         public MyColor.RGB color { get; set; }
+         public RGB color { get; set; }
 
          public int position { get; set; }
 

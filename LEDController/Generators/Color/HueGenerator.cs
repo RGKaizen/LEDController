@@ -1,6 +1,7 @@
 ﻿using LEDController.Interfaces;
 using LEDController.Utils;
 using System;
+using static LEDController.Utils.MyColor;
 
 namespace LEDController.Generators
 {
@@ -15,23 +16,28 @@ namespace LEDController.Generators
         private const int brightnessMin = 0;
         private const int brightnessMax = 256;
 
-        private MyColor.HSV _hsv;
-        public MyColor.HSV hsvDelta { get; set; }
+        private HSV _hsv;
+        public HSV hsvDelta { get; set; }
 
         public HueGenerator()
         {
-            _hsv = new MyColor.HSV(0, 256, 256);
+            _hsv = new HSV(0, 256, 256);
             saturationSign = true;
             brightnessSign = true;
 
-            hsvDelta = new MyColor.HSV();
+            hsvDelta = new HSV();
         }
 
-        public MyColor.RGB getNextColor()
+        public RGB getNextColor()
         {
             // Add or subtract delta based on flag state
-            _hsv.Saturation = saturationSign ? _hsv.Saturation += hsvDelta.Saturation : _hsv.Saturation -= hsvDelta.Saturation;
-            _hsv.Value = brightnessSign ? _hsv.Value += hsvDelta.Value : _hsv.Value -= hsvDelta.Value;
+            _hsv.Saturation = saturationSign 
+                ? _hsv.Saturation + hsvDelta.Saturation 
+                : _hsv.Saturation - hsvDelta.Saturation;
+
+            _hsv.Value = brightnessSign 
+                ? _hsv.Value + hsvDelta.Value 
+                : _hsv.Value - hsvDelta.Value;
 
             // Flip flag state when borders hit
             if (_hsv.Saturation != _hsv.Saturation.Clamp(saturationMin, saturationMax))
@@ -47,10 +53,10 @@ namespace LEDController.Generators
             _hsv.Value = _hsv.Value.Clamp(brightnessMin, brightnessMax);
             _hsv.Hue = (_hsv.Hue + hsvDelta.Hue) % 256; // [0 - 360] => [0 - 256]
 
-            return new MyColor.RGB(_hsv);
+            return _hsv.toRGB();
         }
 
-        public MyColor.RGB getNextColor(MyColor.HSV hsvDelta)
+        public RGB getNextColor(HSV hsvDelta)
         {
             this.hsvDelta = hsvDelta;
             return getNextColor();

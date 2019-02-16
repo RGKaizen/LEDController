@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using LEDController.Interfaces;
-using LEDController.Utils;
 
 namespace LEDController.UI
 {
@@ -33,178 +32,178 @@ namespace LEDController.UI
         /// </summary>
         private void InitializeComponent()
         {
-            this.PlayPauseBtn = new System.Windows.Forms.Button();
+            PlayPauseBtn = new Button();
 
-            this.SleepSlider = new System.Windows.Forms.HScrollBar();
-            this.SleepLbl = new System.Windows.Forms.Label();
-            this.SleepValueLbl = new System.Windows.Forms.Label();
+            SleepSlider = new HScrollBar();
+            SleepLbl = new Label();
+            SleepValueLbl = new Label();
 
-            this.HueSlider = new System.Windows.Forms.HScrollBar();
-            this.HueSliderLbl = new System.Windows.Forms.Label();
-            this.HueSliderValueLbl = new System.Windows.Forms.Label();
+            HueSlider = new HScrollBar();
+            HueSliderLbl = new Label();
+            HueSliderValueLbl = new Label();
 
-            this.SaturationSlider = new System.Windows.Forms.HScrollBar();
-            this.SaturationSliderLbl = new System.Windows.Forms.Label();
-            this.SaturationSliderValueLbl = new System.Windows.Forms.Label();
+            SaturationSlider = new HScrollBar();
+            SaturationSliderLbl = new Label();
+            SaturationSliderValueLbl = new Label();
 
-            this.BrightnessSlider = new System.Windows.Forms.HScrollBar();
-            this.BrightnessSliderLbl = new System.Windows.Forms.Label();
-            this.BrightnessSliderValueLbl = new System.Windows.Forms.Label();
+            BrightnessSlider = new HScrollBar();
+            BrightnessSliderLbl = new Label();
+            BrightnessSliderValueLbl = new Label();
 
-            this.SuspendLayout();
+            SuspendLayout();
             // 
             // PlayPauseBtn
             // 
-            this.PlayPauseBtn.Location = new System.Drawing.Point(406, 14);
-            this.PlayPauseBtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.PlayPauseBtn.Name = "PlayPauseBtn";
-            this.PlayPauseBtn.Size = new System.Drawing.Size(112, 35);
-            this.PlayPauseBtn.TabIndex = 9;
-            this.PlayPauseBtn.Text = "PlayPause";
-            this.PlayPauseBtn.UseVisualStyleBackColor = true;
-            this.PlayPauseBtn.Click += new System.EventHandler(this.PlayPauseEvent);
+            PlayPauseBtn.Location = new System.Drawing.Point(406, 14);
+            PlayPauseBtn.Margin = new Padding(4, 5, 4, 5);
+            PlayPauseBtn.Name = "PlayPauseBtn";
+            PlayPauseBtn.Size = new System.Drawing.Size(112, 35);
+            PlayPauseBtn.TabIndex = 9;
+            PlayPauseBtn.Text = "PlayPause";
+            PlayPauseBtn.UseVisualStyleBackColor = true;
+            PlayPauseBtn.Click += new EventHandler(PlayPauseEvent);
             // 
             // HueSlider
             // 
-            this.HueSlider.Location = new System.Drawing.Point(140, 124);
-            this.HueSlider.Maximum = 1000;
-            this.HueSlider.Name = "HueSlider";
-            this.HueSlider.Size = new System.Drawing.Size(324, 18);
-            this.HueSlider.SmallChange = 5;
-            this.HueSlider.TabIndex = 10;
-            this.HueSlider.Scroll += new System.Windows.Forms.ScrollEventHandler(this.HueSlider_Scroll);
+            HueSlider.Location = new System.Drawing.Point(140, 124);
+            HueSlider.Maximum = 1000;
+            HueSlider.Name = "HueSlider";
+            HueSlider.Size = new System.Drawing.Size(324, 18);
+            HueSlider.SmallChange = 5;
+            HueSlider.TabIndex = 10;
+            HueSlider.Scroll += new ScrollEventHandler(HueSlider_Scroll);
             // 
             // HueSliderLbl
             // 
-            this.HueSliderLbl.AutoSize = true;
-            this.HueSliderLbl.Location = new System.Drawing.Point(53, 124);
-            this.HueSliderLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.HueSliderLbl.Name = "HueSliderLbl";
-            this.HueSliderLbl.Size = new System.Drawing.Size(83, 20);
-            this.HueSliderLbl.TabIndex = 11;
-            this.HueSliderLbl.Text = "Hue Slider";
+            HueSliderLbl.AutoSize = true;
+            HueSliderLbl.Location = new System.Drawing.Point(53, 124);
+            HueSliderLbl.Margin = new Padding(4, 0, 4, 0);
+            HueSliderLbl.Name = "HueSliderLbl";
+            HueSliderLbl.Size = new System.Drawing.Size(83, 20);
+            HueSliderLbl.TabIndex = 11;
+            HueSliderLbl.Text = "Hue Slider";
             // 
             // HueSliderValueLbl
             // 
-            this.HueSliderValueLbl.AutoSize = true;
-            this.HueSliderValueLbl.Location = new System.Drawing.Point(478, 122);
-            this.HueSliderValueLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.HueSliderValueLbl.Name = "HueSliderValueLbl";
-            this.HueSliderValueLbl.Size = new System.Drawing.Size(40, 20);
-            this.HueSliderValueLbl.TabIndex = 12;
-            this.HueSliderValueLbl.Text = "Val: ";
+            HueSliderValueLbl.AutoSize = true;
+            HueSliderValueLbl.Location = new System.Drawing.Point(478, 122);
+            HueSliderValueLbl.Margin = new Padding(4, 0, 4, 0);
+            HueSliderValueLbl.Name = "HueSliderValueLbl";
+            HueSliderValueLbl.Size = new System.Drawing.Size(40, 20);
+            HueSliderValueLbl.TabIndex = 12;
+            HueSliderValueLbl.Text = "Val: ";
             // 
             // RefreshBar
             // 
-            this.SleepSlider.Location = new System.Drawing.Point(140, 73);
-            this.SleepSlider.Name = "RefreshBar";
-            this.SleepSlider.Size = new System.Drawing.Size(324, 18);
-            this.SleepSlider.TabIndex = 13;
-            this.SleepSlider.Scroll += new System.Windows.Forms.ScrollEventHandler(this.RefreshBar_Scroll);
+            SleepSlider.Location = new System.Drawing.Point(140, 73);
+            SleepSlider.Name = "RefreshBar";
+            SleepSlider.Size = new System.Drawing.Size(324, 18);
+            SleepSlider.TabIndex = 13;
+            SleepSlider.Scroll += new ScrollEventHandler(RefreshBar_Scroll);
             // 
             // SaturationSliderValueLbl
             // 
-            this.SaturationSliderValueLbl.AutoSize = true;
-            this.SaturationSliderValueLbl.Location = new System.Drawing.Point(478, 168);
-            this.SaturationSliderValueLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.SaturationSliderValueLbl.Name = "SaturationSliderValueLbl";
-            this.SaturationSliderValueLbl.Size = new System.Drawing.Size(40, 20);
-            this.SaturationSliderValueLbl.TabIndex = 16;
-            this.SaturationSliderValueLbl.Text = "Val: ";
+            SaturationSliderValueLbl.AutoSize = true;
+            SaturationSliderValueLbl.Location = new System.Drawing.Point(478, 168);
+            SaturationSliderValueLbl.Margin = new Padding(4, 0, 4, 0);
+            SaturationSliderValueLbl.Name = "SaturationSliderValueLbl";
+            SaturationSliderValueLbl.Size = new System.Drawing.Size(40, 20);
+            SaturationSliderValueLbl.TabIndex = 16;
+            SaturationSliderValueLbl.Text = "Val: ";
             // 
             // SaturationSliderLbl
             // 
-            this.SaturationSliderLbl.AutoSize = true;
-            this.SaturationSliderLbl.Location = new System.Drawing.Point(9, 168);
-            this.SaturationSliderLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.SaturationSliderLbl.Name = "SaturationSliderLbl";
-            this.SaturationSliderLbl.Size = new System.Drawing.Size(127, 20);
-            this.SaturationSliderLbl.TabIndex = 15;
-            this.SaturationSliderLbl.Text = "Saturation Slider";
+            SaturationSliderLbl.AutoSize = true;
+            SaturationSliderLbl.Location = new System.Drawing.Point(9, 168);
+            SaturationSliderLbl.Margin = new Padding(4, 0, 4, 0);
+            SaturationSliderLbl.Name = "SaturationSliderLbl";
+            SaturationSliderLbl.Size = new System.Drawing.Size(127, 20);
+            SaturationSliderLbl.TabIndex = 15;
+            SaturationSliderLbl.Text = "Saturation Slider";
             // 
             // SaturationSlider
             // 
-            this.SaturationSlider.Location = new System.Drawing.Point(140, 170);
-            this.SaturationSlider.Maximum = 1000;
-            this.SaturationSlider.Name = "SaturationSlider";
-            this.SaturationSlider.Size = new System.Drawing.Size(324, 18);
-            this.SaturationSlider.SmallChange = 5;
-            this.SaturationSlider.TabIndex = 14;
-            this.SaturationSlider.Scroll += new System.Windows.Forms.ScrollEventHandler(this.SaturationSlider_Scroll);
+            SaturationSlider.Location = new System.Drawing.Point(140, 170);
+            SaturationSlider.Maximum = 1000;
+            SaturationSlider.Name = "SaturationSlider";
+            SaturationSlider.Size = new System.Drawing.Size(324, 18);
+            SaturationSlider.SmallChange = 5;
+            SaturationSlider.TabIndex = 14;
+            SaturationSlider.Scroll += new ScrollEventHandler(SaturationSlider_Scroll);
             // 
             // BrightnessSliderValueLbl
             // 
-            this.BrightnessSliderValueLbl.AutoSize = true;
-            this.BrightnessSliderValueLbl.Location = new System.Drawing.Point(478, 211);
-            this.BrightnessSliderValueLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.BrightnessSliderValueLbl.Name = "BrightnessSliderValueLbl";
-            this.BrightnessSliderValueLbl.Size = new System.Drawing.Size(40, 20);
-            this.BrightnessSliderValueLbl.TabIndex = 19;
-            this.BrightnessSliderValueLbl.Text = "Val: ";
+            BrightnessSliderValueLbl.AutoSize = true;
+            BrightnessSliderValueLbl.Location = new System.Drawing.Point(478, 211);
+            BrightnessSliderValueLbl.Margin = new Padding(4, 0, 4, 0);
+            BrightnessSliderValueLbl.Name = "BrightnessSliderValueLbl";
+            BrightnessSliderValueLbl.Size = new System.Drawing.Size(40, 20);
+            BrightnessSliderValueLbl.TabIndex = 19;
+            BrightnessSliderValueLbl.Text = "Val: ";
             // 
             // BrightnessSliderLbl
             // 
-            this.BrightnessSliderLbl.AutoSize = true;
-            this.BrightnessSliderLbl.Location = new System.Drawing.Point(7, 211);
-            this.BrightnessSliderLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.BrightnessSliderLbl.Name = "BrightnessSliderLbl";
-            this.BrightnessSliderLbl.Size = new System.Drawing.Size(129, 20);
-            this.BrightnessSliderLbl.TabIndex = 18;
-            this.BrightnessSliderLbl.Text = "Brightness Slider";
+            BrightnessSliderLbl.AutoSize = true;
+            BrightnessSliderLbl.Location = new System.Drawing.Point(7, 211);
+            BrightnessSliderLbl.Margin = new Padding(4, 0, 4, 0);
+            BrightnessSliderLbl.Name = "BrightnessSliderLbl";
+            BrightnessSliderLbl.Size = new System.Drawing.Size(129, 20);
+            BrightnessSliderLbl.TabIndex = 18;
+            BrightnessSliderLbl.Text = "Brightness Slider";
             // 
             // BrightnessSlider
             // 
-            this.BrightnessSlider.Location = new System.Drawing.Point(140, 213);
-            this.BrightnessSlider.Maximum = 1000;
-            this.BrightnessSlider.Name = "BrightnessSlider";
-            this.BrightnessSlider.Size = new System.Drawing.Size(324, 18);
-            this.BrightnessSlider.SmallChange = 5;
-            this.BrightnessSlider.TabIndex = 17;
-            this.BrightnessSlider.Scroll += new System.Windows.Forms.ScrollEventHandler(this.ValueSlider_Scroll);
+            BrightnessSlider.Location = new System.Drawing.Point(140, 213);
+            BrightnessSlider.Maximum = 1000;
+            BrightnessSlider.Name = "BrightnessSlider";
+            BrightnessSlider.Size = new System.Drawing.Size(324, 18);
+            BrightnessSlider.SmallChange = 5;
+            BrightnessSlider.TabIndex = 17;
+            BrightnessSlider.Scroll += new ScrollEventHandler(ValueSlider_Scroll);
             // 
             // SleepLbl
             // 
-            this.SleepLbl.AutoSize = true;
-            this.SleepLbl.Location = new System.Drawing.Point(73, 73);
-            this.SleepLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.SleepLbl.Name = "SleepLbl";
-            this.SleepLbl.Size = new System.Drawing.Size(50, 20);
-            this.SleepLbl.TabIndex = 23;
-            this.SleepLbl.Text = "Sleep";
+            SleepLbl.AutoSize = true;
+            SleepLbl.Location = new System.Drawing.Point(73, 73);
+            SleepLbl.Margin = new Padding(4, 0, 4, 0);
+            SleepLbl.Name = "SleepLbl";
+            SleepLbl.Size = new System.Drawing.Size(50, 20);
+            SleepLbl.TabIndex = 23;
+            SleepLbl.Text = "Sleep";
             // 
             // RefreshLbl
             // 
-            this.SleepValueLbl.AutoSize = true;
-            this.SleepValueLbl.Location = new System.Drawing.Point(471, 73);
-            this.SleepValueLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.SleepValueLbl.Name = "RefreshLbl";
-            this.SleepValueLbl.Size = new System.Drawing.Size(47, 20);
-            this.SleepValueLbl.TabIndex = 24;
-            this.SleepValueLbl.Text = "T: ms";
+            SleepValueLbl.AutoSize = true;
+            SleepValueLbl.Location = new System.Drawing.Point(471, 73);
+            SleepValueLbl.Margin = new Padding(4, 0, 4, 0);
+            SleepValueLbl.Name = "RefreshLbl";
+            SleepValueLbl.Size = new System.Drawing.Size(47, 20);
+            SleepValueLbl.TabIndex = 24;
+            SleepValueLbl.Text = "T: ms";
             // 
             // RainbowGenerator
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(583, 246);
-            this.Controls.Add(this.SleepValueLbl);
-            this.Controls.Add(this.SleepLbl);
-            this.Controls.Add(this.BrightnessSliderLbl);
-            this.Controls.Add(this.BrightnessSliderValueLbl);
-            this.Controls.Add(this.BrightnessSlider);
-            this.Controls.Add(this.SaturationSliderValueLbl);
-            this.Controls.Add(this.SaturationSliderLbl);
-            this.Controls.Add(this.SaturationSlider);
-            this.Controls.Add(this.SleepSlider);
-            this.Controls.Add(this.HueSliderValueLbl);
-            this.Controls.Add(this.HueSliderLbl);
-            this.Controls.Add(this.HueSlider);
-            this.Controls.Add(this.PlayPauseBtn);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Name = "RainbowGenerator";
-            this.Text = "Main Window";
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(583, 246);
+            Controls.Add(SleepValueLbl);
+            Controls.Add(SleepLbl);
+            Controls.Add(BrightnessSliderLbl);
+            Controls.Add(BrightnessSliderValueLbl);
+            Controls.Add(BrightnessSlider);
+            Controls.Add(SaturationSliderValueLbl);
+            Controls.Add(SaturationSliderLbl);
+            Controls.Add(SaturationSlider);
+            Controls.Add(SleepSlider);
+            Controls.Add(HueSliderValueLbl);
+            Controls.Add(HueSliderLbl);
+            Controls.Add(HueSlider);
+            Controls.Add(PlayPauseBtn);
+            Margin = new Padding(4, 5, 4, 5);
+            Name = "RainbowGenerator";
+            Text = "Main Window";
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 

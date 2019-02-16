@@ -2,6 +2,7 @@ using LEDController.Interfaces;
 using LEDController.Utils;
 using System.Drawing;
 using System.Windows.Forms;
+using static LEDController.Utils.MyColor;
 
 namespace LEDController.UI
 {
@@ -327,8 +328,8 @@ namespace LEDController.UI
 		private Point _selectedPoint;
 
 		private ColorWheel _colorWheel;
-        private MyColor.RGB _RGB;
-		private MyColor.HSV _HSV;
+        private RGB _RGB;
+		private HSV _HSV;
 
 		private void ColorChooser_Load(object sender, System.EventArgs e)
 		{
@@ -346,7 +347,7 @@ namespace LEDController.UI
             var startColor = new MyColor.HSV(127, 256, 82);
             _colorWheel = new ColorWheel(ColorRectangle, BrightnessRectangle, SelectedColorRectangle, startColor);
 			_colorWheel.ColorChanged += new ColorWheel.ColorChangedEventHandler(colorWheel_Changed);
-            SetRGB(new MyColor.RGB(startColor));
+            SetRGB(startColor.toRGB());
             SetHSV(startColor);		
 		}
 
@@ -366,7 +367,7 @@ namespace LEDController.UI
 			_changeType = ChangeStyle.None;
 		}
 
-        private void SetRGBLabels(MyColor.RGB RGB) 
+        private void SetRGBLabels(RGB RGB) 
 		{
             lblRed.Text = RGB.Red.ToString();
             lblGreen.Text = RGB.Green.ToString();
@@ -380,7 +381,7 @@ namespace LEDController.UI
             lblBrightness.Text = HSV.Value.ToString();
 		}
 
-        private void SetRGB(MyColor.RGB RGB) 
+        private void SetRGB(RGB RGB) 
 		{
             if (RGB == null)
                 return;
@@ -423,17 +424,17 @@ namespace LEDController.UI
         private void HandleHSVScroll(object sender, ScrollEventArgs e)  
 		{
 			_changeType = ChangeStyle.HSV;
-            _HSV = new MyColor.HSV(hsbHue.Value, hsbSaturation.Value, hsbBrightness.Value);
-            SetRGB(new MyColor.RGB(_HSV));
+            _HSV = new HSV(hsbHue.Value, hsbSaturation.Value, hsbBrightness.Value);
+            SetRGB(_HSV.toRGB());
 			SetHSVLabels(_HSV);
 			Invalidate();
-            _ledClient.Send(new MyColor.RGB(_HSV));
+            _ledClient.Send(_HSV.toRGB());
 		}
 
 		private void HandleRGBScroll(object sender, ScrollEventArgs e)
 		{
 			_changeType = ChangeStyle.RGB;
-            _RGB = new MyColor.RGB(hsbRed.Value, hsbGreen.Value, hsbBlue.Value);
+            _RGB = new RGB(hsbRed.Value, hsbGreen.Value, hsbBlue.Value);
             SetHSV(new MyColor.HSV(_RGB));
 			SetRGBLabels(_RGB);
 			Invalidate();

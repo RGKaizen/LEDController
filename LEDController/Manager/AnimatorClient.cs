@@ -2,6 +2,7 @@
 using LEDController.Utils;
 using System;
 using System.Threading;
+using static LEDController.Utils.MyColor;
 
 namespace LEDController.Manager
 {
@@ -21,8 +22,8 @@ namespace LEDController.Manager
             set => _refreshRate = value.Clamp(0, int.MaxValue);
         }
 
-        private MyColor.HSV _hsvDelta;
-        public MyColor.HSV hsvDelta
+        private HSV _hsvDelta;
+        public HSV hsvDelta
         {
             get => _hsvDelta;
             set
