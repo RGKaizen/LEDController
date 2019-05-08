@@ -100,9 +100,9 @@ namespace LEDController.Manager
                     success = true;
                 }
             }
-            catch (Exception error)
+            catch (Exception e)
             {
-                // Log
+                Console.WriteLine($"Error {e.Message}");
             }
             return success;
         }

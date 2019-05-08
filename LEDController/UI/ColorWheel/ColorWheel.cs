@@ -7,7 +7,7 @@ using static LEDController.Utils.MyColor;
 
 namespace LEDController.UI
 {
-    public class ColorWheel : IDisposable
+    public sealed class ColorWheel : IDisposable
     {
         /// <summary>
         /// Written by Ken Getz

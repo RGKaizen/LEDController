@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Generators\Animation\AnimatorBase.cs" />
+    <Compile Include="Generators\Animation\FillAnimation.cs" />
     <Compile Include="Generators\Animation\LooperAnimator.cs" />
     <Compile Include="Interfaces\IPaletteManager.cs" />
     <Compile Include="Manager\LedManager.cs" />

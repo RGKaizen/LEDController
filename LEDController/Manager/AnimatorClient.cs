@@ -9,8 +9,8 @@ namespace LEDController.Manager
     public class AnimatorClient : IAnimatorClient
     {        
         private ILedClient _ledClient { get; set; }
-        private IAnimator _Animator { get; set; }
-        private IColorGenerator _HueGenerator { get; set; }
+        private IAnimator _animator { get; set; }
+        private IColorGenerator _hueGenerator { get; set; }
 
         public bool isRunning { get; private set; }
         private AnimationThread _animationThread = null;
@@ -39,19 +39,19 @@ namespace LEDController.Manager
         public AnimatorClient(ILedClient restClient, IAnimator animator, IColorGenerator hueGenerator)
         {
             _ledClient = restClient;
-            _Animator = animator;
-            _HueGenerator = hueGenerator;
+            _animator = animator;
+            _hueGenerator = hueGenerator;
             _animationThread = new AnimationThread(Animate);
 
             RefreshRate = 0;
-            hsvDelta = new MyColor.HSV();
+            hsvDelta = new HSV();
         }
 
         private void Animate()
         {
-            _HueGenerator.hsvDelta = hsvDelta;
-            _Animator.palette.PopulatePalette(_HueGenerator);
-            _ledClient.Send(_Animator.getNextFrame());
+            _hueGenerator.hsvDelta = hsvDelta;
+            _animator.palette.PopulatePalette(_hueGenerator);
+            _ledClient.Send(_animator.getNextFrame());
             Thread.Sleep(RefreshRate);
         }
 

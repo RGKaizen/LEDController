@@ -4,6 +4,7 @@ using LEDController.Utils;
 using LEDController.Interfaces;
 using LEDController.Manager;
 using LEDController.Generators;
+using LEDController.Generators.Animation;
 
 namespace LEDController.UI
 {
@@ -94,7 +95,7 @@ namespace LEDController.UI
 
         private void RainbowBtn_Click(object sender, EventArgs e)
         {
-            new DoubleRainbow(new AnimatorClient(_ledClient, new LooperAnimator(_ledManager, _paletteManager), new HueGenerator())
+            new DoubleRainbow(new AnimatorClient(_ledClient, new FillAnimation(_ledManager, _paletteManager), new HueGenerator())
                 ).Show();
         }
 
