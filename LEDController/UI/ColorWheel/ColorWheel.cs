@@ -1,8 +1,8 @@
+using LEDController.Utils;
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using LEDController.Utils;
 using static LEDController.Utils.MyColor;
 
 namespace LEDController.UI
@@ -45,7 +45,7 @@ namespace LEDController.UI
         private int _brightnessCursorX;
         private double _brightnessScaling;
 
-        private MyColor.HSV _HSV = new MyColor.HSV(0,0,0);
+        private HSV _HSV = new HSV(0, 0, 0);
         private RGB _RGB => _HSV.toRGB();
         public Color Color => _HSV.toColor();
 
@@ -57,9 +57,12 @@ namespace LEDController.UI
         private int _brightnessMin;
         private int _brightnessMax;
 
-        protected void OnColorChanged(RGB RGB, MyColor.HSV HSV) => ColorChanged(this, new ColorChangedEventArgs(RGB, HSV));
+        protected void OnColorChanged(RGB RGB, HSV HSV)
+        {
+            ColorChanged(this, new ColorChangedEventArgs(RGB, HSV));
+        }
 
-        public ColorWheel(Rectangle clrRect, Rectangle brightRect, Rectangle selectedClrRect, MyColor.HSV defaultClr)
+        public ColorWheel(Rectangle clrRect, Rectangle brightRect, Rectangle selectedClrRect, HSV defaultClr)
         {
             using (GraphicsPath path = new GraphicsPath())
             {
@@ -131,10 +134,10 @@ namespace LEDController.UI
 
         public void Draw(Graphics g, RGB RGB)
         {
-            Draw(g, new MyColor.HSV(RGB));
+            Draw(g, new HSV(RGB));
         }
 
-        public void Draw(Graphics g, MyColor.HSV hsv)
+        public void Draw(Graphics g, HSV hsv)
         {
             _g = g;
             _HSV = hsv;
@@ -143,7 +146,7 @@ namespace LEDController.UI
         }
 
         public void Draw(Graphics g, Point mousePoint)
-        {       
+        {
             _g = g;
             if (_currentState == MouseState.MouseUp && !mousePoint.IsEmpty)
             {
@@ -158,7 +161,7 @@ namespace LEDController.UI
                 else
                 {
                     _currentState = MouseState.ClickOutsideRegion;
-                }               
+                }
             }
 
             switch (_currentState)
@@ -189,7 +192,7 @@ namespace LEDController.UI
         {
             var clampedY = mousePoint.Y.Clamp(_brightnessMin, _brightnessMax);
             _brightnessPointer = new Point(_brightnessCursorX, clampedY);
-            _HSV.Value = (int)((_brightnessMax - clampedY) * _brightnessScaling);      
+            _HSV.Value = (int)((_brightnessMax - clampedY) * _brightnessScaling);
         }
 
         private void ColorWheelUpdate(Point mousePoint)
@@ -206,10 +209,10 @@ namespace LEDController.UI
                     _colorPointer = GetPoint(degrees, _radius, _centerPoint);
                 }
             }
-            _HSV = new MyColor.HSV(degrees * 255 / 360, (int)(distance * 255), _brightness);
+            _HSV = new HSV(degrees * 255 / 360, (int)(distance * 255), _brightness);
         }
 
-        private void UpdatePointers(MyColor.HSV HSV)
+        private void UpdatePointers(HSV HSV)
         {
             _colorPointer = GetPoint(
                 (double)HSV.Hue / 255 * 360,
@@ -254,7 +257,7 @@ namespace LEDController.UI
             for (var i = 0; i <= COLOR_COUNT - 1; i++)
             {
                 var hue = (int)((double)(i * 255) / COLOR_COUNT);
-                var hsv =new HSV(hue, 255, 255).toColor();
+                var hsv = new HSV(hue, 255, 255).toColor();
                 Colors[i] = Color.FromArgb(hsv.R, hsv.G, hsv.B);
             }
             return Colors;

@@ -7,7 +7,7 @@ using static LEDController.Utils.MyColor;
 namespace LEDController.Manager
 {
     public class AnimatorClient : IAnimatorClient
-    {        
+    {
         private ILedClient _ledClient { get; set; }
         private IAnimator _animator { get; set; }
         private IColorGenerator _hueGenerator { get; set; }
@@ -33,7 +33,7 @@ namespace LEDController.Manager
                     if (value == null) throw new ArgumentNullException("hsvDelta");
                 }
                 _hsvDelta = value;
-            }               
+            }
         }
 
         public AnimatorClient(ILedClient restClient, IAnimator animator, IColorGenerator hueGenerator)
@@ -69,6 +69,17 @@ namespace LEDController.Manager
             }
 
             return true;
+        }
+
+        public void Stop()
+        {
+            _animationThread.Stop();
+            isRunning = false;
+        }
+
+        public void UpdateFillAnimation(IAnimator animator)
+        {
+            _animator = animator;
         }
     }
 }

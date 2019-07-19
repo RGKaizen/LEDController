@@ -37,7 +37,7 @@ namespace LEDController.Generators
 
             ledManager.setColor(dot1.strip, dot1.position, dot1.color);
             ledManager.setColor(dot2.strip, dot2.position, dot2.color);
-            ledManager.mix(MyColor.Off, 0.1);
+            ledManager.mix(Off, 0.1);
 
             if (dot1.position == ledManager.StripLength / 2)
             {

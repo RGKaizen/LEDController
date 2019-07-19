@@ -10,6 +10,10 @@ namespace LEDController.Interfaces
 
         bool PlayPause();
 
+        void Stop();
+
         MyColor.HSV hsvDelta { get; set; }
+
+        void UpdateFillAnimation(IAnimator animator);
     }
 }

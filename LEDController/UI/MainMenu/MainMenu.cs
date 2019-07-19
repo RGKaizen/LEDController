@@ -1,10 +1,10 @@
-﻿using System;
-using System.Windows.Forms;
-using LEDController.Utils;
+﻿using LEDController.Generators;
+using LEDController.Generators.Animation;
 using LEDController.Interfaces;
 using LEDController.Manager;
-using LEDController.Generators;
-using LEDController.Generators.Animation;
+using LEDController.Utils;
+using System;
+using System.Windows.Forms;
 
 namespace LEDController.UI
 {
@@ -14,7 +14,6 @@ namespace LEDController.UI
         private Button colorWheelBtn;
         private Button rainbowBtn;
         private Button clearBtn;
-        private Button sortBtn;
 
         private void InitializeComponent()
         {
@@ -29,7 +28,7 @@ namespace LEDController.UI
                 TabIndex = 0,
                 Text = "Color Wheel",
                 UseVisualStyleBackColor = true,
-               
+
             };
             colorWheelBtn.Click += new EventHandler(ColorWheelBtn_Click);
 
@@ -65,7 +64,6 @@ namespace LEDController.UI
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(530, 99);
             Controls.Add(clearBtn);
-            Controls.Add(sortBtn);
             Controls.Add(rainbowBtn);
             Controls.Add(colorWheelBtn);
             Margin = new Padding(4, 5, 4, 5);
@@ -85,7 +83,7 @@ namespace LEDController.UI
 
             _ledClient = new LedRestClient("192.168.1.200", "5000", 120);
             _ledManager = new LedManager(120, 2);
-            _paletteManager = new PaletteManager(2);       
+            _paletteManager = new PaletteManager(2);
         }
 
         private void ColorWheelBtn_Click(object sender, EventArgs e)

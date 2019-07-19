@@ -344,7 +344,7 @@ namespace LEDController.UI
 			var BrightnessRectangle = new Rectangle(pnlBrightness.Location, pnlBrightness.Size);
 			var ColorRectangle = new Rectangle(pnlColor.Location, pnlColor.Size);
 
-			var startColor = new MyColor.HSV(127, 256, 82);
+			var startColor = new HSV(127, 256, 82);
 			_colorWheel = new ColorWheel(ColorRectangle, BrightnessRectangle, SelectedColorRectangle, startColor);
 			_colorWheel.ColorChanged += new ColorWheel.ColorChangedEventHandler(colorWheel_Changed);
 			SetRGB(startColor.toRGB());
@@ -374,7 +374,7 @@ namespace LEDController.UI
 			lblBlue.Text = RGB.Blue.ToString();
 		}
 
-		private void SetHSVLabels(MyColor.HSV HSV) 
+		private void SetHSVLabels(HSV HSV) 
 		{
 			lblHue.Text = HSV.Hue.ToString();
 			lblSaturation.Text = HSV.Saturation.ToString();
@@ -392,7 +392,7 @@ namespace LEDController.UI
 			SetRGBLabels(RGB);
 	   }
 
-		private void SetHSV(MyColor.HSV HSV) 
+		private void SetHSV(HSV HSV) 
 		{
 			if (HSV == null)
 				return;
@@ -435,7 +435,7 @@ namespace LEDController.UI
 		{
 			_changeType = ChangeStyle.RGB;
 			_RGB = new RGB(hsbRed.Value, hsbGreen.Value, hsbBlue.Value);
-			SetHSV(new MyColor.HSV(_RGB));
+			SetHSV(new HSV(_RGB));
 			SetRGBLabels(_RGB);
 			Invalidate();
 			_ledClient.Send(_RGB);

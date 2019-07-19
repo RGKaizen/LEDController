@@ -61,7 +61,7 @@ namespace LEDController.Manager
 
             for(var i = 0; i < LEDCount; i++)
             {
-                _State[i] = state[i] ?? MyColor.Off;
+                _State[i] = state[i] ?? Off;
             }
             
             return true;
@@ -106,7 +106,7 @@ namespace LEDController.Manager
 
         public bool clear()
         {
-            return fill(MyColor.Off);
+            return fill(Off);
         }
 
     }
